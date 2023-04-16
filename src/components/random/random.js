@@ -16,7 +16,7 @@ export const Random = ({ onArchiveClick }) => {
       dispatch(updateRandomArchives(newRandomArchives));
     };
     if (!randomArchives.length) callNewArchives();
-  }, [dispatch, randomArchives]);
+  }, [dispatch]);
 
   return (
     <div style={{ margin: "3rem 1.5rem" }}>

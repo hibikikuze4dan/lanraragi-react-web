@@ -1,54 +1,46 @@
-import { getBaseUrl } from "../../storage/requests";
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateBaseUrl } from "../../app/slice";
-import { getBaseUrlSelector } from "../../app/selectors";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Button, Grid, Input, Typography } from "@mui/material";
+import { getBaseUrl, storeBaseUrl } from "../../storage/requests";
 
 export const Url = () => {
   const dispatch = useDispatch();
   const [url, setUrl] = useState("");
-  const reduxUrl = useSelector(getBaseUrlSelector);
 
   const onChangeText = useCallback(
-    (text) => {
-      setUrl(text);
+    (event) => {
+      setUrl(event.target.value);
     },
     [setUrl]
   );
   const onPress = useCallback(() => {
-    const storeBaseUrl = async () => {
-      await AsyncStorage.setItem("BASE_URL", url);
-    };
-    dispatch(updateBaseUrl(url));
-    storeBaseUrl();
+    storeBaseUrl(url);
   }, [url, dispatch]);
 
   useEffect(() => {
-    const getUrl = async () => {
-      setUrl(await getBaseUrl());
+    const getUrl = () => {
+      setUrl(getBaseUrl());
     };
     getUrl();
   }, [setUrl]);
 
-  console.log(url, "the url", reduxUrl, "the reduxd url");
-
   return (
-    <View style={{ display: "flex", justifyContent: "space-around" }}>
-      <TextInput
-        style={{
-          // flex: 1,
-          height: 20,
-          margin: 12,
-          padding: 10,
-          width: 100,
-          borderWidth: 1,
-        }}
-        value={url}
-        onChangeText={onChangeText}
-      />
-      <Pressable onPress={onPress}>
-        <Text>Set Base Url</Text>
-      </Pressable>
-    </View>
+    <div style={{ padding: "2rem 1rem" }}>
+      <Grid container direction="column" spacing={4}>
+        <Grid item xs={12}>
+          <Input
+            fullWidth
+            value={url}
+            placeholder="Lanraragi Server Address (No / at the end)"
+            onChange={onChangeText}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <Button onClick={onPress}>
+            <Typography>Set Base Url</Typography>
+          </Button>
+        </Grid>
+      </Grid>
+    </div>
   );
 };

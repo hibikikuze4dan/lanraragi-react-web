@@ -1,11 +1,12 @@
 import axios from "axios";
 import { HEADERS, SEARCH_URL } from "./constants";
+import { getBaseUrl } from "../storage/requests";
 
 const data = "";
 
 const config = {
   method: "get",
-  url: `${SEARCH_URL}?count=10`,
+  url: `http://${getBaseUrl()}${SEARCH_URL}?count=10`,
   headers: HEADERS,
   data,
 };

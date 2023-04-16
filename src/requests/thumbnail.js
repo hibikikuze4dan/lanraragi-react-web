@@ -1,3 +1,4 @@
+import { getBaseUrl } from "../storage/requests";
 import { HEADERS, THUMBNAIL_URL } from "./constants";
 
 const requestOptions = {
@@ -7,7 +8,10 @@ const requestOptions = {
 };
 
 export const getArchiveThumbnail = async (archiveId) =>
-  fetch(THUMBNAIL_URL.replace(":id", archiveId), requestOptions)
+  fetch(
+    `http://${getBaseUrl()}${THUMBNAIL_URL.replace(":id", archiveId)}`,
+    requestOptions
+  )
     .then((response) => response.blob())
     .then((blob) =>
       new Promise((resolve, reject) => {

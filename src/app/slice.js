@@ -4,6 +4,8 @@ const initialState = {
   currentArchiveId: "",
   randomArchives: [],
   baseUrl: "",
+  pages: [],
+  renderedPages: [],
 };
 
 export const appSlice = createSlice({
@@ -20,10 +22,21 @@ export const appSlice = createSlice({
     updateBaseUrl: (state, { payload }) => {
       state.baseUrl = `${payload}`;
     },
+    updatePages: (state, { payload }) => {
+      state.pages = [...payload];
+    },
+    updateRenderedPages: (state, { payload }) => {
+      state.renderedPages = [...payload];
+    },
   },
 });
 
-export const { updateCurrentArchiveId, updateRandomArchives, updateBaseUrl } =
-  appSlice.actions;
+export const {
+  updateCurrentArchiveId,
+  updateRandomArchives,
+  updateBaseUrl,
+  updatePages,
+  updateRenderedPages,
+} = appSlice.actions;
 
 export default appSlice.reducer;

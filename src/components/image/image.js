@@ -1,8 +1,10 @@
 import { Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useImageSize } from "react-image-size";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Loading } from "../loading/loading";
 
-export const Image = ({ uri, width, deviceHeight }) => {
+export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
   const [height, setHeight] = useState(50);
   const [dimensions, { loading, error }] = useImageSize(uri);
   const imageLoaded = !loading && !error;
@@ -15,18 +17,32 @@ export const Image = ({ uri, width, deviceHeight }) => {
   }
 
   useEffect(() => {
-    const heightFormula =
-      (imageHeight / imageWidth) * width + deviceHeight * 0.2;
-    const newHeight =
-      imageHeight < (imageHeight / imageWidth) * width ? height : heightFormula;
-    setHeight(newHeight);
-  }, [uri, width, deviceHeight, height]);
+    if (imageLoaded) {
+      const heightFormula =
+        (imageHeight / imageWidth) * width + deviceHeight * 0.2;
+      const newHeight =
+        imageHeight < (imageHeight / imageWidth) * width
+          ? imageHeight
+          : heightFormula;
+      setHeight(newHeight);
+    }
+  }, [height, dimensions]);
 
   return (
     <>
-      {loading && <Typography>Loading image</Typography>}
+      {loading && <Loading />}
       {error && <Typography>Sorry, something went wrong</Typography>}
-      {imageLoaded && <img alt="archive" style={{ height, width }} src={uri} />}
+      {imageLoaded && (
+        <LazyLoadImage
+          alt="archive"
+          afterLoad={last ? morePages : () => null}
+          height={height}
+          width={width}
+          src={uri}
+          effect="opacity"
+          threshold={200}
+        />
+      )}
     </>
   );
 };

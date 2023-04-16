@@ -6,10 +6,12 @@ import { ImageList } from "./image-list/image-list";
 import { getCurrentArchiveId } from "../app/selectors";
 import { updateCurrentArchiveId } from "../app/slice";
 import { RandomButton } from "./random-button/random-button";
-// import { Url } from "./url/url";
+import { Url } from "./url/url";
+import { getBaseUrl } from "../storage/requests";
 
 export default function App() {
   const dispatch = useDispatch();
+  const baseUrl = getBaseUrl();
   const currentArchiveId = useSelector(getCurrentArchiveId);
   const [display, setDisplay] = useState({ random: true, images: false });
 
@@ -22,9 +24,9 @@ export default function App() {
   return (
     <Grid>
       <Grid>
-        {/* <Url /> */}
-        {displayRandom && <Random onArchiveClick={onArchiveClick} />}
-        {displayImages && <ImageList arcId={currentArchiveId} />}
+        <Url />
+        {displayRandom && baseUrl && <Random onArchiveClick={onArchiveClick} />}
+        {displayImages && baseUrl && <ImageList arcId={currentArchiveId} />}
       </Grid>
       <Grid>
         <RandomButton displayRandom={displayRandom} setDisplay={setDisplay} />

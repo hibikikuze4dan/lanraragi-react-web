@@ -1,31 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { drop } from "lodash";
+import React, { useEffect } from "react";
+import { drop, take } from "lodash";
 import { Grid } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { getArchiveFiles } from "../../requests/files";
-import { BASE_URL } from "../../requests/constants";
 import { Image } from "../image/image";
+import { getBaseUrl } from "../../storage/requests";
+import { updatePages, updateRenderedPages } from "../../app/slice";
+import { getCurrentPages, getCurrentRenderedPages } from "../../app/selectors";
 
 export const ImageList = ({ arcId }) => {
-  const [pages, updatePages] = useState([]);
+  const dispatch = useDispatch();
+  const pages = useSelector(getCurrentPages);
+  const renderedPages = useSelector(getCurrentRenderedPages);
   const width = window.innerWidth;
   const height = window.innerHeight;
+  const baseUrl = getBaseUrl();
 
   useEffect(() => {
     const getPages = async () => {
       const newPages = await getArchiveFiles(arcId);
-      updatePages(newPages);
+      dispatch(updateRenderedPages([...take(newPages, 5)]));
+      dispatch(updatePages([...drop(newPages, 5)]));
     };
     getPages();
   }, [arcId]);
 
+  const morePages = () => {
+    dispatch(updateRenderedPages([...renderedPages, ...take(pages, 5)]));
+    dispatch(updatePages([...drop(pages, 5)]));
+  };
+
   return (
     <Grid>
-      {pages.map((page) => {
-        const src = BASE_URL + drop(page.split(""), 1).join("");
-        console.log(src);
-
+      {renderedPages.map((page, index) => {
+        const src = `http://${baseUrl}${drop(page.split(""), 1).join("")}`;
         return (
-          <Image key={src} width={width} deviceHeight={height} uri={src} />
+          <Image
+            key={src}
+            width={width}
+            deviceHeight={height}
+            uri={src}
+            last={(index + 1) % 5 === 0}
+            morePages={morePages}
+          />
         );
       })}
     </Grid>
