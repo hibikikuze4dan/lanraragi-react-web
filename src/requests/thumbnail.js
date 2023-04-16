@@ -19,6 +19,5 @@ export const getArchiveThumbnail = async (archiveId) =>
         reader.onloadend = () => resolve(reader.result);
         reader.onerror = reject;
         reader.readAsDataURL(blob);
-      }).then((succ) => succ.split(",")[1])
-    )
+      }).then((succ) => succ.split(",")[1]))
     .catch((error) => console.log("error", error));

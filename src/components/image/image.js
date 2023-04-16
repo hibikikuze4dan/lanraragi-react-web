@@ -4,7 +4,9 @@ import { useImageSize } from "react-image-size";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Loading } from "../loading/loading";
 
-export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
+export const Image = ({
+  uri, width, deviceHeight, last, morePages
+}) => {
   const [height, setHeight] = useState(50);
   const [dimensions, { loading, error }] = useImageSize(uri);
   const imageLoaded = !loading && !error;

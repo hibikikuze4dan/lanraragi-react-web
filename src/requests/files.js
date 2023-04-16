@@ -14,10 +14,7 @@ export const getArchiveFiles = async (archiveId) =>
     ...config,
     url: `http://${getBaseUrl()}${FILES_URL.replace(":id", archiveId)}`,
   })
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-      return response.data.pages;
-    })
+    .then((response) => response.data.pages)
     .catch((error) => {
       console.log(error);
     });
