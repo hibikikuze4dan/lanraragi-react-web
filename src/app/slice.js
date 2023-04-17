@@ -6,6 +6,11 @@ const initialState = {
   baseUrl: "",
   pages: [],
   renderedPages: [],
+  sectionVisibility: {
+    random: false,
+    images: false,
+    address: true,
+  },
 };
 
 export const appSlice = createSlice({
@@ -28,6 +33,9 @@ export const appSlice = createSlice({
     updateRenderedPages: (state, { payload }) => {
       state.renderedPages = [...payload];
     },
+    updateSectionVisibility: (state, { payload }) => {
+      state.sectionVisibility = { ...state.sectionVisibility, ...payload };
+    },
   },
 });
 
@@ -37,6 +45,7 @@ export const {
   updateBaseUrl,
   updatePages,
   updateRenderedPages,
+  updateSectionVisibility,
 } = appSlice.actions;
 
 export default appSlice.reducer;

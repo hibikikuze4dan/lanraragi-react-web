@@ -1,48 +1,53 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  Button, Grid, Input, Typography
-} from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { getBaseUrl, storeBaseUrl } from "../../storage/requests";
+import { updateSectionVisibility } from "../../app/slice";
 
 export const Url = () => {
   const dispatch = useDispatch();
   const [url, setUrl] = useState("");
 
   const onChangeText = useCallback(
-    (event) => {
-      setUrl(event.target.value);
-    },
+    (event) => setUrl(event.target.value),
     [setUrl]
   );
   const onPress = useCallback(() => {
     storeBaseUrl(url);
+    dispatch(updateSectionVisibility({ random: true, address: false }));
   }, [url, dispatch]);
 
   useEffect(() => {
-    const getUrl = () => {
-      setUrl(getBaseUrl());
-    };
-    getUrl();
-  }, [setUrl]);
+    if (getBaseUrl()) {
+      dispatch(updateSectionVisibility({ random: true, address: false }));
+    }
+  }, [dispatch]);
 
   return (
-    <div style={{ padding: "2rem 1rem" }}>
-      <Grid container direction="column" spacing={4}>
-        <Grid item xs={12}>
-          <Input
-            fullWidth
-            value={url}
-            placeholder="Lanraragi Server Address (No / at the end)"
-            onChange={onChangeText}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <Button onClick={onPress}>
-            <Typography>Set Base Url</Typography>
-          </Button>
+    <Grid
+      style={{ padding: "4rem 3rem", height: `${window.innerHeight}px` }}
+      container
+      alignContent="center"
+    >
+      <Grid item xs={12}>
+        <Grid container direction="column" spacing={4}>
+          <Grid item xs={12}>
+            <TextField
+              label="Lanraragi Server Address"
+              fullWidth
+              value={url}
+              placeholder="(No / at the end)"
+              onChange={onChangeText}
+              type="text"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Button onClick={onPress} variant="contained">
+              <Typography>Set Address</Typography>
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
-    </div>
+    </Grid>
   );
 };

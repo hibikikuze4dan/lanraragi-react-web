@@ -24,5 +24,6 @@ module.exports = {
     "import/prefer-default-export": "off",
     "import/no-named-as-default": "off",
     "no-console": "off",
+    "object-curly-newline": "off",
   },
 };

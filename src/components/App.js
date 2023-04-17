@@ -1,36 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 import { Random } from "./random/random";
 import { ImageList } from "./image-list/image-list";
-import { getCurrentArchiveId } from "../app/selectors";
-import { updateCurrentArchiveId } from "../app/slice";
-import { RandomButton } from "./random-button/random-button";
+import {
+  getCurrentArchiveId,
+  getSectionVisibilityObject,
+  getSectionVisibilityObjectWithAllFalse,
+} from "../app/selectors";
+import { updateCurrentArchiveId, updateSectionVisibility } from "../app/slice";
 import { Url } from "./url/url";
-import { getBaseUrl } from "../storage/requests";
+import { Navbar } from "./navbar/navbar";
 
 export default function App() {
   const dispatch = useDispatch();
-  const baseUrl = getBaseUrl();
   const currentArchiveId = useSelector(getCurrentArchiveId);
-  const [display, setDisplay] = useState({ random: true, images: false });
+  const { random, images, address } = useSelector(getSectionVisibilityObject);
+  const allSectionsFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
 
-  const { random: displayRandom, images: displayImages } = display;
   const onArchiveClick = (archiveId) => {
-    setDisplay({ random: false, images: true });
+    dispatch(updateSectionVisibility({ ...allSectionsFalse, images: true }));
     dispatch(updateCurrentArchiveId(archiveId));
   };
 
   return (
-    <Grid>
+    <div style={{ display: "flex" }}>
       <Grid>
-        <Url />
-        {displayRandom && baseUrl && <Random onArchiveClick={onArchiveClick} />}
-        {displayImages && baseUrl && <ImageList arcId={currentArchiveId} />}
+        <Grid>
+          {address && <Url />}
+          {random && <Random onArchiveClick={onArchiveClick} />}
+          {images && <ImageList arcId={currentArchiveId} />}
+        </Grid>
       </Grid>
-      <Grid>
-        <RandomButton displayRandom={displayRandom} setDisplay={setDisplay} />
-      </Grid>
-    </Grid>
+      <Navbar />
+    </div>
   );
 }
