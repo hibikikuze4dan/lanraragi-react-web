@@ -1,4 +1,4 @@
-export const SEARCH_URL = "/api/search/random";
+export const RANDOM_URL = "/api/search/random";
 
 export const THUMBNAIL_URL = "/api/archives/:id/thumbnail";
 

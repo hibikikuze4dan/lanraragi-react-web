@@ -1,10 +1,32 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { getArchiveThumbnail } from "../../requests/thumbnail";
+import {
+  updateCurrentArchiveId,
+  updateSectionVisibility,
+} from "../../app/slice";
+import { getSectionVisibilityObjectWithAllFalse } from "../../app/selectors";
 
-export const Archive = ({ id, title, onArchiveClick }) => {
+const styles = {
+  paper: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  image: { height: 300, width: "100%" },
+};
+
+export const Archive = ({ id, title }) => {
+  const dispatch = useDispatch();
   const [thumbnail, updateThumbnail] = useState(null);
-  const onPress = useCallback(() => onArchiveClick(id), [onArchiveClick, id]);
+  const allSectionsFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
+  const onPress = useCallback(() => {
+    dispatch(updateSectionVisibility({ ...allSectionsFalse, images: true }));
+    dispatch(updateCurrentArchiveId(id));
+    document.getElementById(`images-list-${id}`);
+  }, [id]);
 
   useEffect(() => {
     if (!thumbnail) {
@@ -16,22 +38,27 @@ export const Archive = ({ id, title, onArchiveClick }) => {
   }, [thumbnail, id]);
 
   return (
-    <Button onClick={onPress} sx={{ textTransform: "none" }}>
-      <Grid spacing={2} container direction="column" justifyContent="center">
-        {thumbnail ? (
-          <Grid item container justifyContent="center">
+    <Paper id={`archive_${id}`} style={styles.paper}>
+      {thumbnail ? (
+        <div>
+          <div>
             <img
               alt="thumbnail for archive"
-              style={{ height: 300, width: 250 }}
+              style={styles.image}
               src={`data:image/jpeg;base64,${thumbnail}`}
             />
-          </Grid>
-        ) : null}
-        <Grid item container justifyContent="center">
-          <Typography>{title}</Typography>
-        </Grid>
-      </Grid>
-    </Button>
+          </div>
+        </div>
+      ) : null}
+      <div>
+        <div>
+          <Typography sx={{ textTransform: "none" }}>{title}</Typography>
+        </div>
+      </div>
+      <Button variant="outlined" fullWidth onClick={onPress}>
+        Read
+      </Button>
+    </Paper>
   );
 };
 

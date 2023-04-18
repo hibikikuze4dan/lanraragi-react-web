@@ -6,10 +6,15 @@ import { getArchiveFiles } from "../../requests/files";
 import { Image } from "../image/image";
 import { getBaseUrl } from "../../storage/requests";
 import { updatePages, updateRenderedPages } from "../../app/slice";
-import { getCurrentPages, getCurrentRenderedPages } from "../../app/selectors";
+import {
+  getCurrentArchiveId,
+  getCurrentPages,
+  getCurrentRenderedPages,
+} from "../../app/selectors";
 
-export const ImageList = ({ arcId }) => {
+export const ImageList = () => {
   const dispatch = useDispatch();
+  const arcId = useSelector(getCurrentArchiveId);
   const pages = useSelector(getCurrentPages);
   const renderedPages = useSelector(getCurrentRenderedPages);
   const width = window.innerWidth;
@@ -31,7 +36,7 @@ export const ImageList = ({ arcId }) => {
   };
 
   return (
-    <Grid>
+    <Grid id={`images-list-${arcId}`} sx={{ padding: "3rem 0 5rem 0" }}>
       {renderedPages.map((page, index) => {
         const src = `http://${baseUrl}${drop(page.split(""), 1).join("")}`;
         return (

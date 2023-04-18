@@ -4,14 +4,17 @@ import { useImageSize } from "react-image-size";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Loading } from "../loading/loading";
 
-export const Image = ({
-  uri, width, deviceHeight, last, morePages
-}) => {
+export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
   const [height, setHeight] = useState(50);
   const [dimensions, { loading, error }] = useImageSize(uri);
   const imageLoaded = !loading && !error;
-  let imageWidth = 0;
-  let imageHeight = 0;
+  let imageWidth = 1;
+  let imageHeight = 1;
+  const renderedImageHeight = imageLoaded ? height : window.innerHeight;
+  const renderedImageWidth = imageLoaded ? width : window.innerWidth;
+  const afterLoad = () => {
+    if (last) morePages();
+  };
 
   if (imageLoaded) {
     imageHeight = dimensions?.height;
@@ -37,12 +40,13 @@ export const Image = ({
       {imageLoaded && (
         <LazyLoadImage
           alt="archive"
-          afterLoad={last ? morePages : () => null}
-          height={height}
-          width={width}
+          afterLoad={afterLoad}
+          height={renderedImageHeight}
+          width={renderedImageWidth}
           src={uri}
           effect="opacity"
           threshold={200}
+          style={{ marginBottom: "4px" }}
         />
       )}
     </>
