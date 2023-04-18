@@ -1,7 +1,7 @@
 import { Casino, MenuBook } from "@mui/icons-material";
 import React from "react";
-import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import { useDispatch, useSelector } from "react-redux";
+import { AppBar, Button } from "@mui/material";
 import { getSectionVisibilityObjectForSideNavbar } from "../../../app/selectors";
 import { updateSectionVisibility } from "../../../app/slice";
 
@@ -16,23 +16,46 @@ export const SideNavbar = () => {
   };
 
   return (
-    <Sidebar style={{ height: window.innerHeight }} defaultCollapsed>
-      <Menu>
+    <AppBar
+      position="unser"
+      sx={{
+        height: window.innerHeight,
+        left: 0,
+        width: "fit-content",
+        display: "flex",
+        backgroundColor: "rgba(30, 30, 30, 1)",
+        border: "1px solid grey",
+        justifyContent: "space-around",
+      }}
+    >
+      <div>
         {sectionVisibility.map(({ id, label }) => {
           const onClick = () => {
             const allFalse = sectionVisibility.reduce(
               (acc, sec) => ({ ...acc, [sec.id]: false }),
               {}
             );
-            dispatch(updateSectionVisibility({ allFalse, [id]: true }));
+            dispatch(updateSectionVisibility({ ...allFalse, [id]: true }));
           };
           return (
-            <MenuItem onClick={onClick} icon={icons[id]} key={id}>
+            <Button
+              onClick={onClick}
+              key={id}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                textTransform: "none",
+                padding: "4px 4px",
+                marginBottom: "1.5rem",
+              }}
+            >
+              {icons[id]}
               {label}
-            </MenuItem>
+            </Button>
           );
         })}
-      </Menu>
-    </Sidebar>
+      </div>
+      <div />
+    </AppBar>
   );
 };

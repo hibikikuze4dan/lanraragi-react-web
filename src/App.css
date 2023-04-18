@@ -37,3 +37,12 @@
     transform: translateY(0px);
   }
 }
+
+.overflow {
+  overflow-y: scroll;
+  max-height: 100vh;
+}
+
+.full-width {
+  width: 100%;
+}

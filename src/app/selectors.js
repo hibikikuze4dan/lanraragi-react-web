@@ -41,9 +41,11 @@ export const getSectionVisibilityObjectWithAllFalse = createSelector(
 export const getSectionVisibilityObjectForSideNavbar = createSelector(
   getSectionVisibilityObject,
   (sectionVisibilityObject) => [
-    ...Object.keys(sectionVisibilityObject).map((section) => ({
-      id: section,
-      label: startCase(section),
-    })),
+    ...Object.keys(sectionVisibilityObject)
+      .filter((s) => s !== "address")
+      .map((section) => ({
+        id: section,
+        label: startCase(section),
+      })),
   ]
 );

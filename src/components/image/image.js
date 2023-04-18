@@ -11,7 +11,8 @@ export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
   let imageWidth = 1;
   let imageHeight = 1;
   const renderedImageHeight = imageLoaded ? height : window.innerHeight;
-  const renderedImageWidth = imageLoaded ? width : window.innerWidth;
+  // const renderedImageWidth = imageLoaded ? width : window.innerWidth;
+  const renderedImageWidth = "100%";
   const afterLoad = () => {
     if (last) morePages();
   };

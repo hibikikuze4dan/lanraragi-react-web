@@ -6,8 +6,9 @@ import AppComponent from "./components/App";
 const styles = {
   app: {
     maxWidth: "100%",
-    maxHeight: `${window.innerHeight}px`,
+    maxHeight: `100vh`,
     overflowX: "hidden",
+    overflowY: "scroll",
   },
 };
 

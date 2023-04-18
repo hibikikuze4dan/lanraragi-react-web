@@ -24,18 +24,21 @@ export const Random = () => {
   });
 
   return (
-    <div id="random" style={{ margin: "3rem 1.5rem 5rem 1.5rem" }}>
-      <Grid container spacing={4}>
-        {randomArchives.map((archive) => {
-          const { arcid, title } = archive;
-          return (
-            <Grid key={arcid} xs={12} sm={6} md={6} item>
-              <Archive id={arcid} title={title} />
-            </Grid>
-          );
-        })}
-      </Grid>
-    </div>
+    <Grid
+      id="random"
+      container
+      spacing={4}
+      sx={{ overflowY: "scroll", height: "100vh", padding: "0 1rem" }}
+    >
+      {randomArchives.map((archive) => {
+        const { arcid, title } = archive;
+        return (
+          <Grid key={arcid} xs={12} sm={6} md={6} item>
+            <Archive id={arcid} title={title} />
+          </Grid>
+        );
+      })}
+    </Grid>
   );
 };
 

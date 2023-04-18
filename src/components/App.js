@@ -12,8 +12,8 @@ export default function App() {
 
   return (
     <div style={{ display: "flex" }}>
-      <Grid>
-        <Grid>
+      <Grid className="full-width">
+        <Grid className="full-width">
           {address && <Url />}
           {random && <Random />}
           {images && <ImageList />}
