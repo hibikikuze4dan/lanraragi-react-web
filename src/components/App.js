@@ -11,15 +11,15 @@ export default function App() {
   const { random, images, address } = useSelector(getSectionVisibilityObject);
 
   return (
-    <div style={{ display: "flex" }}>
-      <Grid className="full-width">
+    <div id="top-div" style={{ display: "flex" }}>
+      <Navbar />
+      <div className="full-width">
         <Grid className="full-width">
           {address && <Url />}
           {random && <Random />}
           {images && <ImageList />}
         </Grid>
-      </Grid>
-      <Navbar />
+      </div>
     </div>
   );
 }

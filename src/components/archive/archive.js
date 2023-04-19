@@ -18,7 +18,7 @@ const styles = {
   image: { height: 300, width: "100%" },
 };
 
-export const Archive = ({ id, title }) => {
+export const Archive = ({ id, title, index }) => {
   const dispatch = useDispatch();
   const [thumbnail, updateThumbnail] = useState(null);
   const allSectionsFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
@@ -52,7 +52,12 @@ export const Archive = ({ id, title }) => {
       ) : null}
       <div>
         <div>
-          <Typography sx={{ textTransform: "none" }}>{title}</Typography>
+          <Typography
+            id={`archive-text-${index}`}
+            sx={{ textTransform: "none" }}
+          >
+            {title}
+          </Typography>
         </div>
       </div>
       <Button variant="outlined" fullWidth onClick={onPress}>

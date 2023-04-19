@@ -7,6 +7,7 @@ import { Loading } from "../loading/loading";
 export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
   const [height, setHeight] = useState(50);
   const [dimensions, { loading, error }] = useImageSize(uri);
+  if (last) console.log(loading);
   const imageLoaded = !loading && !error;
   let imageWidth = 1;
   let imageHeight = 1;
@@ -31,6 +32,7 @@ export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
           ? imageHeight
           : heightFormula;
       setHeight(newHeight);
+      afterLoad();
     }
   }, [height, dimensions]);
 
@@ -41,7 +43,6 @@ export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
       {imageLoaded && (
         <LazyLoadImage
           alt="archive"
-          afterLoad={afterLoad}
           height={renderedImageHeight}
           width={renderedImageWidth}
           src={uri}

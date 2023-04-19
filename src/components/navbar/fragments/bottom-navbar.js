@@ -1,40 +1,25 @@
 import { Casino, MenuBook } from "@mui/icons-material";
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { updateSectionVisibility } from "../../../app/slice";
 import {
-  updateRandomArchives,
-  updateSectionVisibility,
-} from "../../../app/slice";
-import { getSectionVisibilityObject } from "../../../app/selectors";
-import getRandomArchives from "../../../requests/random";
+  getSectionVisibilityObject,
+  getSectionVisibilityObjectWithAllFalse,
+} from "../../../app/selectors";
+import { scrollIntoViewByElement } from "../navbar-utils";
 
-export const BottomNavbar = () => {
-  const theme = useTheme();
-  const mdUp = useMediaQuery(theme.breakpoints.up("sm"));
+export const BottomNavbar = ({ getNewArchives }) => {
   const dispatch = useDispatch();
+  const allFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
   const sectionVisibility = useSelector(getSectionVisibilityObject);
-  const count = mdUp ? 20 : 10;
 
   const onChange = useCallback(
     (_, value) => {
-      const callNewArchives = async () => {
-        const newRandomArchives = (await getRandomArchives(count)) ?? [];
-        dispatch(updateRandomArchives(newRandomArchives));
-      };
-      const allFalse = Object.keys(sectionVisibility).reduce(
-        (acc, key) => ({ ...acc, [key]: false }),
-        {}
-      );
       dispatch(updateSectionVisibility({ ...allFalse, [value]: true }));
       if (value === "random" && sectionVisibility.random) {
-        callNewArchives();
-        document.getElementById("random").scrollIntoView();
+        getNewArchives();
+        scrollIntoViewByElement("#archive-text-0", 750);
       }
     },
     [dispatch, sectionVisibility]

@@ -14,6 +14,15 @@ export const getCurrentRandomArchives = createSelector(getApp, (app) => [
   ...app.randomArchives,
 ]);
 
+export const getCurrentArciveRandomArchivesIndex = createSelector(
+  getCurrentArchiveId,
+  getCurrentRandomArchives,
+  (arcId, randomArchives) => {
+    const index = randomArchives.findIndex((arc) => arcId === arc.arcid);
+    return index === -1 ? 0 : index;
+  }
+);
+
 export const getCurrentPages = createSelector(getApp, (app) => [...app.pages]);
 
 export const getCurrentRenderedPages = createSelector(getApp, (app) => [
@@ -46,6 +55,16 @@ export const getSectionVisibilityObjectForSideNavbar = createSelector(
       .map((section) => ({
         id: section,
         label: startCase(section),
+        visible: sectionVisibilityObject[section],
       })),
   ]
+);
+
+export const shouldScrollToArchive = createSelector(
+  getSectionVisibilityObject,
+  getCurrentArciveRandomArchivesIndex,
+  ({ images, random }, index) => ({
+    shouldScroll: images && !random,
+    scrollIndex: index,
+  })
 );
