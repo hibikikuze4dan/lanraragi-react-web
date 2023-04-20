@@ -13,15 +13,20 @@ export default function App() {
   const { random, images, address } = useSelector(getSectionVisibilityObject);
 
   const styles = {
-    topDiv: {
-      ...(mdUp && { display: "flex" }),
+    wrapper: {
+      ...(mdUp && { display: "flex", flexDirection: "row" }),
       ...(!mdUp && { height: `${(11 / 12) * 100}vh` }),
+    },
+    topDiv: {
+      height: "100vh",
+      ...(mdUp && { display: "flex", flexDirection: "row" }),
     },
   };
 
   return (
-    <>
-      <div id="top-div" style={styles.topDiv}>
+    <div style={styles.topDiv}>
+      {mdUp && <Navbar />}
+      <div id="top-div" style={styles.wrapper}>
         <div className="full-width">
           <Grid className="full-width">
             {address && <Url />}
@@ -30,7 +35,7 @@ export default function App() {
           </Grid>
         </div>
       </div>
-      <Navbar />
-    </>
+      {!mdUp && <Navbar />}
+    </div>
   );
 }
