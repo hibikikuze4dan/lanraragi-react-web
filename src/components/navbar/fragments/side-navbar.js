@@ -11,7 +11,7 @@ import { scrollIntoViewByElement } from "../../../utils";
 
 const styles = {
   appBar: {
-    height: "100vh",
+    height: "100svh",
     width: "fit-content",
     display: "flex",
     backgroundColor: "rgba(30, 30, 30, 1)",

@@ -6,7 +6,7 @@ import AppComponent from "./components/App";
 const styles = {
   app: {
     maxWidth: "100%",
-    maxHeight: `100vh`,
+    maxHeight: `100svh`,
     overflowX: "hidden",
     overflowY: "hidden",
   },

@@ -41,7 +41,7 @@
 
 .overflow {
   overflow-y: scroll;
-  max-height: 100vh;
+  max-height: 100svh;
 }
 
 .full-width {

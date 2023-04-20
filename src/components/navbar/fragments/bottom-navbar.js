@@ -35,7 +35,7 @@ export const BottomNavbar = ({ getNewArchives }) => {
         left: 0,
         right: 0,
         zIndex: 1,
-        height: `${(1 / 12) * 100}vh`,
+        height: `${(1 / 12) * 100}svh`,
         backgroundColor: "rgb(30, 30, 30)",
       }}
     >

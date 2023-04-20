@@ -15,10 +15,10 @@ export default function App() {
   const styles = {
     wrapper: {
       ...(mdUp && { display: "flex", flexDirection: "row" }),
-      ...(!mdUp && { height: `${(11 / 12) * 100}vh` }),
+      ...(!mdUp && { height: `${(11 / 12) * 100}svh` }),
     },
     topDiv: {
-      height: "100vh",
+      height: "100svh",
       ...(mdUp && { display: "flex", flexDirection: "row" }),
     },
   };
