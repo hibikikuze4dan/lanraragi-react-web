@@ -15,19 +15,22 @@ export default function App() {
   const styles = {
     topDiv: {
       ...(mdUp && { display: "flex" }),
+      ...(!mdUp && { height: `${(11 / 12) * 100}vh` }),
     },
   };
 
   return (
-    <div id="top-div" style={styles.topDiv}>
-      <Navbar />
-      <div className="full-width">
-        <Grid className="full-width">
-          {address && <Url />}
-          {random && <Random />}
-          {images && <ImageList />}
-        </Grid>
+    <>
+      <div id="top-div" style={styles.topDiv}>
+        <div className="full-width">
+          <Grid className="full-width">
+            {address && <Url />}
+            {random && <Random />}
+            {images && <ImageList />}
+          </Grid>
+        </div>
       </div>
-    </div>
+      <Navbar />
+    </>
   );
 }

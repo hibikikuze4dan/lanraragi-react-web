@@ -30,12 +30,13 @@ export const BottomNavbar = ({ getNewArchives }) => {
       onChange={onChange}
       showLabels
       sx={{
-        position: "absolute",
+        position: "sticky",
         bottom: 0,
         left: 0,
         right: 0,
         zIndex: 1,
-        backgroundColor: "rgba(30, 30, 30, 1)",
+        height: `${(1 / 12) * 100}vh`,
+        backgroundColor: "rgb(30, 30, 30)",
       }}
     >
       <BottomNavigationAction
