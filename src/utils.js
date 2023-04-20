@@ -1,8 +1,9 @@
-export const scrollIntoViewByElement = (selector, timeout = 0) =>
-  setTimeout(
-    document.querySelector(selector).scrollIntoView({ block: "end" }),
-    timeout
-  );
+export const scrollIntoViewByElement = (selector, timeout = 0) => {
+  const element = document.querySelector(selector);
+  return element
+    ? setTimeout(element.scrollIntoView({ block: "end" }), timeout)
+    : null;
+};
 
 export const scrollByCoordinates = (
   xCoordinate = 0,

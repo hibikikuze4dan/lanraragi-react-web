@@ -7,7 +7,7 @@ import {
   getSectionVisibilityObject,
   getSectionVisibilityObjectWithAllFalse,
 } from "../../../app/selectors";
-import { scrollIntoViewByElement } from "../navbar-utils";
+import { scrollIntoViewByElement } from "../../../utils";
 
 export const BottomNavbar = ({ getNewArchives }) => {
   const dispatch = useDispatch();
@@ -29,13 +29,26 @@ export const BottomNavbar = ({ getNewArchives }) => {
     <BottomNavigation
       onChange={onChange}
       showLabels
-      sx={{ position: "absolute", bottom: 0, left: 0, right: 0 }}
+      sx={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1,
+        backgroundColor: "rgba(30, 30, 30, 1)",
+      }}
     >
-      <BottomNavigationAction label="Random" value="random" icon={<Casino />} />
+      <BottomNavigationAction
+        label="Random"
+        value="random"
+        icon={<Casino color="white" />}
+        sx={{ color: "white" }}
+      />
       <BottomNavigationAction
         label="Archive"
         value="images"
-        icon={<MenuBook />}
+        icon={<MenuBook color="white" />}
+        sx={{ color: "white" }}
       />
     </BottomNavigation>
   );

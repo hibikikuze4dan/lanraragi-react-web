@@ -6,7 +6,12 @@ import {
   updateCurrentArchiveId,
   updateSectionVisibility,
 } from "../../app/slice";
-import { getSectionVisibilityObjectWithAllFalse } from "../../app/selectors";
+import {
+  getCurrentArchiveId,
+  getCurrentArciveRandomArchivesIndex,
+  getSectionVisibilityObjectWithAllFalse,
+} from "../../app/selectors";
+import { scrollIntoViewByElement } from "../../utils";
 
 const styles = {
   paper: {
@@ -14,6 +19,8 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    backgroundColor: "#363940",
+    color: "white",
   },
   image: { height: 300, width: "100%" },
 };
@@ -21,6 +28,8 @@ const styles = {
 export const Archive = ({ id, title, index }) => {
   const dispatch = useDispatch();
   const [thumbnail, updateThumbnail] = useState(null);
+  const currentArchiveId = useSelector(getCurrentArchiveId);
+  const currentArchiveIndex = useSelector(getCurrentArciveRandomArchivesIndex);
   const allSectionsFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
   const onPress = useCallback(() => {
     dispatch(updateSectionVisibility({ ...allSectionsFalse, images: true }));
@@ -35,7 +44,10 @@ export const Archive = ({ id, title, index }) => {
       };
       callNewThumb();
     }
-  }, [thumbnail, id]);
+    if (id === currentArchiveId) {
+      scrollIntoViewByElement(`archive-text-${currentArchiveIndex}`, 500);
+    }
+  }, [thumbnail, id, currentArchiveId, currentArchiveIndex]);
 
   return (
     <Paper id={`archive_${id}`} style={styles.paper}>
@@ -50,17 +62,20 @@ export const Archive = ({ id, title, index }) => {
           </div>
         </div>
       ) : null}
-      <div>
-        <div>
-          <Typography
-            id={`archive-text-${index}`}
-            sx={{ textTransform: "none" }}
-          >
-            {title}
-          </Typography>
-        </div>
+      <div style={{ padding: "8px" }}>
+        <Typography
+          id={`archive-text-${index}`}
+          sx={{ textTransform: "none", fontWeight: "bold" }}
+        >
+          {title}
+        </Typography>
       </div>
-      <Button variant="outlined" fullWidth onClick={onPress}>
+      <Button
+        variant="contained"
+        fullWidth
+        onClick={onPress}
+        sx={{ backgroundColor: "#43464E" }}
+      >
         Read
       </Button>
     </Paper>

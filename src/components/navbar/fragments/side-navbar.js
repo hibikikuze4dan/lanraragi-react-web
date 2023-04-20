@@ -7,7 +7,7 @@ import {
   getSectionVisibilityObjectWithAllFalse,
 } from "../../../app/selectors";
 import { updateSectionVisibility } from "../../../app/slice";
-import { scrollIntoViewByElement } from "../navbar-utils";
+import { scrollIntoViewByElement } from "../../../utils";
 
 const styles = {
   appBar: {
@@ -24,6 +24,7 @@ const styles = {
     textTransform: "none",
     padding: "4px 4px",
     marginBottom: "1.5rem",
+    color: "white",
   },
 };
 

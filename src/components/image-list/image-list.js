@@ -36,7 +36,12 @@ export const ImageList = () => {
   };
 
   return (
-    <Grid container className="overflow" id={`images-list-${arcId}`}>
+    <Grid
+      container
+      className="overflow"
+      id={`images-list-${arcId}`}
+      sx={{ backgroundColor: "rgba(24, 24, 26, 1)" }}
+    >
       {renderedPages.map((page, index) => {
         const src = `http://${baseUrl}${drop(page.split(""), 1).join("")}`;
         return (

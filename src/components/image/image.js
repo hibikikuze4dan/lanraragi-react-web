@@ -7,7 +7,6 @@ import { Loading } from "../loading/loading";
 export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
   const [height, setHeight] = useState(50);
   const [dimensions, { loading, error }] = useImageSize(uri);
-  if (last) console.log(loading);
   const imageLoaded = !loading && !error;
   let imageWidth = 1;
   let imageHeight = 1;
@@ -48,7 +47,8 @@ export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
           src={uri}
           effect="opacity"
           threshold={200}
-          style={{ marginBottom: "4px" }}
+          style={{ objectFit: "fill" }}
+          wrapperClassName="half-gutter-bottom"
         />
       )}
     </>
