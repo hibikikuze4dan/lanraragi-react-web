@@ -3,6 +3,15 @@ export const getBaseUrl = () => {
   return value ?? "";
 };
 
+export const getApiKey = () => {
+  const value = localStorage.getItem("LRR_API_KEY");
+  return value ?? "";
+};
+
 export const storeBaseUrl = (url) => {
   localStorage.setItem("BASE_URL", url);
+};
+
+export const storeApiKey = (key) => {
+  localStorage.setItem("LRR_API_KEY", key);
 };
