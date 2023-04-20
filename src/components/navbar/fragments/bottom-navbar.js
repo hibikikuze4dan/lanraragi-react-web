@@ -30,7 +30,7 @@ export const BottomNavbar = ({ getNewArchives }) => {
       onChange={onChange}
       showLabels
       sx={{
-        position: "sticky",
+        position: "absolute",
         bottom: 0,
         left: 0,
         right: 0,
