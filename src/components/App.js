@@ -27,8 +27,8 @@ export default function App() {
     <div style={styles.topDiv}>
       {mdUp && <Navbar />}
       <div id="top-div" style={styles.wrapper}>
-        <div className="full-width">
-          <Grid className="full-width">
+        <div className="full-width full-height">
+          <Grid className="full-width full-height">
             {address && <Url />}
             {random && <Random />}
             {images && <ImageList />}

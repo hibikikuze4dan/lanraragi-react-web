@@ -8,7 +8,7 @@ const styles = {
     maxWidth: "100%",
     maxHeight: `100vh`,
     overflowX: "hidden",
-    overflowY: "scroll",
+    overflowY: "hidden",
   },
 };
 

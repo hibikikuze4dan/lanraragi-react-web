@@ -24,9 +24,9 @@ export const Random = () => {
 
   return (
     <div
+      className="full-height"
       style={{
         overflowY: "scroll",
-        height: "100vh",
       }}
     >
       <div style={{ paddingTop: "2rem", paddingBottom: "3rem" }}>
