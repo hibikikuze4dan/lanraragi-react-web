@@ -26,6 +26,7 @@ module.exports = {
     "no-console": "off",
     "object-curly-newline": "off",
     "nonblock-statement-body-position": "off",
+    "react/jsx-curly-newline": "off",
     curly: "off",
   },
 };

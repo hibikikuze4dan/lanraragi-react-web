@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Paper, Typography } from "@mui/material";
+import { Button, Grid, Paper, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getArchiveThumbnail } from "../../requests/thumbnail";
 import {
@@ -25,7 +25,7 @@ const styles = {
   image: { height: 300, width: "100%" },
 };
 
-export const Archive = ({ id, title, index }) => {
+export const RandomArchive = ({ id, title, index, onInfoClick }) => {
   const dispatch = useDispatch();
   const [thumbnail, updateThumbnail] = useState(null);
   const currentArchiveId = useSelector(getCurrentArchiveId);
@@ -70,16 +70,30 @@ export const Archive = ({ id, title, index }) => {
           {title}
         </Typography>
       </div>
-      <Button
-        variant="contained"
-        fullWidth
-        onClick={onPress}
-        sx={{ backgroundColor: "#43464E" }}
-      >
-        Read
-      </Button>
+      <Grid container>
+        <Grid item xs={6}>
+          <Button
+            variant="contained"
+            onClick={onPress}
+            fullWidth
+            sx={{ backgroundColor: "#43464E" }}
+          >
+            Read
+          </Button>
+        </Grid>
+        <Grid item xs={6}>
+          <Button
+            variant="contained"
+            onClick={onInfoClick}
+            fullWidth
+            sx={{ backgroundColor: "#43464E" }}
+          >
+            Info
+          </Button>
+        </Grid>
+      </Grid>
     </Paper>
   );
 };
 
-export default Archive;
+export default RandomArchive;

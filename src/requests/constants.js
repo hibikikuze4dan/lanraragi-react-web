@@ -6,6 +6,8 @@ export const THUMBNAIL_URL = "/api/archives/:id/thumbnail";
 
 export const FILES_URL = "/api/archives/:id/files";
 
+export const METADATA_URL = "/api/archives/:id/metadata";
+
 export const HEADERS = {
   Authorization: `Bearer ${getApiKey()}`,
 };

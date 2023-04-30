@@ -10,7 +10,7 @@ export const Navbar = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const count = matches ? 20 : 10;
+  const count = matches ? 24 : 15;
 
   const callNewArchives = async () => {
     const newRandomArchives = (await getRandomArchives(count)) ?? [];

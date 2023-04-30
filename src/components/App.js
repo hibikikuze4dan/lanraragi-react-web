@@ -30,7 +30,7 @@ export default function App() {
         <div className="full-width full-height">
           <Grid className="full-width full-height">
             {address && <Url />}
-            {random && <Random />}
+            <Random display={random ? "" : "none"} />
             {images && <ImageList />}
           </Grid>
         </div>
