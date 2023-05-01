@@ -39,6 +39,7 @@ export const ImageList = () => {
     <Grid
       container
       className="overflow"
+      justifyContent="center"
       id={`images-list-${arcId}`}
       sx={{ backgroundColor: "rgba(24, 24, 26, 1)" }}
     >

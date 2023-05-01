@@ -19,13 +19,18 @@ export const getCategories = async () => {
 };
 
 export const updateCategory = async ({ catId, arcId }) => {
-  const result = await axios({
-    method: "put",
-    headers: HEADERS,
-    url: `http://${getBaseUrl()}${UPDATE_CATEGORY_URL}`
-      .replace(":id", catId)
-      .replace(":archive", arcId),
-  });
+  let result = null;
+  try {
+    result = await axios({
+      method: "put",
+      headers: HEADERS,
+      url: `http://${getBaseUrl()}${UPDATE_CATEGORY_URL}`
+        .replace(":id", catId)
+        .replace(":archive", arcId),
+    });
+  } catch (error) {
+    result = { data: { error: error.message } };
+  }
   return result.data;
 };
 

@@ -1,18 +1,19 @@
-import { Typography } from "@mui/material";
+import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useImageSize } from "react-image-size";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Loading } from "../loading/loading";
 
 export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
+  const theme = useTheme();
+  const mdUp = useMediaQuery(theme.breakpoints.up("md"));
   const [height, setHeight] = useState(50);
   const [dimensions, { loading, error }] = useImageSize(uri);
   const imageLoaded = !loading && !error;
   let imageWidth = 1;
   let imageHeight = 1;
   const renderedImageHeight = imageLoaded ? height : window.innerHeight;
-  // const renderedImageWidth = imageLoaded ? width : window.innerWidth;
-  const renderedImageWidth = "100%";
+  const renderedImageWidth = mdUp && dimensions ? dimensions.width : "100%";
   const afterLoad = () => {
     if (last) morePages();
   };
