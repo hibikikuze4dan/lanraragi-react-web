@@ -27,6 +27,7 @@ module.exports = {
     "object-curly-newline": "off",
     "nonblock-statement-body-position": "off",
     "react/jsx-curly-newline": "off",
+    "import/no-extraneous-dependencies": "off",
     curly: "off",
   },
 };
