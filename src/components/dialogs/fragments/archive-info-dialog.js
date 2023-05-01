@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import { BaseDialog } from "../base-dialog";
 import getArchiveMetaData from "../../../requests/metadata";
+import { Categories } from "../../categories/categories";
 
 export const ArchiveInfoDialog = ({ onClose, arcId, open }) => {
   const [archiveData, setArchiveData] = useState(null);
@@ -16,6 +17,7 @@ export const ArchiveInfoDialog = ({ onClose, arcId, open }) => {
     <BaseDialog title={title} onClose={onClose} open={open}>
       <Typography>Pages: {archiveData?.pagecount ?? 0}</Typography>
       <Typography>Tags: {archiveData?.tags ?? ""}</Typography>
+      <Categories arcId={arcId} />
     </BaseDialog>
   );
 };
