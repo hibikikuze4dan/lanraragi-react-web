@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Random } from "./random/random";
-import { ImageList } from "./image-list/image-list";
+import ImageList from "./image-list/image-list";
 import { getSectionVisibilityObject } from "../app/selectors";
 import { Url } from "./url/url";
 import { Navbar } from "./navbar/navbar";

@@ -1,10 +1,15 @@
 import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useImageSize } from "react-image-size";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Loading } from "../loading/loading";
 
-export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
+export const Image = ({
+  uri,
+  width,
+  deviceHeight,
+  setObserverTarget,
+  middle,
+}) => {
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("md"));
   const [height, setHeight] = useState(50);
@@ -14,9 +19,6 @@ export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
   let imageHeight = 1;
   const renderedImageHeight = imageLoaded ? height : window.innerHeight;
   const renderedImageWidth = mdUp && dimensions ? dimensions.width : "100%";
-  const afterLoad = () => {
-    if (last) morePages();
-  };
 
   if (imageLoaded) {
     imageHeight = dimensions?.height;
@@ -32,7 +34,6 @@ export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
           ? imageHeight
           : heightFormula;
       setHeight(newHeight);
-      afterLoad();
     }
   }, [height, dimensions]);
 
@@ -41,15 +42,14 @@ export const Image = ({ uri, width, deviceHeight, last, morePages }) => {
       {loading && <Loading />}
       {error && <Typography>Sorry, something went wrong</Typography>}
       {imageLoaded && (
-        <LazyLoadImage
+        <img
           alt="archive"
           height={renderedImageHeight}
           width={renderedImageWidth}
+          placeholder="Something"
           src={uri}
-          effect="opacity"
-          threshold={200}
+          ref={middle ? setObserverTarget : null}
           style={{ objectFit: "fill" }}
-          wrapperClassName="half-gutter-bottom"
         />
       )}
     </>
