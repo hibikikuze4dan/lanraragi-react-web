@@ -72,3 +72,8 @@ export const shouldScrollToArchive = createSelector(
     scrollIndex: index,
   })
 );
+
+export const getSearchPage = createSelector(
+  getApp,
+  (app) => app?.searchPage ?? 1
+);

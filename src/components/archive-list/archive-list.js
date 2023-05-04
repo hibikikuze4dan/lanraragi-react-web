@@ -2,12 +2,18 @@ import { Grid } from "@mui/material";
 import React, { useState } from "react";
 import Archive from "../archive/archive";
 import { ArchiveInfoDialog } from "../dialogs/fragments/archive-info-dialog";
+import { PageButtons } from "./fragments/page-buttons";
 
-export const ArchiveList = ({ archives = [], display }) => {
+export const ArchiveList = ({
+  archives = [],
+  display,
+  sliceToRender = [0, null],
+}) => {
   const [archiveInfoModalState, updateArchiveInfoModalState] = useState({
     open: false,
     arcId: "",
   });
+  const secondSliceValue = sliceToRender[1] ?? archives.length;
 
   return (
     <div
@@ -26,30 +32,33 @@ export const ArchiveList = ({ archives = [], display }) => {
             marginTop: 0,
           }}
         >
-          {archives.map((archive, idx) => {
-            const { arcid, title } = archive;
-            const onInfoClick = () =>
-              updateArchiveInfoModalState({ open: true, arcId: arcid });
-            return (
-              <Grid
-                key={arcid}
-                xs={12}
-                sm={6}
-                md={6}
-                lg={3}
-                xl={2}
-                item
-                sx={{ paddingTop: "0 !important", paddingBottom: "2rem" }}
-              >
-                <Archive
-                  index={idx}
-                  id={arcid}
-                  title={title}
-                  onInfoClick={onInfoClick}
-                />
-              </Grid>
-            );
-          })}
+          {archives
+            .slice(sliceToRender[0], secondSliceValue)
+            .map((archive, idx) => {
+              const { arcid, title } = archive;
+              const onInfoClick = () =>
+                updateArchiveInfoModalState({ open: true, arcId: arcid });
+              return (
+                <Grid
+                  key={arcid}
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={3}
+                  xl={2}
+                  item
+                  sx={{ paddingTop: "0 !important", paddingBottom: "2rem" }}
+                >
+                  <Archive
+                    index={idx}
+                    id={arcid}
+                    title={title}
+                    onInfoClick={onInfoClick}
+                  />
+                </Grid>
+              );
+            })}
+          <PageButtons />
         </Grid>
       </div>
       <ArchiveInfoDialog

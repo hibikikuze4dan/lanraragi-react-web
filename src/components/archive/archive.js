@@ -35,6 +35,7 @@ export const Archive = ({ id, title, index, onInfoClick }) => {
       <div>
         <div>
           <img
+            id={`archive-img-${index}`}
             alt={`thumbnail for ${title}`}
             style={styles.image}
             src={src}

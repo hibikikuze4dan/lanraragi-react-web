@@ -17,8 +17,10 @@ export const Image = ({
   const imageLoaded = !loading && !error && dimensions;
   let imageWidth = 1;
   let imageHeight = 1;
+  const tooWide = imageLoaded ? dimensions.width > width : false;
   const renderedImageHeight = dimensions ? height : window.innerHeight;
-  const renderedImageWidth = mdUp && dimensions ? dimensions.width : "100%";
+  const renderedImageWidth =
+    mdUp && dimensions && !tooWide ? dimensions.width : "100%";
 
   if (imageLoaded) {
     imageHeight = dimensions?.height;
