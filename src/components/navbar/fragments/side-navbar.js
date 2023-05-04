@@ -1,4 +1,4 @@
-import { Casino, MenuBook } from "@mui/icons-material";
+import { Casino, MenuBook, Search } from "@mui/icons-material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppBar, Button } from "@mui/material";
@@ -36,6 +36,7 @@ export const SideNavbar = ({ getNewArchives }) => {
   const allFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
   const icons = {
     random: <Casino />,
+    search: <Search />,
     images: <MenuBook />,
   };
 
@@ -50,6 +51,7 @@ export const SideNavbar = ({ getNewArchives }) => {
               scrollIntoViewByElement("#archive-text-0", 750);
             }
           };
+
           return (
             <Button onClick={onClick} key={id} sx={styles.button}>
               {icons[id]}

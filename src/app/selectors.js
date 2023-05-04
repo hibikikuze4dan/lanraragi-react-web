@@ -14,6 +14,10 @@ export const getCurrentRandomArchives = createSelector(getApp, (app) => [
   ...app.randomArchives,
 ]);
 
+export const getCurrentSearchArchives = createSelector(getApp, (app) => [
+  ...app.searchArchives,
+]);
+
 export const getCurrentArciveRandomArchivesIndex = createSelector(
   getCurrentArchiveId,
   getCurrentRandomArchives,

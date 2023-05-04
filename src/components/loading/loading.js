@@ -9,9 +9,10 @@ export const Loading = () => (
         display: "flex",
         justifyContent: "center",
         height: "100svh",
+        backgroundColor: "inherit",
       }}
     >
-      <CircularProgress />
+      <CircularProgress size={80} />
     </Paper>
   </Grid>
 );

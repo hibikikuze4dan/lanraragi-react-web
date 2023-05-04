@@ -14,10 +14,10 @@ export const Image = ({
   const mdUp = useMediaQuery(theme.breakpoints.up("md"));
   const [height, setHeight] = useState(50);
   const [dimensions, { loading, error }] = useImageSize(uri);
-  const imageLoaded = !loading && !error;
+  const imageLoaded = !loading && !error && dimensions;
   let imageWidth = 1;
   let imageHeight = 1;
-  const renderedImageHeight = imageLoaded ? height : window.innerHeight;
+  const renderedImageHeight = dimensions ? height : window.innerHeight;
   const renderedImageWidth = mdUp && dimensions ? dimensions.width : "100%";
 
   if (imageLoaded) {
@@ -43,7 +43,8 @@ export const Image = ({
       {error && <Typography>Sorry, something went wrong</Typography>}
       {imageLoaded && (
         <img
-          alt="archive"
+          alt={uri}
+          loading="lazy"
           height={renderedImageHeight}
           width={renderedImageWidth}
           placeholder="Something"

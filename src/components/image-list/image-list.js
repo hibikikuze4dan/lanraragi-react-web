@@ -8,7 +8,7 @@ import { getBaseUrl } from "../../storage/requests";
 import { updatePages } from "../../app/slice";
 import { getCurrentArchiveId, getCurrentPages } from "../../app/selectors";
 
-export const ImageList = ({ scrollPosition }) => {
+export const ImageList = () => {
   const dispatch = useDispatch();
   const arcId = useSelector(getCurrentArchiveId);
   const pages = useSelector(getCurrentPages);
@@ -31,8 +31,7 @@ export const ImageList = ({ scrollPosition }) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        console.log(entries);
-        if (entries[0].isIntersecting) {
+        if (entries.some((entry) => entry.isIntersecting)) {
           updatePagesToRender((ptr) => ptr + 10);
         }
       },
@@ -46,7 +45,7 @@ export const ImageList = ({ scrollPosition }) => {
       if (observerTarget) observer.unobserve(observerTarget);
       if (finalTarget) observer.unobserve(finalTarget);
     };
-  }, [observerTarget]);
+  }, [observerTarget, finalTarget, observerRoot]);
 
   return (
     <Grid
@@ -56,20 +55,20 @@ export const ImageList = ({ scrollPosition }) => {
       justifyContent="center"
       id={`images-list-${arcId}`}
       sx={{ backgroundColor: "rgba(24, 24, 26, 1)" }}
-      scrollPosition={scrollPosition}
     >
       {[...take(pages, pagesToRender)].map((page, index) => {
         const src = `http://${baseUrl}${drop(page.split(""), 1).join("")}`;
         const middle = (index + 1) % (pagesToRender - 5) === 0;
         return (
-          <Image
-            key={src}
-            width={width}
-            deviceHeight={height}
-            uri={src}
-            middle={middle}
-            setObserverTarget={setObserverTarget}
-          />
+          <Grid key={src} item xs={12}>
+            <Image
+              width={width}
+              deviceHeight={height}
+              uri={src}
+              middle={middle}
+              setObserverTarget={setObserverTarget}
+            />
+          </Grid>
         );
       })}
       <div ref={setFinalTarget} style={{ width: "100%", height: "10svh" }} />

@@ -1,6 +1,8 @@
 import { getApiKey } from "../storage/requests";
 
-export const RANDOM_URL = "/api/search/random";
+export const SEARCH_URL = "/api/search";
+
+export const RANDOM_URL = `${SEARCH_URL}/random`;
 
 export const THUMBNAIL_URL = "/api/archives/:id/thumbnail";
 

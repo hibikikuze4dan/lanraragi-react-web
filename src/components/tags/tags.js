@@ -16,7 +16,7 @@ export const Tags = ({ archiveTags }) => {
               const validUrl = isValidUrl(tag);
               return (
                 <Grid
-                  key={tag}
+                  key={`${tagType}:${tag}`}
                   item
                   xs={4}
                   sm={3}

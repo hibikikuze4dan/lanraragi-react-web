@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   currentArchiveId: "",
   randomArchives: [],
+  searchArchives: [],
   baseUrl: "",
   pages: [],
   renderedPages: [],
   sectionVisibility: {
     random: false,
+    search: false,
     images: false,
     address: true,
   },
@@ -23,6 +25,9 @@ export const appSlice = createSlice({
     },
     updateRandomArchives: (state, { payload }) => {
       state.randomArchives = [...payload];
+    },
+    updateSearchArchives: (state, { payload }) => {
+      state.searchArchives = [...payload];
     },
     updateBaseUrl: (state, { payload }) => {
       state.baseUrl = `${payload}`;
@@ -46,6 +51,7 @@ export const {
   updatePages,
   updateRenderedPages,
   updateSectionVisibility,
+  updateSearchArchives,
 } = appSlice.actions;
 
 export default appSlice.reducer;
