@@ -43,6 +43,14 @@ export const appSlice = createSlice({
     updateSectionVisibility: (state, { payload }) => {
       state.sectionVisibility = { ...state.sectionVisibility, ...payload };
     },
+    setAllSectionVisibilityFalse: (state) => {
+      state.sectionVisibility = {
+        ...Object.keys(state.sectionVisibility).reduce(
+          (acc, section) => ({ ...acc, [section]: false }),
+          {}
+        ),
+      };
+    },
     updateSearchPage: (state, { payload }) => {
       state.searchPage = payload || 1;
     },
@@ -62,6 +70,7 @@ export const {
   updateSearchArchives,
   updateSearchPage,
   updateSearchFilter,
+  setAllSectionVisibilityFalse,
 } = appSlice.actions;
 
 export default appSlice.reducer;

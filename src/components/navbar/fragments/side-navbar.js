@@ -49,6 +49,7 @@ export const SideNavbar = ({ getNewArchives, openSearchDialog }) => {
             if (id === "random" && visible) {
               getNewArchives();
               scrollIntoViewByElement("#archive-text-0", 750);
+              return;
             }
             if (id === "search" && visible) openSearchDialog();
           };

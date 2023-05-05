@@ -20,7 +20,7 @@ export const ArchiveInfoDialog = ({ onClose, arcId, open }) => {
       <Typography sx={{ padding: "1rem 0" }}>
         Pages: {archiveData?.pagecount ?? 0}
       </Typography>
-      <Tags archiveTags={archiveData?.tags ?? ""} />
+      <Tags onClose={onClose} archiveTags={archiveData?.tags ?? ""} />
       <Categories arcId={arcId} />
     </BaseDialog>
   );

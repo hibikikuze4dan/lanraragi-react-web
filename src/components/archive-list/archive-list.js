@@ -32,7 +32,7 @@ export const ArchiveList = ({
       <div style={{ paddingTop: "2rem", paddingBottom: "3rem" }}>
         <Grid
           container
-          spacing={4}
+          spacing={2}
           sx={{
             padding: "0 1rem",
             marginTop: 0,
@@ -54,7 +54,10 @@ export const ArchiveList = ({
                   lg={3}
                   xl={2}
                   item
-                  sx={{ paddingTop: "0 !important", paddingBottom: "2rem" }}
+                  sx={{
+                    paddingTop: "0 !important",
+                    paddingBottom: "2rem",
+                  }}
                 >
                   <Archive
                     index={idx}

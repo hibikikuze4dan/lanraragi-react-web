@@ -20,6 +20,7 @@ export const BottomNavbar = ({ getNewArchives, openSearchDialog }) => {
       if (value === "random" && sectionVisibility.random) {
         getNewArchives();
         scrollIntoViewByElement("#archive-text-0", 750);
+        return;
       }
       if (value === "search" && sectionVisibility.search) openSearchDialog();
     },

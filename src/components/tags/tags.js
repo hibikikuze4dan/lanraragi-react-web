@@ -1,10 +1,37 @@
 import React from "react";
 import { Button, Grid, Link, Typography } from "@mui/material";
 import { DateTime } from "luxon";
+import { useDispatch } from "react-redux";
 import { getTagsObjectFromTagsString, isValidUrl } from "../../utils";
+import {
+  setAllSectionVisibilityFalse,
+  updateSearchArchives,
+  updateSearchPage,
+  updateSectionVisibility,
+} from "../../app/slice";
+import { getArchivesBySearch } from "../../requests/search";
 
-export const Tags = ({ archiveTags }) => {
+export const Tags = ({ archiveTags, onClose }) => {
+  const dispatch = useDispatch();
   const tagsAsObject = getTagsObjectFromTagsString(archiveTags);
+
+  const callNewArchives = async (searchVal) => {
+    const arcs = await getArchivesBySearch({
+      filter: searchVal,
+      sortby: "date_added",
+      order: "desc",
+      start: -1,
+    });
+    dispatch(updateSearchArchives(arcs.data));
+  };
+  const onTagClick = (tagType, tag) => {
+    const filter = tagType !== "other" ? `${tagType}:${tag}` : tag;
+    callNewArchives(filter);
+    dispatch(updateSearchPage(1));
+    dispatch(setAllSectionVisibilityFalse());
+    dispatch(updateSectionVisibility({ search: true }));
+    onClose();
+  };
 
   return (
     <Grid container spacing={2}>
@@ -27,6 +54,7 @@ export const Tags = ({ archiveTags }) => {
                       fullWidth
                       variant="text"
                       sx={{ textTransform: "none", padding: 0 }}
+                      onClick={() => onTagClick(tagType, tag)}
                     >
                       {tagType === "date_added"
                         ? DateTime.fromSeconds(Number(tag)).toLocaleString()

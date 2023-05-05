@@ -35,9 +35,13 @@ export const getTagsObjectFromTagsString = (tags) => {
         const [tagType, tagValue] = tagSeperator(tag);
         const typeToSearchFor = tagType || "other";
         const currentTagTypeValues = acc[typeToSearchFor] ?? [];
+        const exists = currentTagTypeValues.includes(tagValue);
         return {
           ...acc,
-          [typeToSearchFor]: [...currentTagTypeValues, tagValue],
+          [typeToSearchFor]: [
+            ...currentTagTypeValues,
+            ...(exists ? [] : [tagValue]),
+          ],
         };
       }, {})
     : {};
