@@ -15,11 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMaxPages, getSearchPage } from "../../../app/selectors";
 import { updateSearchPage } from "../../../app/slice";
 
-const scroll = () =>
-  document
-    .getElementById("archive-img-0")
-    .scrollIntoView({ behavior: "smooth", block: "nearest" });
-
+const scroll = () => {
+  console.log(document.getElementById("archives-top"));
+  document.getElementById("archives-top")?.scrollIntoView();
+};
 export const PageButtons = () => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
@@ -39,8 +38,8 @@ export const PageButtons = () => {
     if (maxPage !== searchPage) dispatch(updateSearchPage(searchPage + 1));
   };
   const onChange = (e) => {
-    scroll();
     dispatch(updateSearchPage(e.target.value));
+    scroll();
   };
 
   return (

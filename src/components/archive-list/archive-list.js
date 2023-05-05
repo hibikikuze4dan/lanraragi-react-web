@@ -38,6 +38,7 @@ export const ArchiveList = ({
             marginTop: 0,
           }}
         >
+          <div id="archives-top" />
           {isSearch && <PageButtons />}
           {archives
             .slice(sliceToRender[0], secondSliceValue)
