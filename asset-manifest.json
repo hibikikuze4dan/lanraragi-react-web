@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/lanraragi-react-web/static/css/main.9071bff3.css",
-    "main.js": "/lanraragi-react-web/static/js/main.de136b15.js",
-    "static/js/787.d2f3a684.chunk.js": "/lanraragi-react-web/static/js/787.d2f3a684.chunk.js",
-    "index.html": "/lanraragi-react-web/index.html",
-    "main.9071bff3.css.map": "/lanraragi-react-web/static/css/main.9071bff3.css.map",
-    "main.de136b15.js.map": "/lanraragi-react-web/static/js/main.de136b15.js.map",
-    "787.d2f3a684.chunk.js.map": "/lanraragi-react-web/static/js/787.d2f3a684.chunk.js.map"
+    "main.css": "/static/css/main.1613da29.css",
+    "main.js": "/static/js/main.6bf47deb.js",
+    "static/js/787.d2f3a684.chunk.js": "/static/js/787.d2f3a684.chunk.js",
+    "index.html": "/index.html",
+    "main.1613da29.css.map": "/static/css/main.1613da29.css.map",
+    "main.6bf47deb.js.map": "/static/js/main.6bf47deb.js.map",
+    "787.d2f3a684.chunk.js.map": "/static/js/787.d2f3a684.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9071bff3.css",
-    "static/js/main.de136b15.js"
+    "static/css/main.1613da29.css",
+    "static/js/main.6bf47deb.js"
   ]
 }
