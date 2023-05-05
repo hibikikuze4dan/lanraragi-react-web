@@ -23,16 +23,26 @@ export const PageButtons = () => {
     <Grid
       container
       justifyContent={mdDown ? "space-around" : "center"}
-      sx={{ ml: "2rem" }}
+      sx={{ ml: "2rem", pb: "1rem", color: "white" }}
     >
-      <Grid item xs={4}>
-        <Button fullWidth onClick={onBackClick}>
+      <Grid item xs={5}>
+        <Button
+          fullWidth
+          onClick={onBackClick}
+          variant="contained"
+          sx={{ backgroundColor: "#43464E" }}
+        >
           <ArrowBack />
           Prev
         </Button>
       </Grid>
-      <Grid item xs={4}>
-        <Button fullWidth onClick={onForwardClick}>
+      <Grid item xs={5}>
+        <Button
+          fullWidth
+          onClick={onForwardClick}
+          variant="contained"
+          sx={{ backgroundColor: "#43464E" }}
+        >
           Next
           <ArrowForward />
         </Button>

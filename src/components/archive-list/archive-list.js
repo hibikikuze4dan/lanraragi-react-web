@@ -1,8 +1,11 @@
 import { Grid } from "@mui/material";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import Archive from "../archive/archive";
 import { ArchiveInfoDialog } from "../dialogs/fragments/archive-info-dialog";
 import { PageButtons } from "./fragments/page-buttons";
+import { getBaseUrl } from "../../storage/requests";
+import { getCurrentArchiveId } from "../../app/selectors";
 
 export const ArchiveList = ({
   archives = [],
@@ -10,11 +13,13 @@ export const ArchiveList = ({
   sliceToRender = [0, null],
   isSearch = false,
 }) => {
+  const currentArchiveId = useSelector(getCurrentArchiveId);
   const [archiveInfoModalState, updateArchiveInfoModalState] = useState({
     open: false,
     arcId: "",
   });
   const secondSliceValue = sliceToRender[1] ?? archives.length;
+  const baseUrl = getBaseUrl();
 
   return (
     <div
@@ -33,6 +38,7 @@ export const ArchiveList = ({
             marginTop: 0,
           }}
         >
+          {isSearch && <PageButtons />}
           {archives
             .slice(sliceToRender[0], secondSliceValue)
             .map((archive, idx) => {
@@ -55,6 +61,8 @@ export const ArchiveList = ({
                     id={arcid}
                     title={title}
                     onInfoClick={onInfoClick}
+                    baseUrl={baseUrl}
+                    currentArchiveId={currentArchiveId}
                   />
                 </Grid>
               );

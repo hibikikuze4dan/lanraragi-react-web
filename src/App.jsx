@@ -1,5 +1,6 @@
 import React from "react";
-import { ProSidebarProvider } from "react-pro-sidebar";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import "./App.css";
 import AppComponent from "./components/App";
 
@@ -12,12 +13,28 @@ const styles = {
   },
 };
 
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        contained: {
+          color: "white",
+        },
+      },
+    },
+  },
+});
+
 function App() {
   return (
     <div className="App" style={styles.app}>
-      <ProSidebarProvider>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
         <AppComponent />
-      </ProSidebarProvider>
+      </ThemeProvider>
     </div>
   );
 }

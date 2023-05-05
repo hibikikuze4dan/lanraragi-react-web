@@ -2,12 +2,9 @@ import axios from "axios";
 import { HEADERS, METADATA_URL } from "./constants";
 import { getBaseUrl } from "../storage/requests";
 
-const data = "";
-
 const config = {
   method: "get",
   headers: HEADERS,
-  data,
 };
 
 export const getArchiveMetaData = async (arcId) => {

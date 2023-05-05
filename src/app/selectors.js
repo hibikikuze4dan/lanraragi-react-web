@@ -1,6 +1,7 @@
 /* eslint-disable no-confusing-arrow */
 import { startCase } from "lodash";
 import { createSelector } from "reselect";
+import { NUM_ARCHIVES_FOR_RENDER } from "../constants";
 
 const getState = (state) => state;
 
@@ -91,6 +92,10 @@ export const getSearchFilter = createSelector(
 
 export const getMaxPages = createSelector(
   getAmountOfSearchArchives,
-  (numOfArchive) =>
-    numOfArchive % 24 === 0 ? numOfArchive / 24 : Math.ceil(numOfArchive / 24)
+  (numOfArchive) => {
+    const maxPageNumber = numOfArchive / NUM_ARCHIVES_FOR_RENDER;
+    return numOfArchive % NUM_ARCHIVES_FOR_RENDER === 0
+      ? maxPageNumber
+      : Math.ceil(maxPageNumber);
+  }
 );

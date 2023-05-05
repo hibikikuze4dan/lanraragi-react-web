@@ -13,7 +13,9 @@ export const Image = ({
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("md"));
   const [height, setHeight] = useState(50);
+  const [loaded, setLoaded] = useState(false);
   const [dimensions, { loading, error }] = useImageSize(uri);
+  const onLoad = () => setLoaded(true);
   const imageLoaded = !loading && !error && dimensions;
   let imageWidth = 1;
   let imageHeight = 1;
@@ -52,7 +54,8 @@ export const Image = ({
           placeholder="Something"
           src={uri}
           ref={middle ? setObserverTarget : null}
-          style={{ objectFit: "fill" }}
+          style={{ objectFit: "fill", display: loaded ? "" : "none" }}
+          onLoad={onLoad}
         />
       )}
     </>

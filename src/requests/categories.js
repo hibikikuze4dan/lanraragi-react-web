@@ -2,12 +2,9 @@ import axios from "axios";
 import { HEADERS, CATEGORIES_URL, UPDATE_CATEGORY_URL } from "./constants";
 import { getBaseUrl } from "../storage/requests";
 
-const data = "";
-
 const config = {
   method: "get",
   headers: HEADERS,
-  data,
 };
 
 export const getCategories = async () => {

@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { THUMBNAIL_URL } from "../../requests/constants";
 import {
   updateCurrentArchiveId,
+  updatePages,
   updateSectionVisibility,
 } from "../../app/slice";
 import { getSectionVisibilityObjectWithAllFalse } from "../../app/selectors";
-import { getBaseUrl } from "../../storage/requests";
 
 const styles = {
   paper: {
@@ -16,16 +16,28 @@ const styles = {
     flexDirection: "column",
     justifyContent: "space-between",
     backgroundColor: "#363940",
-    color: "white",
   },
   image: { height: 300, width: "100%" },
+  typography: {
+    textTransform: "none",
+    fontWeight: "bold",
+    wordWrap: "break-word",
+  },
 };
 
-export const Archive = ({ id, title, index, onInfoClick }) => {
+export const Archive = ({
+  id,
+  title,
+  index,
+  onInfoClick,
+  baseUrl,
+  currentArchiveId,
+}) => {
   const dispatch = useDispatch();
   const allSectionsFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
-  const src = `http://${getBaseUrl()}${THUMBNAIL_URL.replace(":id", id)}`;
+  const src = `http://${baseUrl}${THUMBNAIL_URL.replace(":id", id)}`;
   const onPress = useCallback(() => {
+    if (currentArchiveId !== id) dispatch(updatePages([]));
     dispatch(updateSectionVisibility({ ...allSectionsFalse, images: true }));
     dispatch(updateCurrentArchiveId(id));
   }, [id]);
@@ -44,14 +56,7 @@ export const Archive = ({ id, title, index, onInfoClick }) => {
         </div>
       </div>
       <div style={{ padding: "8px" }}>
-        <Typography
-          id={`archive-text-${index}`}
-          sx={{
-            textTransform: "none",
-            fontWeight: "bold",
-            wordWrap: "break-word",
-          }}
-        >
+        <Typography id={`archive-text-${index}`} sx={styles.typography}>
           {title}
         </Typography>
       </div>

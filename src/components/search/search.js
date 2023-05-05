@@ -8,6 +8,7 @@ import {
 } from "../../app/selectors";
 import { updateSearchArchives } from "../../app/slice";
 import { ArchiveList } from "../archive-list/archive-list";
+import { NUM_ARCHIVES_FOR_RENDER } from "../../constants";
 
 export const Search = ({ display }) => {
   const dispatch = useDispatch();
@@ -15,8 +16,8 @@ export const Search = ({ display }) => {
   const searchFilter = useSelector(getSearchFilter);
   const searchPage = useSelector(getSearchPage);
   const sliceToRender = [
-    searchPage > 1 ? (searchPage - 1) * 24 : 0,
-    24 * searchPage,
+    searchPage > 1 ? (searchPage - 1) * NUM_ARCHIVES_FOR_RENDER : 0,
+    NUM_ARCHIVES_FOR_RENDER * searchPage,
   ];
 
   const callNewArchives = useCallback(async (search) => {

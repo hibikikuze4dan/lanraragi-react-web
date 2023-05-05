@@ -3,12 +3,9 @@ import { throttle } from "lodash";
 import { HEADERS, RANDOM_URL } from "./constants";
 import { getApiKey, getBaseUrl } from "../storage/requests";
 
-const data = "";
-
 const config = {
   method: "get",
   headers: HEADERS,
-  data,
 };
 
 export const getRandomArchives = throttle(
