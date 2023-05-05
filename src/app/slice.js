@@ -5,6 +5,7 @@ const initialState = {
   randomArchives: [],
   searchArchives: [],
   baseUrl: "",
+  searchFilter: "",
   searchPage: 1,
   pages: [],
   renderedPages: [],
@@ -43,7 +44,10 @@ export const appSlice = createSlice({
       state.sectionVisibility = { ...state.sectionVisibility, ...payload };
     },
     updateSearchPage: (state, { payload }) => {
-      state.searchPage = payload ?? 1;
+      state.searchPage = payload || 1;
+    },
+    updateSearchFilter: (state, { payload }) => {
+      state.searchFilter = payload ?? "";
     },
   },
 });
@@ -57,6 +61,7 @@ export const {
   updateSectionVisibility,
   updateSearchArchives,
   updateSearchPage,
+  updateSearchFilter,
 } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -8,6 +8,7 @@ export const ArchiveList = ({
   archives = [],
   display,
   sliceToRender = [0, null],
+  isSearch = false,
 }) => {
   const [archiveInfoModalState, updateArchiveInfoModalState] = useState({
     open: false,
@@ -58,7 +59,7 @@ export const ArchiveList = ({
                 </Grid>
               );
             })}
-          <PageButtons />
+          {isSearch && <PageButtons />}
         </Grid>
       </div>
       <ArchiveInfoDialog

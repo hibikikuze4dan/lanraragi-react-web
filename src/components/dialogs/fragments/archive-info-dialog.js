@@ -9,8 +9,9 @@ export const ArchiveInfoDialog = ({ onClose, arcId, open }) => {
   const [archiveData, setArchiveData] = useState(null);
 
   useEffect(() => {
-    const a = async () => setArchiveData(await getArchiveMetaData(arcId));
-    a();
+    const getArchiveData = async () =>
+      setArchiveData(await getArchiveMetaData(arcId));
+    getArchiveData();
   }, [arcId, setArchiveData]);
 
   const title = archiveData?.title ?? "";

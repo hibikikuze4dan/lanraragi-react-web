@@ -1,4 +1,4 @@
-import { Casino, MenuBook } from "@mui/icons-material";
+import { Casino, MenuBook, Search } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import {
 } from "../../../app/selectors";
 import { scrollIntoViewByElement } from "../../../utils";
 
-export const BottomNavbar = ({ getNewArchives }) => {
+export const BottomNavbar = ({ getNewArchives, openSearchDialog }) => {
   const dispatch = useDispatch();
   const allFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
   const sectionVisibility = useSelector(getSectionVisibilityObject);
@@ -21,6 +21,7 @@ export const BottomNavbar = ({ getNewArchives }) => {
         getNewArchives();
         scrollIntoViewByElement("#archive-text-0", 750);
       }
+      if (value === "search" && sectionVisibility.search) openSearchDialog();
     },
     [dispatch, sectionVisibility]
   );
@@ -43,6 +44,12 @@ export const BottomNavbar = ({ getNewArchives }) => {
         label="Random"
         value="random"
         icon={<Casino color="white" />}
+        sx={{ color: "white" }}
+      />
+      <BottomNavigationAction
+        label="Search"
+        value="search"
+        icon={<Search color="white" />}
         sx={{ color: "white" }}
       />
       <BottomNavigationAction

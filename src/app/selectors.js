@@ -1,3 +1,4 @@
+/* eslint-disable no-confusing-arrow */
 import { startCase } from "lodash";
 import { createSelector } from "reselect";
 
@@ -17,6 +18,11 @@ export const getCurrentRandomArchives = createSelector(getApp, (app) => [
 export const getCurrentSearchArchives = createSelector(getApp, (app) => [
   ...app.searchArchives,
 ]);
+
+export const getAmountOfSearchArchives = createSelector(
+  getCurrentSearchArchives,
+  (archives) => archives.length
+);
 
 export const getCurrentArciveRandomArchivesIndex = createSelector(
   getCurrentArchiveId,
@@ -76,4 +82,15 @@ export const shouldScrollToArchive = createSelector(
 export const getSearchPage = createSelector(
   getApp,
   (app) => app?.searchPage ?? 1
+);
+
+export const getSearchFilter = createSelector(
+  getApp,
+  (app) => app?.searchFilter ?? ""
+);
+
+export const getMaxPages = createSelector(
+  getAmountOfSearchArchives,
+  (numOfArchive) =>
+    numOfArchive % 24 === 0 ? numOfArchive / 24 : Math.ceil(numOfArchive / 24)
 );

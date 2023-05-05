@@ -28,7 +28,7 @@ const styles = {
   },
 };
 
-export const SideNavbar = ({ getNewArchives }) => {
+export const SideNavbar = ({ getNewArchives, openSearchDialog }) => {
   const dispatch = useDispatch();
   const sectionVisibility = useSelector(
     getSectionVisibilityObjectForSideNavbar
@@ -50,6 +50,7 @@ export const SideNavbar = ({ getNewArchives }) => {
               getNewArchives();
               scrollIntoViewByElement("#archive-text-0", 750);
             }
+            if (id === "search" && visible) openSearchDialog();
           };
 
           return (

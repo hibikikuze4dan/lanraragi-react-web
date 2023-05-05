@@ -46,7 +46,11 @@ export const Archive = ({ id, title, index, onInfoClick }) => {
       <div style={{ padding: "8px" }}>
         <Typography
           id={`archive-text-${index}`}
-          sx={{ textTransform: "none", fontWeight: "bold" }}
+          sx={{
+            textTransform: "none",
+            fontWeight: "bold",
+            wordWrap: "break-word",
+          }}
         >
           {title}
         </Typography>
