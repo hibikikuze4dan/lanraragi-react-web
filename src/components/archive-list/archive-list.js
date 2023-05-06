@@ -29,7 +29,7 @@ export const ArchiveList = ({
         overflowY: "scroll",
       }}
     >
-      <div style={{ paddingTop: "2rem", paddingBottom: "3rem" }}>
+      <div style={{ paddingTop: "2rem", paddingBottom: "75svh" }}>
         <Grid
           container
           spacing={2}
