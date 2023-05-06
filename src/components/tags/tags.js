@@ -6,6 +6,7 @@ import { getTagsObjectFromTagsString, isValidUrl } from "../../utils";
 import {
   setAllSectionVisibilityFalse,
   updateSearchArchives,
+  updateSearchFilter,
   updateSearchPage,
   updateSectionVisibility,
 } from "../../app/slice";
@@ -27,6 +28,7 @@ export const Tags = ({ archiveTags, onClose }) => {
   const onTagClick = (tagType, tag) => {
     const filter = tagType !== "other" ? `${tagType}:${tag}` : tag;
     callNewArchives(filter);
+    dispatch(updateSearchFilter(filter));
     dispatch(updateSearchPage(1));
     dispatch(setAllSectionVisibilityFalse());
     dispatch(updateSectionVisibility({ search: true }));

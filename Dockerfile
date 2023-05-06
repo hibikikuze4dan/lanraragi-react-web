@@ -1,11 +1,10 @@
 # build environment
-FROM node:latest as build
+FROM node:20-slim as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 COPY yarn.lock ./
-RUN npm install yarn
-RUN yarn
+RUN yarn --prod
 COPY . ./
 RUN yarn run build
 RUN yarn add serve

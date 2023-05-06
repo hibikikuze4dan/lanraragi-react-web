@@ -31,7 +31,8 @@ export const Search = ({ display }) => {
   }, []);
 
   useEffect(() => {
-    if (searchFilter === "") callNewArchives(searchFilter);
+    if (searchFilter === "" && !searchArchives.length)
+      callNewArchives(searchFilter);
   }, []);
 
   return (
