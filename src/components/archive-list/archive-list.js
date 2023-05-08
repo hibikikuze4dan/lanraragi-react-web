@@ -6,6 +6,7 @@ import { ArchiveInfoDialog } from "../dialogs/fragments/archive-info-dialog";
 import { PageButtons } from "./fragments/page-buttons";
 import { getBaseUrl } from "../../storage/requests";
 import { getCurrentArchiveId } from "../../app/selectors";
+import { NUM_ARCHIVES_PER_ROW } from "../../constants";
 
 export const ArchiveList = ({
   archives = [],
@@ -32,6 +33,7 @@ export const ArchiveList = ({
       <div style={{ paddingTop: "2rem", paddingBottom: "75svh" }}>
         <Grid
           container
+          columns={NUM_ARCHIVES_PER_ROW}
           spacing={2}
           sx={{
             padding: "0 1rem",
@@ -49,11 +51,11 @@ export const ArchiveList = ({
               return (
                 <Grid
                   key={arcid}
-                  xs={12}
-                  sm={6}
-                  md={6}
-                  lg={3}
-                  xl={2}
+                  xs={1}
+                  sm={1}
+                  md={1}
+                  lg={1}
+                  xl={1}
                   item
                   sx={{
                     paddingTop: "0 !important",

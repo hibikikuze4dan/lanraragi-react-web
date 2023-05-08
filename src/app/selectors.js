@@ -1,3 +1,4 @@
+/* eslint-disable function-paren-newline */
 /* eslint-disable no-confusing-arrow */
 import { startCase } from "lodash";
 import { createSelector } from "reselect";
@@ -34,7 +35,9 @@ export const getCurrentArciveRandomArchivesIndex = createSelector(
   }
 );
 
-export const getCurrentPages = createSelector(getApp, (app) => [...app.pages]);
+export const getCurrentPages = createSelector(getApp, (app) =>
+  [...app.pages].map((page) => page.replace(".", ""))
+);
 
 export const getCurrentRenderedPages = createSelector(getApp, (app) => [
   ...app.renderedPages,

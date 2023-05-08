@@ -44,7 +44,7 @@ export const Url = () => {
               label="Lanraragi Server Address"
               fullWidth
               value={url}
-              placeholder="(No / at the end)"
+              placeholder="Ex: 111.111.1.111:3000"
               onChange={onChangeText}
               type="text"
             />

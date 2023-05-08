@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { drop, take } from "lodash";
 import { Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getArchiveFiles } from "../../requests/files";
@@ -11,7 +10,7 @@ import { getCurrentArchiveId, getCurrentPages } from "../../app/selectors";
 export const ImageList = () => {
   const dispatch = useDispatch();
   const arcId = useSelector(getCurrentArchiveId);
-  const pages = useSelector(getCurrentPages);
+  const pageUrls = useSelector(getCurrentPages);
   const [pagesToRender, updatePagesToRender] = useState(10);
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -56,13 +55,13 @@ export const ImageList = () => {
       id={`images-list-${arcId}`}
       sx={{ backgroundColor: "rgba(24, 24, 26, 1)" }}
     >
-      {[...take(pages, pagesToRender)].map((page, index) => {
-        const src = `http://${baseUrl}${drop(page.split(""), 1).join("")}`;
+      {[...pageUrls.slice(0, pagesToRender)].map((page, index) => {
+        const src = `http://${baseUrl}${page}`;
         const middle = (index + 1) % (pagesToRender - 5) === 0;
         return (
           <Grid key={src} item xs={12}>
             <Image
-              width={width}
+              deviceWidth={width}
               deviceHeight={height}
               uri={src}
               middle={middle}

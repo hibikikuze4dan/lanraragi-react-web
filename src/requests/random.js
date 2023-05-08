@@ -1,5 +1,5 @@
 import axios from "axios";
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 import { HEADERS, RANDOM_URL } from "./constants";
 import { getApiKey, getBaseUrl } from "../storage/requests";
 

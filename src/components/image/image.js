@@ -5,7 +5,7 @@ import { Loading } from "../loading/loading";
 
 export const Image = ({
   uri,
-  width,
+  deviceWidth,
   deviceHeight,
   setObserverTarget,
   middle,
@@ -19,7 +19,7 @@ export const Image = ({
   const imageLoaded = !loading && !error && dimensions;
   let imageWidth = 1;
   let imageHeight = 1;
-  const tooWide = imageLoaded ? dimensions.width > width : false;
+  const tooWide = imageLoaded ? dimensions.width > deviceWidth : false;
   const renderedImageHeight = dimensions ? height : window.innerHeight;
   const renderedImageWidth =
     mdUp && dimensions && !tooWide ? dimensions.width : "100%";
@@ -32,9 +32,9 @@ export const Image = ({
   useEffect(() => {
     if (imageLoaded) {
       const heightFormula =
-        (imageHeight / imageWidth) * width + deviceHeight * 0.2;
+        (imageHeight / imageWidth) * deviceWidth + deviceHeight * 0.1;
       const newHeight =
-        imageHeight < (imageHeight / imageWidth) * width
+        imageHeight < (imageHeight / imageWidth) * deviceWidth
           ? imageHeight
           : heightFormula;
       setHeight(newHeight);
