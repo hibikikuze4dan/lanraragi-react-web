@@ -16,5 +16,3 @@ export function useWidth() {
     }, null) || "xs"
   );
 }
-
-export default useWidth;

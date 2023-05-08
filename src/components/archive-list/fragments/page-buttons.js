@@ -14,6 +14,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMaxPages, getSearchPage } from "../../../app/selectors";
 import { updateSearchPage } from "../../../app/slice";
+import { useWidth } from "../../../hooks/useWidth";
 
 const scroll = () => {
   console.log(document.getElementById("archives-top"));
@@ -22,9 +23,10 @@ const scroll = () => {
 export const PageButtons = () => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
+  const breakpoint = useWidth();
   const dispatch = useDispatch();
   const searchPage = useSelector(getSearchPage);
-  const maxPage = useSelector(getMaxPages);
+  const maxPage = useSelector(getMaxPages)(breakpoint);
   const pages = Array(maxPage)
     .fill(0)
     .map((_, index) => index + 1);

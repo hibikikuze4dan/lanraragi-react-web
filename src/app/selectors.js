@@ -1,6 +1,5 @@
 /* eslint-disable function-paren-newline */
 /* eslint-disable no-confusing-arrow */
-import { startCase } from "lodash";
 import { createSelector } from "reselect";
 import { NUM_ARCHIVES_FOR_RENDER } from "../constants";
 
@@ -68,7 +67,7 @@ export const getSectionVisibilityObjectForSideNavbar = createSelector(
       .filter((s) => s !== "address")
       .map((section) => ({
         id: section,
-        label: startCase(section),
+        label: section.slice(0, 1).toUpperCase() + section.slice(1),
         visible: sectionVisibilityObject[section],
       })),
   ]
@@ -95,9 +94,9 @@ export const getSearchFilter = createSelector(
 
 export const getMaxPages = createSelector(
   getAmountOfSearchArchives,
-  (numOfArchive) => {
-    const maxPageNumber = numOfArchive / NUM_ARCHIVES_FOR_RENDER;
-    return numOfArchive % NUM_ARCHIVES_FOR_RENDER === 0
+  (numOfArchive) => (breakpoint) => {
+    const maxPageNumber = numOfArchive / NUM_ARCHIVES_FOR_RENDER[breakpoint];
+    return numOfArchive % NUM_ARCHIVES_FOR_RENDER[breakpoint] === 0
       ? maxPageNumber
       : Math.ceil(maxPageNumber);
   }

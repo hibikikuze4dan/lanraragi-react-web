@@ -6,17 +6,16 @@ import { SideNavbar } from "./fragments/side-navbar";
 import { updateRandomArchives } from "../../app/slice";
 import getRandomArchives from "../../requests/random";
 import { SearchDialog } from "../dialogs/fragments/search-dialog";
-import {
-  NUM_ARCHIVES_FOR_RENDER,
-  NUM_ARCHIVES_FOR_RENDER_SVP,
-} from "../../constants";
+import { NUM_ARCHIVES_FOR_RENDER } from "../../constants";
+import { useWidth } from "../../hooks/useWidth";
 
 export const Navbar = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const width = useWidth();
   const [searchDialogOpen, setSearchDialogOpen] = useState(false);
-  const count = matches ? NUM_ARCHIVES_FOR_RENDER : NUM_ARCHIVES_FOR_RENDER_SVP;
+  const count = NUM_ARCHIVES_FOR_RENDER[width];
 
   const callNewArchives = async () => {
     const newRandomArchives = (await getRandomArchives(count)) ?? [];

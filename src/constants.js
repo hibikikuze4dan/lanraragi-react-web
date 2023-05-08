@@ -6,6 +6,10 @@ export const NUM_ARCHIVES_PER_ROW = {
   xl: 8,
 };
 
-export const NUM_ARCHIVES_FOR_RENDER = 24;
-
-export const NUM_ARCHIVES_FOR_RENDER_SVP = 15;
+export const NUM_ARCHIVES_FOR_RENDER = {
+  xs: 15,
+  sm: 15,
+  md: 20,
+  lg: 25,
+  xl: 40,
+};

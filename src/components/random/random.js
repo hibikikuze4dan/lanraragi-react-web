@@ -1,20 +1,16 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useMediaQuery, useTheme } from "@mui/material";
 import { getRandomArchives } from "../../requests/random";
 import { getCurrentRandomArchives } from "../../app/selectors";
 import { updateRandomArchives } from "../../app/slice";
 import { ArchiveList } from "../archive-list/archive-list";
-import {
-  NUM_ARCHIVES_FOR_RENDER,
-  NUM_ARCHIVES_FOR_RENDER_SVP,
-} from "../../constants";
+import { NUM_ARCHIVES_FOR_RENDER } from "../../constants";
+import { useWidth } from "../../hooks/useWidth";
 
 export const Random = ({ display }) => {
-  const theme = useTheme();
-  const mdUp = useMediaQuery(theme.breakpoints.up("sm"));
+  const breakpoint = useWidth();
   const dispatch = useDispatch();
-  const count = mdUp ? NUM_ARCHIVES_FOR_RENDER : NUM_ARCHIVES_FOR_RENDER_SVP;
+  const count = NUM_ARCHIVES_FOR_RENDER[breakpoint];
   const randomArchives = useSelector(getCurrentRandomArchives);
   const callNewArchives = useCallback(async () => {
     dispatch(updateRandomArchives(await getRandomArchives(count)));

@@ -9,15 +9,17 @@ import {
 import { updateSearchArchives } from "../../app/slice";
 import { ArchiveList } from "../archive-list/archive-list";
 import { NUM_ARCHIVES_FOR_RENDER } from "../../constants";
+import { useWidth } from "../../hooks/useWidth";
 
 export const Search = ({ display }) => {
   const dispatch = useDispatch();
+  const breakpoint = useWidth();
   const searchArchives = useSelector(getCurrentSearchArchives);
   const searchFilter = useSelector(getSearchFilter);
   const searchPage = useSelector(getSearchPage);
   const sliceToRender = [
-    searchPage > 1 ? (searchPage - 1) * NUM_ARCHIVES_FOR_RENDER : 0,
-    NUM_ARCHIVES_FOR_RENDER * searchPage,
+    searchPage > 1 ? (searchPage - 1) * NUM_ARCHIVES_FOR_RENDER[breakpoint] : 0,
+    NUM_ARCHIVES_FOR_RENDER[breakpoint] * searchPage,
   ];
 
   const callNewArchives = useCallback(async (search) => {
