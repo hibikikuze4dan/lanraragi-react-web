@@ -11,9 +11,7 @@ import Search from "./search/search";
 export default function App() {
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("sm"));
-  const { random, images, address, search } = useSelector(
-    getSectionVisibilityObject
-  );
+  const { random, images, search } = useSelector(getSectionVisibilityObject);
 
   const styles = {
     wrapper: {
@@ -32,10 +30,11 @@ export default function App() {
       <div id="top-div" style={styles.wrapper}>
         <div className="full-width full-height">
           <Grid className="full-width full-height">
-            {address && <Url />}
-            {random && <Random />}
-            {search && <Search />}
-            {images && <ImageList />}
+            <Url>
+              {random && <Random />}
+              {search && <Search />}
+              {images && <ImageList />}
+            </Url>
           </Grid>
         </div>
       </div>

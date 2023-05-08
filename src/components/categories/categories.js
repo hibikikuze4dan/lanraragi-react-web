@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Alert,
   Button,
@@ -8,10 +8,9 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { getCategories, updateCategory } from "../../requests/categories";
+import { updateCategory } from "../../requests/categories";
 
-export const Categories = ({ arcId }) => {
-  const [categories, setCategories] = useState([]);
+export const Categories = ({ arcId, categories }) => {
   const [selectedCatagory, setSelectedCategory] = useState("");
   const [response, setResponse] = useState(null);
   const onChange = (e) => {
@@ -28,13 +27,6 @@ export const Categories = ({ arcId }) => {
     updateCat();
   };
 
-  useEffect(() => {
-    const getCats = async () => {
-      setCategories(await getCategories());
-    };
-    getCats();
-  }, [setCategories]);
-
   const categoriesToShow = categories.filter((cat) => !!cat.archives.length);
 
   return categoriesToShow.length ? (
@@ -48,7 +40,7 @@ export const Categories = ({ arcId }) => {
           {response?.successMessage ?? ""}
         </Alert>
       )}
-      <Grid item xs={9} sm={6}>
+      <Grid item xs={12} sm={12}>
         <FormControl fullWidth>
           <InputLabel id="category-select-info-dialog">Category</InputLabel>
           <Select

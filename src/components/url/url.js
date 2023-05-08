@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+/* eslint-disable react/jsx-no-useless-fragment */
+import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import { getBaseUrl, storeApiKey, storeBaseUrl } from "../../storage/requests";
 import { updateSectionVisibility } from "../../app/slice";
 
-export const Url = () => {
+export const Url = ({ children }) => {
   const dispatch = useDispatch();
   const [url, setUrl] = useState("");
   const [apiKey, setApiKey] = useState("");
@@ -24,13 +25,7 @@ export const Url = () => {
     dispatch(updateSectionVisibility({ random: true, address: false }));
   }, [url, apiKey, dispatch]);
 
-  useEffect(() => {
-    if (getBaseUrl()) {
-      dispatch(updateSectionVisibility({ random: true, address: false }));
-    }
-  }, [dispatch]);
-
-  return (
+  return !getBaseUrl() ? (
     <Grid
       style={{ padding: "4rem 3rem", height: `${window.innerHeight}px` }}
       container
@@ -73,5 +68,7 @@ export const Url = () => {
         </Grid>
       </Grid>
     </Grid>
+  ) : (
+    <>{children}</>
   );
 };

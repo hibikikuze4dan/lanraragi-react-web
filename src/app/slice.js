@@ -4,16 +4,16 @@ const initialState = {
   currentArchiveId: "",
   randomArchives: [],
   searchArchives: [],
+  categories: [],
   baseUrl: "",
   searchFilter: "",
   searchPage: 1,
   pages: [],
   renderedPages: [],
   sectionVisibility: {
-    random: false,
+    random: true,
     search: false,
     images: false,
-    address: true,
   },
 };
 
@@ -57,6 +57,9 @@ export const appSlice = createSlice({
     updateSearchFilter: (state, { payload }) => {
       state.searchFilter = payload ?? "";
     },
+    updateCategories: (state, { payload }) => {
+      state.categories = [...payload];
+    },
   },
 });
 
@@ -71,6 +74,7 @@ export const {
   updateSearchPage,
   updateSearchFilter,
   setAllSectionVisibilityFalse,
+  updateCategories,
 } = appSlice.actions;
 
 export default appSlice.reducer;

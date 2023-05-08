@@ -101,3 +101,7 @@ export const getMaxPages = createSelector(
       : Math.ceil(maxPageNumber);
   }
 );
+
+export const getCategories = createSelector(getApp, (app) => [
+  ...app.categories,
+]);

@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { BaseDialog } from "../base-dialog";
 import getArchiveMetaData from "../../../requests/metadata";
 import { Categories } from "../../categories/categories";
 import { Tags } from "../../tags/tags";
+import { updateCategories } from "../../../app/slice";
+import { getCategories as getStateCategories } from "../../../app/selectors";
+import getCategories from "../../../requests/categories";
 
 export const ArchiveInfoDialog = ({ onClose, arcId, open }) => {
+  const dispatch = useDispatch();
+  const categories = useSelector(getStateCategories);
   const [archiveData, setArchiveData] = useState(null);
 
   useEffect(() => {
@@ -14,14 +20,33 @@ export const ArchiveInfoDialog = ({ onClose, arcId, open }) => {
     getArchiveData();
   }, [arcId, setArchiveData]);
 
-  const title = archiveData?.title ?? "";
+  useEffect(() => {
+    const getCats = async () => {
+      dispatch(updateCategories(await getCategories()));
+    };
+    if (!categories.length) getCats();
+  }, [categories]);
+
+  const archiveTitle = archiveData?.title ?? "";
   return (
-    <BaseDialog title={title} onClose={onClose} open={open}>
+    <BaseDialog title="Archive Info" onClose={onClose} open={open}>
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={6}>
+          <Grid alignContent="center" container sx={{ height: "100%" }}>
+            <Typography textAlign="center">{archiveTitle}</Typography>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Categories arcId={arcId} categories={categories} />
+        </Grid>
+      </Grid>
+      <Typography sx={{ padding: "1rem 0" }}>
+        Pages: {archiveData?.pagecount ?? 0}
+      </Typography>
       <Typography sx={{ padding: "1rem 0" }}>
         Pages: {archiveData?.pagecount ?? 0}
       </Typography>
       <Tags onClose={onClose} archiveTags={archiveData?.tags ?? ""} />
-      <Categories arcId={arcId} />
     </BaseDialog>
   );
 };
