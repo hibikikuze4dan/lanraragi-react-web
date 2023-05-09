@@ -35,18 +35,19 @@ export const Archive = ({
 }) => {
   const dispatch = useDispatch();
   const allSectionsFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
-  const src = `http://${baseUrl}${THUMBNAIL_URL.replace(":id", id)}`;
   const onPress = useCallback(() => {
     if (currentArchiveId !== id) dispatch(updatePages([]));
     dispatch(updateSectionVisibility({ ...allSectionsFalse, images: true }));
     dispatch(updateCurrentArchiveId(id));
-  }, [id]);
+  }, [id, currentArchiveId]);
   const ref = useRef();
 
   useEffect(() => {
     if (id === currentArchiveId)
       ref?.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [id, currentArchiveId, ref]);
+
+  const src = `http://${baseUrl}${THUMBNAIL_URL.replace(":id", id)}`;
 
   return (
     <Paper id={`archive_${id}`} style={styles.paper}>
@@ -58,6 +59,7 @@ export const Archive = ({
             style={styles.image}
             src={src}
             placeholder={`Loading thumbnail for ${title}`}
+            loading="lazy"
           />
         </div>
       </div>

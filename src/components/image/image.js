@@ -9,6 +9,7 @@ export const Image = ({
   deviceHeight,
   setObserverTarget,
   middle,
+  onImageClick,
 }) => {
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("md"));
@@ -46,17 +47,23 @@ export const Image = ({
       {loading && <Loading />}
       {error && <Typography>Sorry, something went wrong</Typography>}
       {imageLoaded && (
-        <img
-          alt={uri}
-          loading="lazy"
-          height={renderedImageHeight}
-          width={renderedImageWidth}
-          placeholder="Something"
-          src={uri}
-          ref={middle ? setObserverTarget : null}
-          style={{ objectFit: "fill", display: loaded ? "" : "none" }}
-          onLoad={onLoad}
-        />
+        <button
+          type="button"
+          onClick={onImageClick}
+          style={{ backgroundColor: "transparent", border: "none" }}
+        >
+          <img
+            alt={uri}
+            loading="lazy"
+            height={renderedImageHeight}
+            width={renderedImageWidth}
+            placeholder="Something"
+            src={uri}
+            ref={middle ? setObserverTarget : null}
+            style={{ objectFit: "fill", display: loaded ? "" : "none" }}
+            onLoad={onLoad}
+          />
+        </button>
       )}
     </>
   );

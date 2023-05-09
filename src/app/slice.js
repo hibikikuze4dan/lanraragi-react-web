@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  displayNavbar: true,
   currentArchiveId: "",
   randomArchives: [],
   searchArchives: [],
@@ -15,6 +16,7 @@ const initialState = {
     random: true,
     search: false,
     images: false,
+    settings: false,
   },
 };
 
@@ -64,6 +66,9 @@ export const appSlice = createSlice({
     updateInfoDialogArchiveId: (state, { payload }) => {
       state.infoDialogArchiveId = payload;
     },
+    updateDisplayNavbar: (state, { payload }) => {
+      state.displayNavbar = payload;
+    },
   },
 });
 
@@ -80,6 +85,7 @@ export const {
   setAllSectionVisibilityFalse,
   updateCategories,
   updateInfoDialogArchiveId,
+  updateDisplayNavbar,
 } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -16,6 +16,8 @@ export const UPDATE_CATEGORY_URL = `${CATEGORIES_URL}/:id/:archive`;
 
 export const ARCHIVE_CATEGORY_URL = `/api/archives/:id/categories`;
 
+export const MINION_URL = "/api/minion/:jobid";
+
 export const HEADERS = {
   Authorization: `Bearer ${getApiKey()}`,
 };

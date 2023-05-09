@@ -26,7 +26,7 @@ export const ArchiveInfoDialog = ({ onClose, arcId, open }) => {
       });
     };
 
-    getArchiveData();
+    if (arcId) getArchiveData();
   }, [arcId, setArchiveData]);
 
   useEffect(() => {

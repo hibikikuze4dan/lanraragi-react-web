@@ -1,16 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getArchiveFiles } from "../../requests/files";
 import { Image } from "../image/image";
 import { getBaseUrl } from "../../storage/requests";
-import { updatePages } from "../../app/slice";
-import { getCurrentArchiveId, getCurrentPages } from "../../app/selectors";
+import { updateDisplayNavbar, updatePages } from "../../app/slice";
+import {
+  getCurrentArchiveId,
+  getCurrentPages,
+  getDisplayNavbar,
+} from "../../app/selectors";
+import { getMinionStatus } from "../../requests/minion";
 
 export const ImageList = () => {
   const dispatch = useDispatch();
   const arcId = useSelector(getCurrentArchiveId);
   const pageUrls = useSelector(getCurrentPages);
+  const displayNavbar = useSelector(getDisplayNavbar);
   const [pagesToRender, updatePagesToRender] = useState(10);
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -21,8 +27,17 @@ export const ImageList = () => {
 
   useEffect(() => {
     const getPages = async () => {
-      const newPages = await getArchiveFiles(arcId);
-      dispatch(updatePages(newPages));
+      let jobStatus;
+      const newPagesData = await getArchiveFiles(arcId);
+      const job = newPagesData?.job;
+      if (job) {
+        jobStatus = await getMinionStatus(newPagesData?.job);
+      }
+      if (jobStatus?.state === "finished") {
+        dispatch(updatePages(newPagesData.pages));
+        return;
+      }
+      setTimeout(() => dispatch(updatePages(newPagesData.pages)), 1000);
     };
     if (arcId) getPages();
   }, [arcId]);
@@ -46,6 +61,10 @@ export const ImageList = () => {
     };
   }, [observerTarget, finalTarget, observerRoot]);
 
+  const onImageClick = useCallback(() => {
+    dispatch(updateDisplayNavbar(!displayNavbar));
+  }, [displayNavbar]);
+
   return (
     <Grid
       ref={observerRoot}
@@ -66,6 +85,7 @@ export const ImageList = () => {
               uri={src}
               middle={middle}
               setObserverTarget={setObserverTarget}
+              onImageClick={onImageClick}
             />
           </Grid>
         );

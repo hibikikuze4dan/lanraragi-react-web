@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMediaQuery, useTheme } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BottomNavbar } from "./fragments/bottom-navbar";
 import { SideNavbar } from "./fragments/side-navbar";
 import { updateRandomArchives } from "../../app/slice";
@@ -8,12 +8,14 @@ import getRandomArchives from "../../requests/random";
 import { SearchDialog } from "../dialogs/fragments/search-dialog";
 import { NUM_ARCHIVES_FOR_RENDER } from "../../constants";
 import { useWidth } from "../../hooks/useWidth";
+import { getDisplayNavbar } from "../../app/selectors";
 
 export const Navbar = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const width = useWidth();
+  const displayNavbar = useSelector(getDisplayNavbar);
   const [searchDialogOpen, setSearchDialogOpen] = useState(false);
   const count = NUM_ARCHIVES_FOR_RENDER[width];
 
@@ -24,7 +26,7 @@ export const Navbar = () => {
   const openSearchDialog = () => setSearchDialogOpen(true);
   const onClose = () => setSearchDialogOpen(false);
 
-  return (
+  return displayNavbar ? (
     <>
       {matches && (
         <SideNavbar
@@ -40,5 +42,5 @@ export const Navbar = () => {
       )}
       <SearchDialog onClose={onClose} open={searchDialogOpen} />
     </>
-  );
+  ) : null;
 };

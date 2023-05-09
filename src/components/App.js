@@ -7,11 +7,14 @@ import { getSectionVisibilityObject } from "../app/selectors";
 import { Url } from "./url/url";
 import { Navbar } from "./navbar/navbar";
 import Search from "./search/search";
+import { Settings } from "./settings/settings";
 
 export default function App() {
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("sm"));
-  const { random, images, search } = useSelector(getSectionVisibilityObject);
+  const { random, images, search, settings } = useSelector(
+    getSectionVisibilityObject
+  );
 
   const styles = {
     wrapper: {
@@ -34,6 +37,7 @@ export default function App() {
               {random && <Random />}
               {search && <Search />}
               {images && <ImageList />}
+              {settings && <Settings />}
             </Url>
           </Grid>
         </div>

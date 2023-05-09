@@ -1,4 +1,4 @@
-import { Casino, MenuBook, Search } from "@mui/icons-material";
+import { Casino, MenuBook, Search, Settings } from "@mui/icons-material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppBar, Button } from "@mui/material";
@@ -38,6 +38,7 @@ export const SideNavbar = ({ getNewArchives, openSearchDialog }) => {
     random: <Casino />,
     search: <Search />,
     images: <MenuBook />,
+    settings: <Settings />,
   };
 
   return (

@@ -122,3 +122,8 @@ export const getArchiveCategories = createSelector(
       return acc;
     }, {})
 );
+
+export const getDisplayNavbar = createSelector(
+  getApp,
+  (app) => !!app.displayNavbar
+);
