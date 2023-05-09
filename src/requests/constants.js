@@ -14,6 +14,8 @@ export const CATEGORIES_URL = "/api/categories";
 
 export const UPDATE_CATEGORY_URL = `${CATEGORIES_URL}/:id/:archive`;
 
+export const ARCHIVE_CATEGORY_URL = `/api/archives/:id/categories`;
+
 export const HEADERS = {
   Authorization: `Bearer ${getApiKey()}`,
 };

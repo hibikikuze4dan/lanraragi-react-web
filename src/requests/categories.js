@@ -1,5 +1,10 @@
 import axios from "axios";
-import { HEADERS, CATEGORIES_URL, UPDATE_CATEGORY_URL } from "./constants";
+import {
+  HEADERS,
+  CATEGORIES_URL,
+  UPDATE_CATEGORY_URL,
+  ARCHIVE_CATEGORY_URL,
+} from "./constants";
 import { getBaseUrl } from "../storage/requests";
 
 const config = {
@@ -13,6 +18,23 @@ export const getCategories = async () => {
     url: `http://${getBaseUrl()}${CATEGORIES_URL}`,
   });
   return categories.data;
+};
+
+export const getArchiveCategories = async (arcId) => {
+  let response = null;
+  try {
+    response = await axios({
+      ...config,
+      url: `http://${getBaseUrl()}${ARCHIVE_CATEGORY_URL.replace(
+        ":id",
+        arcId
+      )}`,
+    });
+  } catch (error) {
+    console.log(error);
+    response = { data: { errorMessage: "Sorry, something went wrong" } };
+  }
+  return response.data;
 };
 
 export const updateCategory = async ({ catId, arcId }) => {

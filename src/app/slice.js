@@ -10,6 +10,7 @@ const initialState = {
   searchPage: 1,
   pages: [],
   renderedPages: [],
+  infoDialogArchiveId: "",
   sectionVisibility: {
     random: true,
     search: false,
@@ -60,6 +61,9 @@ export const appSlice = createSlice({
     updateCategories: (state, { payload }) => {
       state.categories = [...payload];
     },
+    updateInfoDialogArchiveId: (state, { payload }) => {
+      state.infoDialogArchiveId = payload;
+    },
   },
 });
 
@@ -75,6 +79,7 @@ export const {
   updateSearchFilter,
   setAllSectionVisibilityFalse,
   updateCategories,
+  updateInfoDialogArchiveId,
 } = appSlice.actions;
 
 export default appSlice.reducer;

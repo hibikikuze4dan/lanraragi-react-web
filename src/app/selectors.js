@@ -105,3 +105,20 @@ export const getMaxPages = createSelector(
 export const getCategories = createSelector(getApp, (app) => [
   ...app.categories,
 ]);
+
+export const getInfoDialogArchiveId = createSelector(
+  getApp,
+  (app) => `${app?.infoDialogArchiveId}`
+);
+
+export const getArchiveCategories = createSelector(
+  getInfoDialogArchiveId,
+  getCategories,
+  (archiveId, categories) =>
+    categories.reduce((acc, category) => {
+      const archivesIds = category?.archives;
+      if (archivesIds?.length) return acc;
+      if (archivesIds?.includes(archiveId)) return { ...acc, category };
+      return acc;
+    }, {})
+);

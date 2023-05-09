@@ -7,16 +7,25 @@ import { Categories } from "../../categories/categories";
 import { Tags } from "../../tags/tags";
 import { updateCategories } from "../../../app/slice";
 import { getCategories as getStateCategories } from "../../../app/selectors";
-import getCategories from "../../../requests/categories";
+import getCategories, {
+  getArchiveCategories,
+} from "../../../requests/categories";
 
 export const ArchiveInfoDialog = ({ onClose, arcId, open }) => {
   const dispatch = useDispatch();
   const categories = useSelector(getStateCategories);
-  const [archiveData, setArchiveData] = useState(null);
+  const [archiveData, setArchiveData] = useState({});
 
   useEffect(() => {
-    const getArchiveData = async () =>
-      setArchiveData(await getArchiveMetaData(arcId));
+    const getArchiveData = async () => {
+      const metaData = await getArchiveMetaData(arcId);
+      const categoriesData = await getArchiveCategories(arcId);
+      setArchiveData({
+        ...metaData,
+        categories: categoriesData?.categories ?? [],
+      });
+    };
+
     getArchiveData();
   }, [arcId, setArchiveData]);
 
@@ -40,6 +49,10 @@ export const ArchiveInfoDialog = ({ onClose, arcId, open }) => {
           <Categories arcId={arcId} categories={categories} />
         </Grid>
       </Grid>
+      <Typography>
+        Categories:{" "}
+        {archiveData?.categories?.map((cat) => cat?.name ?? "").join(", ")}
+      </Typography>
       <Typography sx={{ padding: "1rem 0" }}>
         Pages: {archiveData?.pagecount ?? 0}
       </Typography>
