@@ -39,9 +39,14 @@ export const ArchiveInfoDialog = ({ onClose, arcId, open }) => {
   const archiveTitle = archiveData?.title ?? "";
   return (
     <BaseDialog title="Archive Info" onClose={onClose} open={open}>
-      <Grid container spacing={4}>
+      <Grid container spacing={4} sx={{ padding: "2rem 0 1rem 0" }}>
         <Grid item xs={12} sm={6}>
-          <Grid alignContent="center" container sx={{ height: "100%" }}>
+          <Grid
+            alignContent="center"
+            justifyContent="center"
+            container
+            sx={{ height: "100%" }}
+          >
             <Typography textAlign="center">{archiveTitle}</Typography>
           </Grid>
         </Grid>
@@ -52,9 +57,6 @@ export const ArchiveInfoDialog = ({ onClose, arcId, open }) => {
       <Typography>
         Categories:{" "}
         {archiveData?.categories?.map((cat) => cat?.name ?? "").join(", ")}
-      </Typography>
-      <Typography sx={{ padding: "1rem 0" }}>
-        Pages: {archiveData?.pagecount ?? 0}
       </Typography>
       <Typography sx={{ padding: "1rem 0" }}>
         Pages: {archiveData?.pagecount ?? 0}

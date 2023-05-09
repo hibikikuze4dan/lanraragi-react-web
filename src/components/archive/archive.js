@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { Button, Grid, Paper, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { THUMBNAIL_URL } from "../../requests/constants";
@@ -41,6 +41,12 @@ export const Archive = ({
     dispatch(updateSectionVisibility({ ...allSectionsFalse, images: true }));
     dispatch(updateCurrentArchiveId(id));
   }, [id]);
+  const ref = useRef();
+
+  useEffect(() => {
+    if (id === currentArchiveId)
+      ref?.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [id, currentArchiveId, ref]);
 
   return (
     <Paper id={`archive_${id}`} style={styles.paper}>
@@ -56,7 +62,11 @@ export const Archive = ({
         </div>
       </div>
       <div style={{ padding: "8px" }}>
-        <Typography id={`archive-text-${index}`} sx={styles.typography}>
+        <Typography
+          id={`archive-text-${index}`}
+          sx={styles.typography}
+          ref={ref}
+        >
           {title}
         </Typography>
       </div>
