@@ -30,7 +30,7 @@ export default function App() {
   return (
     <div style={styles.topDiv}>
       {mdUp && <Navbar />}
-      <div id="top-div" style={styles.wrapper}>
+      <div id="top-div" className="full-width" style={styles.wrapper}>
         <div className="full-width full-height">
           <Grid className="full-width full-height">
             <Url>

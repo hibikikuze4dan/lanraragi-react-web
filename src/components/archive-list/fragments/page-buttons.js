@@ -17,7 +17,6 @@ import { updateSearchPage } from "../../../app/slice";
 import { useWidth } from "../../../hooks/useWidth";
 
 const scroll = () => {
-  console.log(document.getElementById("archives-top"));
   document.getElementById("archives-top")?.scrollIntoView();
 };
 export const PageButtons = () => {

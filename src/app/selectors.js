@@ -1,7 +1,7 @@
 /* eslint-disable function-paren-newline */
 /* eslint-disable no-confusing-arrow */
 import { createSelector } from "reselect";
-import { NUM_ARCHIVES_FOR_RENDER } from "../constants";
+import { getNumArchivesToRender } from "../storage/archives";
 
 const getState = (state) => state;
 
@@ -95,8 +95,9 @@ export const getSearchFilter = createSelector(
 export const getMaxPages = createSelector(
   getAmountOfSearchArchives,
   (numOfArchive) => (breakpoint) => {
-    const maxPageNumber = numOfArchive / NUM_ARCHIVES_FOR_RENDER[breakpoint];
-    return numOfArchive % NUM_ARCHIVES_FOR_RENDER[breakpoint] === 0
+    const maxNum = getNumArchivesToRender();
+    const maxPageNumber = numOfArchive / maxNum[breakpoint];
+    return numOfArchive % maxNum[breakpoint] === 0
       ? maxPageNumber
       : Math.ceil(maxPageNumber);
   }

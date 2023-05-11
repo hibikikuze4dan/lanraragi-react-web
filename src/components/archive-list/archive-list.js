@@ -6,8 +6,8 @@ import { ArchiveInfoDialog } from "../dialogs/fragments/archive-info-dialog";
 import { PageButtons } from "./fragments/page-buttons";
 import { getBaseUrl } from "../../storage/requests";
 import { getCurrentArchiveId } from "../../app/selectors";
-import { NUM_ARCHIVES_PER_ROW } from "../../constants";
 import { updateInfoDialogArchiveId } from "../../app/slice";
+import { getNumArchivePerRow } from "../../storage/archives";
 
 export const ArchiveList = ({
   archives = [],
@@ -23,6 +23,7 @@ export const ArchiveList = ({
   });
   const secondSliceValue = sliceToRender[1] ?? archives.length;
   const baseUrl = getBaseUrl();
+  const columns = getNumArchivePerRow();
 
   return (
     <div
@@ -35,7 +36,7 @@ export const ArchiveList = ({
       <div style={{ paddingTop: "2rem", paddingBottom: "75svh" }}>
         <Grid
           container
-          columns={NUM_ARCHIVES_PER_ROW}
+          columns={columns}
           spacing={2}
           sx={{
             padding: "0 1rem",
