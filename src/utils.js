@@ -54,3 +54,6 @@ export const isValidUrl = (urlString) => {
     return false;
   }
 };
+
+export const firstLetterToUppercase = (word = "") =>
+  word.slice(0, 1).toUpperCase() + word.slice(1);

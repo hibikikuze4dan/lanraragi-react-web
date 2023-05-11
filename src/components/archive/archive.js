@@ -3,6 +3,7 @@ import { Button, Grid, Paper, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { THUMBNAIL_URL } from "../../requests/constants";
 import {
+  updateArchiveOpenedFrom,
   updateCurrentArchiveId,
   updatePages,
   updateSectionVisibility,
@@ -32,6 +33,7 @@ export const Archive = ({
   onInfoClick,
   baseUrl,
   currentArchiveId,
+  isSearch,
 }) => {
   const dispatch = useDispatch();
   const allSectionsFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
@@ -39,7 +41,8 @@ export const Archive = ({
     if (currentArchiveId !== id) dispatch(updatePages([]));
     dispatch(updateSectionVisibility({ ...allSectionsFalse, images: true }));
     dispatch(updateCurrentArchiveId(id));
-  }, [id, currentArchiveId]);
+    dispatch(updateArchiveOpenedFrom(isSearch ? "search" : "random"));
+  }, [id, currentArchiveId, isSearch]);
   const ref = useRef();
 
   useEffect(() => {

@@ -71,6 +71,7 @@ export const ArchiveList = ({
                     index={idx}
                     id={arcid}
                     title={title}
+                    isSearch={isSearch}
                     onInfoClick={onInfoClick}
                     baseUrl={baseUrl}
                     currentArchiveId={currentArchiveId}

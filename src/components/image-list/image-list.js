@@ -1,22 +1,30 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getArchiveFiles } from "../../requests/files";
 import { Image } from "../image/image";
 import { getBaseUrl } from "../../storage/requests";
-import { updateDisplayNavbar, updatePages } from "../../app/slice";
 import {
+  setAllSectionVisibilityFalse,
+  updateDisplayNavbar,
+  updatePages,
+  updateSectionVisibility,
+} from "../../app/slice";
+import {
+  getArchiveOpenedFrom,
   getCurrentArchiveId,
   getCurrentPages,
   getDisplayNavbar,
 } from "../../app/selectors";
 import { getMinionStatus } from "../../requests/minion";
+import { firstLetterToUppercase } from "../../utils";
 
 export const ImageList = () => {
   const dispatch = useDispatch();
   const arcId = useSelector(getCurrentArchiveId);
   const pageUrls = useSelector(getCurrentPages);
   const displayNavbar = useSelector(getDisplayNavbar);
+  const archiveOpenedFrom = useSelector(getArchiveOpenedFrom);
   const [pagesToRender, updatePagesToRender] = useState(10);
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -64,6 +72,10 @@ export const ImageList = () => {
   const onImageClick = useCallback(() => {
     dispatch(updateDisplayNavbar(!displayNavbar));
   }, [displayNavbar]);
+  const onBackClick = useCallback(() => {
+    dispatch(setAllSectionVisibilityFalse());
+    dispatch(updateSectionVisibility({ [archiveOpenedFrom]: true }));
+  }, [archiveOpenedFrom]);
 
   return (
     <Grid
@@ -90,7 +102,20 @@ export const ImageList = () => {
           </Grid>
         );
       })}
-      <div ref={setFinalTarget} style={{ width: "100%", height: "10svh" }} />
+      <Grid item xs={12}>
+        <Grid container justifyContent="center">
+          <Grid item xs={8}>
+            <Button
+              onClick={onBackClick}
+              fullWidth
+              sx={{ textTransform: "none", mt: "2rem" }}
+            >
+              Back to {firstLetterToUppercase(archiveOpenedFrom)}
+            </Button>
+          </Grid>
+        </Grid>
+        <div ref={setFinalTarget} style={{ width: "100%", height: "10svh" }} />
+      </Grid>
     </Grid>
   );
 };

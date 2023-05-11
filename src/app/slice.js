@@ -18,6 +18,7 @@ const initialState = {
     images: false,
     settings: false,
   },
+  archiveOpenedFrom: "random",
 };
 
 export const appSlice = createSlice({
@@ -69,6 +70,9 @@ export const appSlice = createSlice({
     updateDisplayNavbar: (state, { payload }) => {
       state.displayNavbar = payload;
     },
+    updateArchiveOpenedFrom: (state, { payload }) => {
+      state.archiveOpenedFrom = payload;
+    },
   },
 });
 
@@ -86,6 +90,7 @@ export const {
   updateCategories,
   updateInfoDialogArchiveId,
   updateDisplayNavbar,
+  updateArchiveOpenedFrom,
 } = appSlice.actions;
 
 export default appSlice.reducer;

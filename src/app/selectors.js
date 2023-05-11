@@ -2,6 +2,7 @@
 /* eslint-disable no-confusing-arrow */
 import { createSelector } from "reselect";
 import { getNumArchivesToRender } from "../storage/archives";
+import { firstLetterToUppercase } from "../utils";
 
 const getState = (state) => state;
 
@@ -67,7 +68,7 @@ export const getSectionVisibilityObjectForSideNavbar = createSelector(
       .filter((s) => s !== "address")
       .map((section) => ({
         id: section,
-        label: section.slice(0, 1).toUpperCase() + section.slice(1),
+        label: firstLetterToUppercase(section),
         visible: sectionVisibilityObject[section],
       })),
   ]
@@ -127,4 +128,9 @@ export const getArchiveCategories = createSelector(
 export const getDisplayNavbar = createSelector(
   getApp,
   (app) => !!app.displayNavbar
+);
+
+export const getArchiveOpenedFrom = createSelector(
+  getApp,
+  (app) => app?.archiveOpenedFrom ?? "random"
 );
