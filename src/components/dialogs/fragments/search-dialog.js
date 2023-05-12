@@ -21,26 +21,26 @@ export const SearchDialog = ({ onClose, open }) => {
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
   const [tempSearch, setTempSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
   const onChangeText = (e) => setTempSearch(() => e.target.value);
 
-  const callNewArchives = useCallback(async (searchVal, category) => {
+  const callNewArchives = useCallback(async (searchVal, categoryId) => {
     const arcs = await getArchivesBySearch({
       filter: searchVal,
       sortby: "date_added",
       order: "desc",
       start: -1,
-      ...(category && { category: category?.id }),
+      ...(categoryId && { category: categoryId }),
     });
     dispatch(updateSearchArchives(arcs.data));
   }, []);
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     dispatch(updateSearchPage(1));
     dispatch(updateSearchFilter(tempSearch));
-    callNewArchives(tempSearch, selectedCategory);
+    callNewArchives(tempSearch, selectedCategoryId);
     onClose();
-  };
+  }, [tempSearch, selectedCategoryId, onClose]);
   const onKeyUp = (event) => {
     if (event.isComposing || event.keyCode === 229) {
       return;
@@ -48,7 +48,7 @@ export const SearchDialog = ({ onClose, open }) => {
     if (event.code === "Enter") onSubmit();
   };
   const onCategorySelect = (e) => {
-    setSelectedCategory(e.target.value);
+    setSelectedCategoryId(e.target.value);
   };
 
   return (
@@ -68,15 +68,14 @@ export const SearchDialog = ({ onClose, open }) => {
             <Select
               labelId="select-categories-search-label"
               id="select-categories-search"
-              defaultValue={{}}
-              value={selectedCategory}
+              value={selectedCategoryId}
               label="Filter Archives by Category"
               onChange={onCategorySelect}
               native
             >
-              <option value="">None</option>
+              <option value="" aria-label="None" />
               {categories.map((cat) => (
-                <option key={cat.id} value={cat}>
+                <option key={cat.id} value={cat.id}>
                   {cat.name}
                 </option>
               ))}

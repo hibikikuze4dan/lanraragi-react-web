@@ -10,7 +10,7 @@ import {
 import { updateCategory } from "../../requests/categories";
 
 export const Categories = ({ arcId, categories }) => {
-  const [selectedCatagory, setSelectedCategory] = useState("");
+  const [selectedCatagoryID, setSelectedCategory] = useState("");
   const [response, setResponse] = useState(null);
   const onChange = (e) => {
     setSelectedCategory(e.target.value);
@@ -18,7 +18,7 @@ export const Categories = ({ arcId, categories }) => {
   const onClick = () => {
     const updateCat = async () => {
       const updateCategoryResponse = await updateCategory({
-        catId: selectedCatagory?.id ?? "",
+        catId: selectedCatagoryID ?? "",
         arcId,
       });
       setResponse(updateCategoryResponse);
@@ -47,14 +47,15 @@ export const Categories = ({ arcId, categories }) => {
             fullWidth
             labelId="category-select-info-dialog"
             id="category-select-select"
-            value={selectedCatagory}
+            value={selectedCatagoryID}
             label="Category"
             onChange={onChange}
             native
             sx={{ margin: "0 0 1rem 0" }}
           >
+            <option value="" aria-label="none" />
             {categoriesToShow.map((cat) => (
-              <option key={cat.id} value={cat}>
+              <option key={cat.id} value={cat.id}>
                 {cat?.name ?? "UNKNOWN"}
               </option>
             ))}
