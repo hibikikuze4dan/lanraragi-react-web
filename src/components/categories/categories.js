@@ -5,7 +5,6 @@ import {
   FormControl,
   Grid,
   InputLabel,
-  MenuItem,
   Select,
 } from "@mui/material";
 import { updateCategory } from "../../requests/categories";
@@ -51,12 +50,13 @@ export const Categories = ({ arcId, categories }) => {
             value={selectedCatagory}
             label="Category"
             onChange={onChange}
+            native
             sx={{ margin: "0 0 1rem 0" }}
           >
             {categoriesToShow.map((cat) => (
-              <MenuItem key={cat.id} value={cat}>
+              <option key={cat.id} value={cat}>
                 {cat?.name ?? "UNKNOWN"}
-              </MenuItem>
+              </option>
             ))}
           </Select>
           <Button fullWidth onClick={onClick}>

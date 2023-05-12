@@ -5,7 +5,6 @@ import {
   FormControl,
   Grid,
   InputLabel,
-  MenuItem,
   Select,
   useMediaQuery,
   useTheme,
@@ -73,12 +72,13 @@ export const PageButtons = () => {
               id="page-jump-select"
               value={searchPage}
               label="Page"
+              native
               onChange={onChange}
             >
               {pages.map((pageNum) => (
-                <MenuItem key={`page-${pageNum}`} value={pageNum}>
+                <option key={`page-${pageNum}`} value={pageNum}>
                   {pageNum}
-                </MenuItem>
+                </option>
               ))}
             </Select>
           </FormControl>

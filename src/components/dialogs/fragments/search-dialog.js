@@ -4,7 +4,6 @@ import {
   FormControl,
   Grid,
   InputLabel,
-  MenuItem,
   Select,
   TextField,
 } from "@mui/material";
@@ -22,7 +21,7 @@ export const SearchDialog = ({ onClose, open }) => {
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
   const [tempSearch, setTempSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const onChangeText = (e) => setTempSearch(() => e.target.value);
 
@@ -73,12 +72,13 @@ export const SearchDialog = ({ onClose, open }) => {
               value={selectedCategory}
               label="Filter Archives by Category"
               onChange={onCategorySelect}
+              native
             >
-              <MenuItem value={null}>None</MenuItem>
+              <option value="">None</option>
               {categories.map((cat) => (
-                <MenuItem key={cat.id} value={cat}>
+                <option key={cat.id} value={cat}>
                   {cat.name}
-                </MenuItem>
+                </option>
               ))}
             </Select>
           </FormControl>
