@@ -70,12 +70,13 @@ export const Settings = () => {
         <div style={{ padding: "1rem" }}>
           <Slider
             min={10}
-            max={50}
+            max={100}
             step={1}
             defaultValue={maxArchivesForViewport}
             value={maxArchivesForViewport}
             onChange={onArchiveToRenderChange}
             label={maxArchivesLabel}
+            marks={false}
           />
         </div>
       </Grid>

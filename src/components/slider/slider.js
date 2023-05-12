@@ -10,6 +10,7 @@ export const Slider = ({
   onChange,
   label = "Slider",
   value,
+  marks = true,
 }) => {
   const [sliderValue, setSliderValue] = useState(defaultValue);
   const onSliderChange = (_, newValue) => {
@@ -29,7 +30,7 @@ export const Slider = ({
           onChange={onSliderChange}
           min={min}
           max={max}
-          marks
+          marks={marks}
           step={step}
           valueLabelDisplay="auto"
         />

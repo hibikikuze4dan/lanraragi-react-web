@@ -74,6 +74,7 @@ export const ImageList = () => {
   }, [displayNavbar]);
   const onBackClick = useCallback(() => {
     dispatch(setAllSectionVisibilityFalse());
+    dispatch(updateDisplayNavbar(true));
     dispatch(updateSectionVisibility({ [archiveOpenedFrom]: true }));
   }, [archiveOpenedFrom]);
 
