@@ -12,6 +12,7 @@ export const getArchivesBySearch = async ({
   sortby,
   order,
   start = -1,
+  category,
 }) => {
   const categories = await axios({
     ...config,
@@ -21,6 +22,7 @@ export const getArchivesBySearch = async ({
       sortby,
       order,
       start,
+      category,
     },
   });
   return categories.data;
