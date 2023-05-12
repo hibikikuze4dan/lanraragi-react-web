@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getArchivesBySearch } from "../../requests/search";
 import {
@@ -10,6 +10,7 @@ import { updateSearchArchives } from "../../app/slice";
 import { ArchiveList } from "../archive-list/archive-list";
 import { useWidth } from "../../hooks/useWidth";
 import { getNumArchivesToRender } from "../../storage/archives";
+import { Loading } from "../loading/loading";
 
 export const Search = ({ display }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ export const Search = ({ display }) => {
   const searchArchives = useSelector(getCurrentSearchArchives);
   const searchFilter = useSelector(getSearchFilter);
   const searchPage = useSelector(getSearchPage);
+  const [loading, setLoading] = useState(false);
   const maxArchivesBreakpoints = getNumArchivesToRender();
   const sliceToRender = [
     searchPage > 1 ? (searchPage - 1) * maxArchivesBreakpoints[breakpoint] : 0,
@@ -24,6 +26,7 @@ export const Search = ({ display }) => {
   ];
 
   const callNewArchives = useCallback(async (search) => {
+    setLoading(true);
     const arcs = await getArchivesBySearch({
       filter: search,
       sortby: "date_added",
@@ -34,17 +37,22 @@ export const Search = ({ display }) => {
   }, []);
 
   useEffect(() => {
-    if (searchFilter === "" && !searchArchives.length)
+    if (searchFilter === "" && !searchArchives.length) {
       callNewArchives(searchFilter);
-  }, []);
+      return;
+    }
+    setLoading(false);
+  }, [searchFilter, searchArchives]);
 
   return (
-    <ArchiveList
-      display={display}
-      archives={searchArchives}
-      sliceToRender={sliceToRender}
-      isSearch
-    />
+    <Loading loading={loading} label="Getting archives from search">
+      <ArchiveList
+        display={display}
+        archives={searchArchives}
+        sliceToRender={sliceToRender}
+        isSearch
+      />
+    </Loading>
   );
 };
 

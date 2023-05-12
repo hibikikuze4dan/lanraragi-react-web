@@ -76,7 +76,9 @@ export const SearchDialog = ({ onClose, open }) => {
             >
               <MenuItem value={null}>None</MenuItem>
               {categories.map((cat) => (
-                <MenuItem value={cat}>{cat.name}</MenuItem>
+                <MenuItem key={cat.id} value={cat}>
+                  {cat.name}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
