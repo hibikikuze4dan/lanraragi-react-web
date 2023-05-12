@@ -60,6 +60,8 @@ export const SearchDialog = ({ onClose, open }) => {
   const onClear = () => {
     dispatch(updateSearchPage(1));
     dispatch(updateSearchCategory({}));
+    dispatch(updateSearchFilter(""));
+    setSelectedCategoryId("");
     callNewArchives("", "");
     onClose();
   };
