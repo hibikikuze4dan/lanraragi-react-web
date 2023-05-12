@@ -7,6 +7,7 @@ const initialState = {
   searchArchives: [],
   categories: [],
   baseUrl: "",
+  searchCategory: {},
   searchFilter: "",
   searchPage: 1,
   pages: [],
@@ -24,7 +25,6 @@ const initialState = {
 export const appSlice = createSlice({
   name: "app",
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     updateCurrentArchiveId: (state, action) => {
       state.currentArchiveId = action.payload;
@@ -73,6 +73,9 @@ export const appSlice = createSlice({
     updateArchiveOpenedFrom: (state, { payload }) => {
       state.archiveOpenedFrom = payload;
     },
+    updateSearchCategory: (state, { payload }) => {
+      state.searchCategory = { ...payload };
+    },
   },
 });
 
@@ -91,6 +94,7 @@ export const {
   updateInfoDialogArchiveId,
   updateDisplayNavbar,
   updateArchiveOpenedFrom,
+  updateSearchCategory,
 } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -134,3 +134,8 @@ export const getArchiveOpenedFrom = createSelector(
   getApp,
   (app) => app?.archiveOpenedFrom ?? "random"
 );
+
+export const getSearchCategory = createSelector(
+  getApp,
+  (app) => app?.searchCategory ?? {}
+);

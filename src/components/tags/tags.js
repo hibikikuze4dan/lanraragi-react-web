@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Grid, Link, Typography } from "@mui/material";
 import { DateTime } from "luxon";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTagsObjectFromTagsString, isValidUrl } from "../../utils";
 import {
   setAllSectionVisibilityFalse,
@@ -11,10 +11,12 @@ import {
   updateSectionVisibility,
 } from "../../app/slice";
 import { getArchivesBySearch } from "../../requests/search";
+import { getSearchCategory } from "../../app/selectors";
 
 export const Tags = ({ archiveTags, onClose }) => {
   const dispatch = useDispatch();
   const tagsAsObject = getTagsObjectFromTagsString(archiveTags);
+  const searchCategory = useSelector(getSearchCategory);
 
   const callNewArchives = async (searchVal) => {
     const arcs = await getArchivesBySearch({
@@ -22,6 +24,7 @@ export const Tags = ({ archiveTags, onClose }) => {
       sortby: "date_added",
       order: "desc",
       start: -1,
+      ...(searchCategory?.id && { category: searchCategory?.id }),
     });
     dispatch(updateSearchArchives(arcs.data));
   };
