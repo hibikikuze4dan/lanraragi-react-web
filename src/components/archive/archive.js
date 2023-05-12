@@ -78,6 +78,7 @@ export const Archive = ({
       <Grid container>
         <Grid item xs={6}>
           <Button
+            aria-label={`Click to read ${title}`}
             variant="contained"
             onClick={onPress}
             fullWidth
@@ -88,6 +89,7 @@ export const Archive = ({
         </Grid>
         <Grid item xs={6}>
           <Button
+            aria-label={`Click for info and to modify categories for ${title}`}
             variant="contained"
             onClick={onInfoClick}
             fullWidth

@@ -10,7 +10,6 @@ import { updateSearchArchives } from "../../app/slice";
 import { ArchiveList } from "../archive-list/archive-list";
 import { useWidth } from "../../hooks/useWidth";
 import { getNumArchivesToRender } from "../../storage/archives";
-import { Loading } from "../loading/loading";
 
 export const Search = ({ display }) => {
   const dispatch = useDispatch();
@@ -45,14 +44,14 @@ export const Search = ({ display }) => {
   }, [searchFilter, searchArchives]);
 
   return (
-    <Loading loading={loading} label="Getting archives from search">
-      <ArchiveList
-        display={display}
-        archives={searchArchives}
-        sliceToRender={sliceToRender}
-        isSearch
-      />
-    </Loading>
+    <ArchiveList
+      display={display}
+      archives={searchArchives}
+      sliceToRender={sliceToRender}
+      isSearch
+      archivesLoading={loading}
+      loadingLabel="Getting archives from search"
+    />
   );
 };
 

@@ -8,12 +8,15 @@ import { getBaseUrl } from "../../storage/requests";
 import { getCurrentArchiveId } from "../../app/selectors";
 import { updateInfoDialogArchiveId } from "../../app/slice";
 import { getNumArchivePerRow } from "../../storage/archives";
+import { Loading } from "../loading/loading";
 
 export const ArchiveList = ({
   archives = [],
   display,
   sliceToRender = [0, null],
   isSearch = false,
+  archivesLoading = false,
+  loadingLabel = "",
 }) => {
   const dispatch = useDispatch();
   const currentArchiveId = useSelector(getCurrentArchiveId);
@@ -45,40 +48,42 @@ export const ArchiveList = ({
         >
           <div id="archives-top" />
           {isSearch && <PageButtons />}
-          {archives
-            .slice(sliceToRender[0], secondSliceValue)
-            .map((archive, idx) => {
-              const { arcid, title } = archive;
-              const onInfoClick = () => {
-                dispatch(updateInfoDialogArchiveId(arcid));
-                updateArchiveInfoModalState({ open: true, arcId: arcid });
-              };
-              return (
-                <Grid
-                  key={arcid}
-                  xs={1}
-                  sm={1}
-                  md={1}
-                  lg={1}
-                  xl={1}
-                  item
-                  sx={{
-                    paddingTop: "0 !important",
-                    paddingBottom: "2rem",
-                  }}
-                >
-                  <Archive
-                    index={idx}
-                    id={arcid}
-                    title={title}
-                    isSearch={isSearch}
-                    onInfoClick={onInfoClick}
-                    baseUrl={baseUrl}
-                    currentArchiveId={currentArchiveId}
-                  />
-                </Grid>
-              );
-            })}
+          <Loading loading={archivesLoading} label={loadingLabel}>
+            {archives
+              .slice(sliceToRender[0], secondSliceValue)
+              .map((archive, idx) => {
+                const { arcid, title } = archive;
+                const onInfoClick = () => {
+                  dispatch(updateInfoDialogArchiveId(arcid));
+                  updateArchiveInfoModalState({ open: true, arcId: arcid });
+                };
+                return (
+                  <Grid
+                    key={arcid}
+                    xs={1}
+                    sm={1}
+                    md={1}
+                    lg={1}
+                    xl={1}
+                    item
+                    sx={{
+                      paddingTop: "0 !important",
+                      paddingBottom: "2rem",
+                    }}
+                  >
+                    <Archive
+                      index={idx}
+                      id={arcid}
+                      title={title}
+                      isSearch={isSearch}
+                      onInfoClick={onInfoClick}
+                      baseUrl={baseUrl}
+                      currentArchiveId={currentArchiveId}
+                    />
+                  </Grid>
+                );
+              })}
+          </Loading>
           {isSearch && <PageButtons />}
         </Grid>
       </div>
