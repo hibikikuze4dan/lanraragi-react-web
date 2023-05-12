@@ -8,6 +8,7 @@ import {
 } from "../../app/selectors";
 import { updateSearchArchives } from "../../app/slice";
 import { ArchiveList } from "../archive-list/archive-list";
+import { PageButtons } from "../archive-list/fragments/page-buttons";
 import { useWidth } from "../../hooks/useWidth";
 import { getNumArchivesToRender } from "../../storage/archives";
 
@@ -51,6 +52,8 @@ export const Search = ({ display }) => {
       isSearch
       archivesLoading={loading}
       loadingLabel="Getting archives from search"
+      header={<PageButtons />}
+      footer={<PageButtons />}
     />
   );
 };

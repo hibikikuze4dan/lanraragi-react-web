@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button, Grid } from "@mui/material";
+import { Casino } from "@mui/icons-material";
 import { getRandomArchives } from "../../requests/random";
 import { getCurrentRandomArchives } from "../../app/selectors";
 import { updateRandomArchives } from "../../app/slice";
@@ -28,9 +30,27 @@ export const Random = ({ display }) => {
     callNewArchives();
   }, [randomArchives]);
 
+  const footer = (
+    <Grid container justifyContent="center">
+      <Grid item xs={12} sm={8}>
+        <Button
+          fullWidth
+          onClick={callNewArchives}
+          sx={{ textTransform: "none" }}
+        >
+          <Casino sx={{ mr: ".5rem" }} /> More Archives
+        </Button>
+      </Grid>
+    </Grid>
+  );
+
   return (
     <Loading loading={loading} label="Loading Random Archives">
-      <ArchiveList display={display} archives={randomArchives} />
+      <ArchiveList
+        display={display}
+        archives={randomArchives}
+        footer={footer}
+      />
     </Loading>
   );
 };

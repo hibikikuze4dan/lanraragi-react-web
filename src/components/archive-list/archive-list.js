@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Archive from "../archive/archive";
 import { ArchiveInfoDialog } from "../dialogs/fragments/archive-info-dialog";
-import { PageButtons } from "./fragments/page-buttons";
 import { getBaseUrl } from "../../storage/requests";
 import { getCurrentArchiveId } from "../../app/selectors";
 import { updateInfoDialogArchiveId } from "../../app/slice";
@@ -17,6 +16,8 @@ export const ArchiveList = ({
   isSearch = false,
   archivesLoading = false,
   loadingLabel = "",
+  header = null,
+  footer = null,
 }) => {
   const dispatch = useDispatch();
   const currentArchiveId = useSelector(getCurrentArchiveId);
@@ -36,18 +37,17 @@ export const ArchiveList = ({
         overflowY: "scroll",
       }}
     >
-      <div style={{ paddingTop: "2rem", paddingBottom: "75svh" }}>
+      <div style={{ padding: "2rem 1rem 75svh 1rem" }}>
+        {header}
         <Grid
           container
           columns={columns}
           spacing={2}
           sx={{
-            padding: "0 1rem",
             marginTop: 0,
           }}
         >
           <div id="archives-top" />
-          {isSearch && <PageButtons />}
           <Loading loading={archivesLoading} label={loadingLabel}>
             {archives
               .slice(sliceToRender[0], secondSliceValue)
@@ -84,8 +84,8 @@ export const ArchiveList = ({
                 );
               })}
           </Loading>
-          {isSearch && <PageButtons />}
         </Grid>
+        {footer}
       </div>
       <ArchiveInfoDialog
         onClose={() =>
