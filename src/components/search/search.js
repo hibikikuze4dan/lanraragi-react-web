@@ -20,7 +20,7 @@ export const Search = ({ display }) => {
   const searchArchives = useSelector(getCurrentSearchArchives);
   const searchFilter = useSelector(getSearchFilter);
   const searchPage = useSelector(getSearchPage);
-  const loading = useSelector(getLoading);
+  const { search: isSearchLoading } = useSelector(getLoading);
   const maxArchivesBreakpoints = getNumArchivesToRender();
   const sliceToRender = [
     searchPage > 1 ? (searchPage - 1) * maxArchivesBreakpoints[breakpoint] : 0,
@@ -28,7 +28,7 @@ export const Search = ({ display }) => {
   ];
 
   const callNewArchives = useCallback(async (search) => {
-    dispatch(updateLoading({ search: loading }));
+    dispatch(updateLoading({ search: true }));
     const arcs = await getArchivesBySearch({
       filter: search,
       sortby: "date_added",
@@ -40,8 +40,7 @@ export const Search = ({ display }) => {
   }, []);
 
   useEffect(() => {
-    console.log(searchFilter, searchArchives, loading);
-    if (searchFilter === "" && !searchArchives.length && !loading.search) {
+    if (searchFilter === "" && !searchArchives.length && !isSearchLoading) {
       callNewArchives(searchFilter);
       return;
     }
@@ -51,7 +50,7 @@ export const Search = ({ display }) => {
   const header = (
     <>
       <SearchAccordion />
-      <PageButtons id="page-buttons-top" />
+      <PageButtons id="page-buttons-top" disabled={isSearchLoading} />
     </>
   );
 
@@ -61,10 +60,12 @@ export const Search = ({ display }) => {
       archives={searchArchives}
       sliceToRender={sliceToRender}
       isSearch
-      archivesLoading={loading.search}
+      archivesLoading={isSearchLoading}
       loadingLabel="Getting archives from search"
       header={header}
-      footer={<PageButtons id="page-buttons-bottom" />}
+      footer={
+        <PageButtons id="page-buttons-bottom" disabled={isSearchLoading} />
+      }
     />
   );
 };

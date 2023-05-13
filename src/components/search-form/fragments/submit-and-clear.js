@@ -6,6 +6,7 @@ import {
   updateSearchPage,
   updateSearchArchives,
   updateSearchFilter,
+  updateLoading,
 } from "../../../app/slice";
 import {
   getCategories,
@@ -28,6 +29,7 @@ export const SubmitAndClear = ({
 
   const callNewArchives = useCallback(
     async ({ filter, category, sortby, order }) => {
+      dispatch(updateLoading({ search: true }));
       const arcs = await getArchivesBySearch({
         filter,
         sortby,
@@ -36,6 +38,7 @@ export const SubmitAndClear = ({
         ...(category && { category }),
       });
       dispatch(updateSearchArchives(arcs.data));
+      dispatch(updateLoading({ search: false }));
     },
     []
   );

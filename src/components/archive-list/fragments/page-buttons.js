@@ -20,7 +20,7 @@ const scroll = () => {
     .getElementById("page-buttons-top")
     ?.scrollIntoView({ behavior: "smooth" });
 };
-export const PageButtons = ({ id }) => {
+export const PageButtons = ({ id, disabled }) => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
   const breakpoint = useWidth();
@@ -58,6 +58,7 @@ export const PageButtons = ({ id }) => {
             fullWidth
             onClick={onBackClick}
             variant="contained"
+            disabled={disabled}
             sx={{ backgroundColor: "#43464E" }}
           >
             <ArrowBack />
@@ -75,6 +76,7 @@ export const PageButtons = ({ id }) => {
               value={searchPage}
               label="Page"
               native
+              disabled={disabled}
               onChange={onChange}
             >
               {pages.map((pageNum) => (
@@ -90,6 +92,7 @@ export const PageButtons = ({ id }) => {
             fullWidth
             onClick={onForwardClick}
             variant="contained"
+            disabled={disabled}
             sx={{ backgroundColor: "#43464E" }}
           >
             Next
