@@ -10,13 +10,13 @@ export const SearchFilterTextField = () => {
   const searchFilter = useSelector(getSearchFilter);
   const [searchText, updateSearchText] = useState(searchFilter);
 
-  const throttledUpdate = debounce(
+  const debouncedUpdate = debounce(
     (e) => dispatch(updateSearchFilter(e.target.value)),
-    1000
+    500
   );
   const onChangeText = (e) => {
     updateSearchText(e.target.value);
-    throttledUpdate(e);
+    debouncedUpdate(e);
   };
 
   return (
