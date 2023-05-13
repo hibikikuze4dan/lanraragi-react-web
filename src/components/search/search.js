@@ -50,7 +50,7 @@ export const Search = ({ display }) => {
   const header = (
     <>
       <SearchAccordion />
-      <PageButtons id="page-buttons-top" disabled={isSearchLoading} />
+      <PageButtons id="page-buttons-top" top disabled={isSearchLoading} />
     </>
   );
 

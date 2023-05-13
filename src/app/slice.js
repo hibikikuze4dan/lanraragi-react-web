@@ -65,7 +65,7 @@ export const appSlice = createSlice({
       };
     },
     updateSearchPage: (state, { payload }) => {
-      state.searchPage = payload || 1;
+      state.searchPage = Number(payload) || 1;
     },
     updateSearchFilter: (state, { payload }) => {
       state.searchFilter = payload ?? "";

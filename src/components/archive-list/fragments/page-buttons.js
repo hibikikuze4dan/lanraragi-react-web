@@ -20,7 +20,7 @@ const scroll = () => {
     .getElementById("page-buttons-top")
     ?.scrollIntoView({ behavior: "smooth" });
 };
-export const PageButtons = ({ id, disabled }) => {
+export const PageButtons = ({ id, disabled, top = false }) => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
   const breakpoint = useWidth();
@@ -32,16 +32,16 @@ export const PageButtons = ({ id, disabled }) => {
     .map((_, index) => index + 1);
 
   const onBackClick = () => {
-    scroll();
+    if (!top) scroll();
     dispatch(updateSearchPage(searchPage - 1));
   };
   const onForwardClick = () => {
-    scroll();
+    if (!top) scroll();
     if (maxPage !== searchPage) dispatch(updateSearchPage(searchPage + 1));
   };
   const onChange = (e) => {
     dispatch(updateSearchPage(e.target.value));
-    scroll();
+    if (!top) scroll();
   };
 
   return (
