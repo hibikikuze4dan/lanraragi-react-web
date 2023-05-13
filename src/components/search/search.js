@@ -1,12 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getArchivesBySearch } from "../../requests/search";
 import {
   getCurrentSearchArchives,
+  getLoading,
   getSearchFilter,
   getSearchPage,
 } from "../../app/selectors";
-import { updateSearchArchives } from "../../app/slice";
+import { updateLoading, updateSearchArchives } from "../../app/slice";
 import { ArchiveList } from "../archive-list/archive-list";
 import { PageButtons } from "../archive-list/fragments/page-buttons";
 import { useWidth } from "../../hooks/useWidth";
@@ -19,7 +20,7 @@ export const Search = ({ display }) => {
   const searchArchives = useSelector(getCurrentSearchArchives);
   const searchFilter = useSelector(getSearchFilter);
   const searchPage = useSelector(getSearchPage);
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector(getLoading);
   const maxArchivesBreakpoints = getNumArchivesToRender();
   const sliceToRender = [
     searchPage > 1 ? (searchPage - 1) * maxArchivesBreakpoints[breakpoint] : 0,
@@ -27,7 +28,7 @@ export const Search = ({ display }) => {
   ];
 
   const callNewArchives = useCallback(async (search) => {
-    setLoading(true);
+    dispatch(updateLoading({ search: loading }));
     const arcs = await getArchivesBySearch({
       filter: search,
       sortby: "date_added",
@@ -35,15 +36,17 @@ export const Search = ({ display }) => {
       start: -1,
     });
     dispatch(updateSearchArchives(arcs.data));
+    dispatch(updateLoading({ search: false }));
   }, []);
 
   useEffect(() => {
-    if (searchFilter === "" && !searchArchives.length) {
+    console.log(searchFilter, searchArchives, loading);
+    if (searchFilter === "" && !searchArchives.length && !loading.search) {
       callNewArchives(searchFilter);
       return;
     }
-    setLoading(false);
-  }, [searchFilter, searchArchives]);
+    dispatch(updateLoading({ search: false }));
+  }, []);
 
   const header = (
     <>
@@ -58,7 +61,7 @@ export const Search = ({ display }) => {
       archives={searchArchives}
       sliceToRender={sliceToRender}
       isSearch
-      archivesLoading={loading}
+      archivesLoading={loading.search}
       loadingLabel="Getting archives from search"
       header={header}
       footer={<PageButtons id="page-buttons-bottom" />}

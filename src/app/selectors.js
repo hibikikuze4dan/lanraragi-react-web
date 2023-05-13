@@ -149,3 +149,5 @@ export const getSearchCategory = createSelector(
   getApp,
   (app) => app?.searchCategory ?? {}
 );
+
+export const getLoading = createSelector(getApp, (app) => app?.loading ?? {});

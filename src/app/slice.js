@@ -21,6 +21,10 @@ const initialState = {
     images: false,
     settings: false,
   },
+  loading: {
+    search: false,
+    random: false,
+  },
   archiveOpenedFrom: "random",
 };
 
@@ -48,6 +52,9 @@ export const appSlice = createSlice({
     },
     updateSectionVisibility: (state, { payload }) => {
       state.sectionVisibility = { ...state.sectionVisibility, ...payload };
+    },
+    updateLoading: (state, { payload }) => {
+      state.loading = { ...state.loading, ...payload };
     },
     setAllSectionVisibilityFalse: (state) => {
       state.sectionVisibility = {
@@ -105,6 +112,7 @@ export const {
   updateSearchCategory,
   updateSearchSort,
   updateSearchSortDirection,
+  updateLoading,
 } = appSlice.actions;
 
 export default appSlice.reducer;
