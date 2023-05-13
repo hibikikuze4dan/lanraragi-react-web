@@ -135,6 +135,16 @@ export const getArchiveOpenedFrom = createSelector(
   (app) => app?.archiveOpenedFrom ?? "random"
 );
 
+export const getSearchSort = createSelector(
+  getApp,
+  (app) => app?.searchSort ?? "date_added"
+);
+
+export const getSearchSortDirection = createSelector(
+  getApp,
+  (app) => app?.searchSortDirection ?? "desc"
+);
+
 export const getSearchCategory = createSelector(
   getApp,
   (app) => app?.searchCategory ?? {}

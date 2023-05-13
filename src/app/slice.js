@@ -9,6 +9,8 @@ const initialState = {
   baseUrl: "",
   searchCategory: {},
   searchFilter: "",
+  searchSort: "date_added",
+  searchSortDirection: "desc",
   searchPage: 1,
   pages: [],
   renderedPages: [],
@@ -76,6 +78,12 @@ export const appSlice = createSlice({
     updateSearchCategory: (state, { payload }) => {
       state.searchCategory = { ...payload };
     },
+    updateSearchSort: (state, { payload }) => {
+      state.searchSort = payload;
+    },
+    updateSearchSortDirection: (state, { payload }) => {
+      state.searchSortDirection = payload;
+    },
   },
 });
 
@@ -95,6 +103,8 @@ export const {
   updateDisplayNavbar,
   updateArchiveOpenedFrom,
   updateSearchCategory,
+  updateSearchSort,
+  updateSearchSortDirection,
 } = appSlice.actions;
 
 export default appSlice.reducer;

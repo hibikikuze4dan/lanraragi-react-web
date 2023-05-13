@@ -31,7 +31,7 @@ export const Random = ({ display }) => {
   }, [randomArchives]);
 
   const footer = (
-    <Grid container justifyContent="center">
+    <Grid container justifyContent="center" sx={{ pt: "1rem" }}>
       <Grid item xs={12} sm={8}>
         <Button
           fullWidth
