@@ -11,6 +11,7 @@ import { ArchiveList } from "../archive-list/archive-list";
 import { PageButtons } from "../archive-list/fragments/page-buttons";
 import { useWidth } from "../../hooks/useWidth";
 import { getNumArchivesToRender } from "../../storage/archives";
+import { SearchAccordion } from "../accordions/search-accordion/search-accordion";
 
 export const Search = ({ display }) => {
   const dispatch = useDispatch();
@@ -44,6 +45,13 @@ export const Search = ({ display }) => {
     setLoading(false);
   }, [searchFilter, searchArchives]);
 
+  const header = (
+    <>
+      <SearchAccordion />
+      <PageButtons id="page-buttons-top" />
+    </>
+  );
+
   return (
     <ArchiveList
       display={display}
@@ -52,8 +60,8 @@ export const Search = ({ display }) => {
       isSearch
       archivesLoading={loading}
       loadingLabel="Getting archives from search"
-      header={<PageButtons />}
-      footer={<PageButtons />}
+      header={header}
+      footer={<PageButtons id="page-buttons-bottom" />}
     />
   );
 };

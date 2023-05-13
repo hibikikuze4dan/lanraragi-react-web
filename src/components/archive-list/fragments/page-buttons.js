@@ -16,9 +16,11 @@ import { updateSearchPage } from "../../../app/slice";
 import { useWidth } from "../../../hooks/useWidth";
 
 const scroll = () => {
-  document.getElementById("archives-top")?.scrollIntoView();
+  document
+    .getElementById("page-buttons-top")
+    ?.scrollIntoView({ behavior: "smooth" });
 };
-export const PageButtons = () => {
+export const PageButtons = ({ id }) => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
   const breakpoint = useWidth();
@@ -43,7 +45,7 @@ export const PageButtons = () => {
   };
 
   return (
-    <Grid item xs={12}>
+    <Grid id={id} item xs={12}>
       <Grid
         container
         justifyContent={mdDown ? "space-around" : "center"}

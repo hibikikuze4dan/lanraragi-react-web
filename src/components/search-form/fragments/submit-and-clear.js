@@ -17,7 +17,7 @@ import { getArchivesBySearch } from "../../../requests/search";
 
 export const SubmitAndClear = ({
   selectedCategoryId,
-  onClose,
+  onClose = () => null,
   setSelectedCategoryId,
 }) => {
   const dispatch = useDispatch();
