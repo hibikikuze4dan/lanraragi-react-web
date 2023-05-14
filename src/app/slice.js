@@ -24,6 +24,7 @@ const initialState = {
   loading: {
     search: false,
     random: false,
+    images: false,
   },
   archiveOpenedFrom: "random",
 };

@@ -43,8 +43,7 @@ export const Image = ({
   }, [height, dimensions]);
 
   return (
-    <>
-      {loading && <Loading />}
+    <Loading loading={!imageLoaded}>
       {error && <Typography>Sorry, something went wrong</Typography>}
       {imageLoaded && (
         <button
@@ -65,7 +64,7 @@ export const Image = ({
           />
         </button>
       )}
-    </>
+    </Loading>
   );
 };
 

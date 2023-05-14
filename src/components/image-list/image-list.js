@@ -7,6 +7,7 @@ import { getBaseUrl } from "../../storage/requests";
 import {
   setAllSectionVisibilityFalse,
   updateDisplayNavbar,
+  updateLoading,
   updatePages,
   updateSectionVisibility,
 } from "../../app/slice";
@@ -15,9 +16,11 @@ import {
   getCurrentArchiveId,
   getCurrentPages,
   getDisplayNavbar,
+  getLoading,
 } from "../../app/selectors";
 import { getMinionStatus } from "../../requests/minion";
 import { firstLetterToUppercase } from "../../utils";
+import { Loading } from "../loading/loading";
 
 export const ImageList = () => {
   const dispatch = useDispatch();
@@ -25,6 +28,7 @@ export const ImageList = () => {
   const pageUrls = useSelector(getCurrentPages);
   const displayNavbar = useSelector(getDisplayNavbar);
   const archiveOpenedFrom = useSelector(getArchiveOpenedFrom);
+  const { images: gettingImagesFromLRR } = useSelector(getLoading);
   const [pagesToRender, updatePagesToRender] = useState(10);
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -36,6 +40,7 @@ export const ImageList = () => {
   useEffect(() => {
     const getPages = async () => {
       let jobStatus;
+      dispatch(updateLoading({ images: true }));
       const newPagesData = await getArchiveFiles(arcId);
       const job = newPagesData?.job;
       if (job) {
@@ -43,9 +48,11 @@ export const ImageList = () => {
       }
       if (jobStatus?.state === "finished") {
         dispatch(updatePages(newPagesData.pages));
+        dispatch(updateLoading({ images: false }));
         return;
       }
       setTimeout(() => dispatch(updatePages(newPagesData.pages)), 1000);
+      dispatch(updateLoading({ images: false }));
     };
     if (arcId) getPages();
   }, [arcId]);
@@ -87,22 +94,24 @@ export const ImageList = () => {
       id={`images-list-${arcId}`}
       sx={{ backgroundColor: "rgba(24, 24, 26, 1)" }}
     >
-      {[...pageUrls.slice(0, pagesToRender)].map((page, index) => {
-        const src = `http://${baseUrl}${page}`;
-        const middle = (index + 1) % (pagesToRender - 5) === 0;
-        return (
-          <Grid key={src} item xs={12}>
-            <Image
-              deviceWidth={width}
-              deviceHeight={height}
-              uri={src}
-              middle={middle}
-              setObserverTarget={setObserverTarget}
-              onImageClick={onImageClick}
-            />
-          </Grid>
-        );
-      })}
+      <Loading label="Getting images" loading={gettingImagesFromLRR}>
+        {[...pageUrls.slice(0, pagesToRender)].map((page, index) => {
+          const src = `http://${baseUrl}${page}`;
+          const middle = (index + 1) % (pagesToRender - 5) === 0;
+          return (
+            <Grid key={src} item xs={12}>
+              <Image
+                deviceWidth={width}
+                deviceHeight={height}
+                uri={src}
+                middle={middle}
+                setObserverTarget={setObserverTarget}
+                onImageClick={onImageClick}
+              />
+            </Grid>
+          );
+        })}
+      </Loading>
       <Grid item xs={12}>
         <Grid container justifyContent="center">
           <Grid item xs={8}>
