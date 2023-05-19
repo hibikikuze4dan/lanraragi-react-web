@@ -12,7 +12,7 @@ import { PageButtons } from "../archive-list/fragments/page-buttons";
 import { useWidth } from "../../hooks/useWidth";
 import { getNumArchivesToRender } from "../../storage/archives";
 import { SearchAccordion } from "../accordions/search-accordion/search-accordion";
-import { searchOnLoad } from "../../hooks/searchOnLoad/searchOnLoad";
+import { useSearchOnLoad } from "../../hooks/useSearchOnLoad/useSearchOnLoad";
 
 export const Search = ({ display }) => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export const Search = ({ display }) => {
   const searchFilter = useSelector(getSearchFilter);
   const searchPage = useSelector(getSearchPage);
   const { search: isSearchLoading } = useSelector(getLoading);
-  const { loading } = searchOnLoad(searchFilter);
+  const { loading } = useSearchOnLoad(searchFilter);
   const maxArchivesBreakpoints = getNumArchivesToRender();
   const sliceToRender = [
     searchPage > 1 ? (searchPage - 1) * maxArchivesBreakpoints[breakpoint] : 0,

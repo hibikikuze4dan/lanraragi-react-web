@@ -9,7 +9,7 @@ import { ArchiveList } from "../archive-list/archive-list";
 import { useWidth } from "../../hooks/useWidth";
 import { getNumArchivesToRender } from "../../storage/archives";
 import { Loading } from "../loading/loading";
-import { searchOnLoad } from "../../hooks/searchOnLoad/searchOnLoad";
+import { useSearchOnLoad } from "../../hooks/useSearchOnLoad/useSearchOnLoad";
 
 export const Random = ({ display }) => {
   const breakpoint = useWidth();
@@ -17,7 +17,7 @@ export const Random = ({ display }) => {
   const count = getNumArchivesToRender()[breakpoint];
   const randomArchives = useSelector(getCurrentRandomArchives);
   const { random: israndomLoading } = useSelector(getLoading);
-  searchOnLoad("");
+  useSearchOnLoad("");
 
   const callNewArchives = useCallback(async () => {
     dispatch(updateLoading({ random: true }));

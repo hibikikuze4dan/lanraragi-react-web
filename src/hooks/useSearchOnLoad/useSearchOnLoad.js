@@ -7,7 +7,7 @@ import {
 import { updateSearchArchives } from "../../app/slice";
 import { getArchivesBySearchThrottled } from "../../requests/search";
 
-export const searchOnLoad = (searchFilter) => {
+export const useSearchOnLoad = (searchFilter) => {
   const dispatch = useDispatch();
   const searchArchives = useSelector(getCurrentSearchArchives);
   const randomArchives = useSelector(getCurrentRandomArchives);

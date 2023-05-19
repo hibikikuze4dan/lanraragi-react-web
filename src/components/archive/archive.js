@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button, Grid, Paper, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { THUMBNAIL_URL } from "../../requests/constants";
 import {
+  setAllSectionVisibilityFalse,
   updateArchiveOpenedFrom,
   updateCurrentArchiveId,
   updatePages,
   updateSectionVisibility,
 } from "../../app/slice";
-import { getSectionVisibilityObjectWithAllFalse } from "../../app/selectors";
 
 const styles = {
   paper: {
@@ -23,8 +23,12 @@ const styles = {
     textTransform: "none",
     fontWeight: "bold",
     wordWrap: "break-word",
-    maxHeight: "96px",
-    overflow: "scroll",
+  },
+  clamp: {
+    overflow: "hidden",
+    display: "-webkit-box",
+    WebkitLineClamp: "4",
+    WebkitBoxOrient: "vertical",
   },
 };
 
@@ -38,14 +42,20 @@ export const Archive = ({
   isSearch,
 }) => {
   const dispatch = useDispatch();
-  const allSectionsFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
+  const [showFullTitle, updateShowFullTitle] = useState(false);
+
   const onPress = useCallback(() => {
     if (currentArchiveId !== id) dispatch(updatePages([]));
-    dispatch(updateSectionVisibility({ ...allSectionsFalse, images: true }));
+    dispatch(setAllSectionVisibilityFalse());
+    dispatch(updateSectionVisibility({ images: true }));
     dispatch(updateCurrentArchiveId(id));
     dispatch(updateArchiveOpenedFrom(isSearch ? "search" : "random"));
   }, [id, currentArchiveId, isSearch]);
   const ref = useRef();
+
+  const onTitleClick = useCallback(() => {
+    updateShowFullTitle(!showFullTitle);
+  }, [showFullTitle]);
 
   useEffect(() => {
     if (id === currentArchiveId)
@@ -69,13 +79,15 @@ export const Archive = ({
         </div>
       </div>
       <div style={{ padding: "8px" }}>
-        <Typography
-          id={`archive-text-${index}`}
-          sx={styles.typography}
-          ref={ref}
-        >
-          {title}
-        </Typography>
+        <button type="button" onClick={onTitleClick}>
+          <Typography
+            id={`archive-text-${index}`}
+            sx={{ ...styles.typography, ...(!showFullTitle && styles.clamp) }}
+            ref={ref}
+          >
+            {title}
+          </Typography>
+        </button>
       </div>
       <Grid container>
         <Grid item xs={6}>

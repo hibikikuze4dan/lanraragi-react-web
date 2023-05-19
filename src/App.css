@@ -59,3 +59,9 @@
 .quarter-gutter-bottom {
   margin-bottom: 4px;
 }
+
+button {
+  color: inherit;
+  background-color: inherit;
+  border: none;
+}
