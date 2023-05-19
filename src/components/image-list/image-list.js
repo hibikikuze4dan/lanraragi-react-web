@@ -125,6 +125,7 @@ export const ImageList = () => {
           </Grid>
         </Grid>
         <div ref={setFinalTarget} style={{ width: "100%", height: "10svh" }} />
+        <div style={{ width: "100%", height: "65svh" }} />
       </Grid>
     </Grid>
   );

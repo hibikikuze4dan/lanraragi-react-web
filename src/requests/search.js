@@ -1,4 +1,5 @@
 import axios from "axios";
+import { throttle } from "lodash";
 import { HEADERS, SEARCH_URL } from "./constants";
 import { getBaseUrl } from "../storage/requests";
 
@@ -27,3 +28,9 @@ export const getArchivesBySearch = async ({
   });
   return categories.data;
 };
+
+export const getArchivesBySearchThrottled = throttle(
+  getArchivesBySearch,
+  10000,
+  { trailing: false }
+);
