@@ -16,8 +16,6 @@ export const searchOnLoad = (searchFilter) => {
 
   const results = { results: searchArchives, loading };
 
-  if (searchLoaded) return results;
-
   const callNewArchives = useCallback(async (search) => {
     setLoading(true);
     const arcs = await getArchivesBySearchThrottled({
