@@ -34,7 +34,9 @@ export const Search = ({ display }) => {
 
   const header = (
     <>
-      <SearchAccordion />
+      <div style={{ marginBottom: "1.5rem" }}>
+        <SearchAccordion />
+      </div>
       <PageButtons id="page-buttons-top" top disabled={isSearchLoading} />
     </>
   );

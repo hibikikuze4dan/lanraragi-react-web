@@ -12,7 +12,7 @@ export const BaseAccordion = ({
     expanded={open}
     onChange={onChange}
     TransitionProps={{ mountOnEnter: true, unmountOnExit: true }}
-    sx={{ mb: "1.5rem", backgroundColor: "#43464E" }}
+    sx={{ backgroundColor: "#43464E" }}
   >
     <AccordionSummary id={accordionTitleId}>{title}</AccordionSummary>
     <AccordionDetails>{children}</AccordionDetails>

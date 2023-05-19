@@ -1,15 +1,15 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import { NumArchivesForRow } from "./fragments/num-archives-for-row/num-archives-for-row";
-import { MaxArchivesForViewPort } from "./fragments/max-archives-for-viewport/max-archives-for-viewport";
+import { UrlAccordion } from "../accordions/url-accordion/url-accordion";
+import { ArchiveSettingsAccordion } from "../accordions/archive-settings-accordion/archive-settings-accordion";
 
 export const Settings = () => (
-  <Grid container>
-    <Grid item xs={12}>
-      <NumArchivesForRow />
-    </Grid>
-    <Grid item xs={12}>
-      <MaxArchivesForViewPort />
+  <Grid container justifyContent="center">
+    <Grid item xs={7}>
+      <div style={{ paddingTop: "3rem" }}>
+        <UrlAccordion />
+        <ArchiveSettingsAccordion />
+      </div>
     </Grid>
   </Grid>
 );

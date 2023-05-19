@@ -26,7 +26,7 @@ export const MaxArchivesForViewPort = () => {
   const maxArchivesForViewport = archivesToRender[width];
   const maxArchivesLabel = (
     <>
-      Max number of archives displayed at once (Max: 50)
+      Max number of archives displayed at once (Max: 100)
       <br />
       {portraitOrLandscape}: {maxArchivesForViewport}
     </>
