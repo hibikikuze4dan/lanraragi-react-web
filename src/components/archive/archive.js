@@ -23,6 +23,8 @@ const styles = {
     textTransform: "none",
     fontWeight: "bold",
     wordWrap: "break-word",
+    maxHeight: "96px",
+    overflow: "scroll",
   },
 };
 
@@ -82,7 +84,7 @@ export const Archive = ({
             variant="contained"
             onClick={onPress}
             fullWidth
-            sx={{ backgroundColor: "#43464E" }}
+            sx={{ backgroundColor: "#43464E", borderRadius: "4px 0 0 4px" }}
           >
             Read
           </Button>
@@ -93,7 +95,7 @@ export const Archive = ({
             variant="contained"
             onClick={onInfoClick}
             fullWidth
-            sx={{ backgroundColor: "#43464E" }}
+            sx={{ backgroundColor: "#43464E", borderRadius: "0 4px 4px 0" }}
           >
             Info
           </Button>
