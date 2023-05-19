@@ -2,9 +2,12 @@
 import React from "react";
 import { CircularProgress, Grid, Typography } from "@mui/material";
 
-export const Loading = ({ children, label, loading = true }) => {
+export const Loading = ({ children, label, loading = true, height = 0 }) => {
   const styles = {
-    container: { minHeight: `${window.innerHeight}px`, width: "100%" },
+    container: {
+      minHeight: `${height || window.innerHeight}px`,
+      width: "100%",
+    },
   };
 
   return !loading ? (

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button, Grid, Paper, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
+import { useImageSize } from "react-image-size";
 import { THUMBNAIL_URL } from "../../requests/constants";
 import {
   setAllSectionVisibilityFalse,
@@ -9,6 +10,7 @@ import {
   updatePages,
   updateSectionVisibility,
 } from "../../app/slice";
+import { Loading } from "../loading/loading";
 
 const styles = {
   paper: {
@@ -43,6 +45,8 @@ export const Archive = ({
 }) => {
   const dispatch = useDispatch();
   const [showFullTitle, updateShowFullTitle] = useState(false);
+  const src = `http://${baseUrl}${THUMBNAIL_URL.replace(":id", id)}`;
+  const [, { loading }] = useImageSize(src);
 
   const onPress = useCallback(() => {
     if (currentArchiveId !== id) dispatch(updatePages([]));
@@ -62,20 +66,23 @@ export const Archive = ({
       ref?.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [id, currentArchiveId, ref]);
 
-  const src = `http://${baseUrl}${THUMBNAIL_URL.replace(":id", id)}`;
-
   return (
     <Paper id={`archive_${id}`} style={styles.paper}>
       <div>
         <div>
-          <img
-            id={`archive-img-${index}`}
-            alt={`thumbnail for ${title}`}
-            style={styles.image}
-            src={src}
-            placeholder={`Loading thumbnail for ${title}`}
-            loading="lazy"
-          />
+          <Loading
+            label="Loading thumbnail"
+            loading={loading}
+            height={styles.image.height}
+          >
+            <img
+              id={`archive-img-${index}`}
+              alt={`thumbnail for ${title}`}
+              style={styles.image}
+              src={src}
+              loading="lazy"
+            />
+          </Loading>
         </div>
       </div>
       <div style={{ padding: "8px" }}>
