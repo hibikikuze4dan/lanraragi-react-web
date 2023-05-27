@@ -57,3 +57,14 @@ export const isValidUrl = (urlString) => {
 
 export const firstLetterToUppercase = (word = "") =>
   word.slice(0, 1).toUpperCase() + word.slice(1);
+
+export const getNewSearchArchivesArrayAfterDeletingArchiveId = (
+  searchArchives,
+  archiveId
+) => {
+  const arcIndex = searchArchives.findIndex(({ arcid }) => arcid === archiveId);
+  if (arcIndex === -1) return [...searchArchives];
+  const newArchives = [...searchArchives];
+  newArchives.splice(arcIndex, 1);
+  return newArchives;
+};

@@ -1,20 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getNewSearchArchivesArrayAfterDeletingArchiveId } from "../utils";
 
 const initialState = {
-  displayNavbar: true,
-  currentArchiveId: "",
-  randomArchives: [],
-  searchArchives: [],
-  categories: [],
+  archiveOpenedFrom: "random",
   baseUrl: "",
+  categories: [],
+  currentArchiveId: "",
+  displayNavbar: true,
+  displayDeleteSnackbar: false,
+  infoDialogArchiveId: "",
+  pages: [],
+  randomArchives: [],
+  renderedPages: [],
+  searchArchives: [],
   searchCategory: {},
   searchFilter: "",
+  searchPage: 1,
   searchSort: "date_added",
   searchSortDirection: "desc",
-  searchPage: 1,
-  pages: [],
-  renderedPages: [],
-  infoDialogArchiveId: "",
   sectionVisibility: {
     random: true,
     search: false,
@@ -26,7 +29,6 @@ const initialState = {
     random: false,
     images: false,
   },
-  archiveOpenedFrom: "random",
 };
 
 export const appSlice = createSlice({
@@ -92,6 +94,22 @@ export const appSlice = createSlice({
     updateSearchSortDirection: (state, { payload }) => {
       state.searchSortDirection = payload;
     },
+    updateDisplayDeleteSnackbar: (state, { payload }) => {
+      state.displayDeleteSnackbar = payload;
+    },
+    deleteArchiveFromRandomArchives: (state, { payload }) => {
+      state.randomArchives = [
+        ...state.randomArchives.filter(({ arcid }) => arcid !== payload),
+      ];
+    },
+    deleteArchiveFromSearchArchives: (state, { payload }) => {
+      state.searchArchives = [
+        ...getNewSearchArchivesArrayAfterDeletingArchiveId(
+          state.searchArchives,
+          payload
+        ),
+      ];
+    },
   },
 });
 
@@ -114,6 +132,9 @@ export const {
   updateSearchSort,
   updateSearchSortDirection,
   updateLoading,
+  updateDisplayDeleteSnackbar,
+  deleteArchiveFromRandomArchives,
+  deleteArchiveFromSearchArchives,
 } = appSlice.actions;
 
 export default appSlice.reducer;

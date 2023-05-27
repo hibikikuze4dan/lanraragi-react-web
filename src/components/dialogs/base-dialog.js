@@ -1,4 +1,4 @@
-import React from "react";
+import React, { isValidElement } from "react";
 import {
   AppBar,
   Dialog,
@@ -21,6 +21,7 @@ export const BaseDialog = ({
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
+  const isElement = isValidElement(title);
 
   return (
     <Dialog fullScreen={smDown} open={open} onClose={onClose}>
@@ -35,9 +36,13 @@ export const BaseDialog = ({
             >
               <Close />
             </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              {title}
-            </Typography>
+            {!isElement ? (
+              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                {title}
+              </Typography>
+            ) : (
+              title
+            )}
           </Toolbar>
         </AppBar>
       </DialogTitle>

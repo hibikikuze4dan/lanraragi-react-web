@@ -8,6 +8,7 @@ import { Url } from "./url/url";
 import { Navbar } from "./navbar/navbar";
 import Search from "./search/search";
 import { Settings } from "./settings/settings";
+import { SnackbarAlert } from "./snackbar-alert/snackbar-alert";
 
 export default function App() {
   const theme = useTheme();
@@ -42,6 +43,7 @@ export default function App() {
           </Grid>
         </div>
       </div>
+      <SnackbarAlert />
       {!mdUp && <Navbar />}
     </div>
   );

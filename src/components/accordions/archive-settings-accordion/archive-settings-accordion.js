@@ -10,7 +10,7 @@ export const ArchiveSettingsAccordion = () => {
   const onChange = () => setOpen(!open);
 
   return (
-    <BaseAccordion title="Accordion Settings" onChange={onChange} open={open}>
+    <BaseAccordion title="Archives Settings" onChange={onChange} open={open}>
       <Grid container>
         <Grid item xs={12}>
           <NumArchivesForRow />
