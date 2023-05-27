@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Button, Grid, Paper, Typography } from "@mui/material";
+import { Button, Grid, Paper } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useImageSize } from "react-image-size";
 import { THUMBNAIL_URL } from "../../requests/constants";
@@ -25,6 +25,8 @@ const styles = {
     textTransform: "none",
     fontWeight: "bold",
     wordWrap: "break-word",
+    fontSize: ".8 rem",
+    margin: 0,
   },
   clamp: {
     overflow: "hidden",
@@ -87,13 +89,16 @@ export const Archive = ({
       </div>
       <div style={{ padding: "8px" }}>
         <button type="button" onClick={onTitleClick}>
-          <Typography
+          <p
             id={`archive-text-${index}`}
-            sx={{ ...styles.typography, ...(!showFullTitle && styles.clamp) }}
+            style={{
+              ...styles.typography,
+              ...(!showFullTitle && styles.clamp),
+            }}
             ref={ref}
           >
             {title}
-          </Typography>
+          </p>
         </button>
       </div>
       <Grid container>

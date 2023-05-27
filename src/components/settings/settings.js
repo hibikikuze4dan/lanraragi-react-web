@@ -5,7 +5,7 @@ import { ArchiveSettingsAccordion } from "../accordions/archive-settings-accordi
 
 export const Settings = () => (
   <Grid container justifyContent="center">
-    <Grid item xs={7}>
+    <Grid item xs={10} md={7}>
       <div style={{ paddingTop: "3rem" }}>
         <UrlAccordion />
         <ArchiveSettingsAccordion />

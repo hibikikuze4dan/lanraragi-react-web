@@ -12,6 +12,7 @@ const styles = {
   },
   outerGridSettings: {
     height: "auto",
+    padding: "4rem 1rem",
   },
 };
 
