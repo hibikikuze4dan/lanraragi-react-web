@@ -6,9 +6,11 @@ import {
 } from "../../app/selectors";
 import { updateSearchArchives } from "../../app/slice";
 import { getArchivesBySearchThrottled } from "../../requests/search";
+import { getSearchStats } from "../../storage/archives";
 
 export const useSearchOnLoad = (searchFilter) => {
   const dispatch = useDispatch();
+  const { filter, sort: sortby, direction: order, category } = getSearchStats();
   const searchArchives = useSelector(getCurrentSearchArchives);
   const randomArchives = useSelector(getCurrentRandomArchives);
   const [loading, setLoading] = useState(false);
@@ -20,9 +22,10 @@ export const useSearchOnLoad = (searchFilter) => {
     setLoading(true);
     const arcs = await getArchivesBySearchThrottled({
       filter: search,
-      sortby: "date_added",
-      order: "desc",
+      sortby,
+      order,
       start: -1,
+      ...(category && { category }),
     });
     dispatch(updateSearchArchives(arcs.data));
     setLoading(false);
@@ -34,7 +37,7 @@ export const useSearchOnLoad = (searchFilter) => {
     randomArchives.length &&
     !loading
   ) {
-    callNewArchives(searchFilter);
+    callNewArchives(filter);
   }
 
   return results;

@@ -15,6 +15,7 @@ import {
   getSearchSortDirection,
 } from "../../../app/selectors";
 import { getArchivesBySearch } from "../../../requests/search";
+import { setSearchStats } from "../../../storage/archives";
 
 export const SubmitAndClear = ({
   selectedCategoryId,
@@ -56,6 +57,13 @@ export const SubmitAndClear = ({
       order: searchSortDirection,
     });
     onClose();
+    setSearchStats({
+      filter: searchFilter,
+      page: 1,
+      sort: searchSort,
+      direction: searchSortDirection,
+      category: selectedCategoryId,
+    });
   }, [
     searchFilter,
     selectedCategoryId,
@@ -64,6 +72,7 @@ export const SubmitAndClear = ({
     searchSort,
     searchSortDirection,
   ]);
+
   const onClear = () => {
     dispatch(updateSearchPage(1));
     dispatch(updateSearchCategory({}));
@@ -76,6 +85,13 @@ export const SubmitAndClear = ({
       order: searchSortDirection,
     });
     onClose();
+    setSearchStats({
+      filter: "",
+      page: 1,
+      sort: searchSort,
+      direction: searchSortDirection,
+      category: "",
+    });
   };
 
   return (

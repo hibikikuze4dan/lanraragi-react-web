@@ -15,7 +15,10 @@ export const SearchCategoriesSelect = ({
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="select-categories-search-label">
+      <InputLabel
+        id="select-categories-search-label"
+        for="select-categories-search"
+      >
         Filter Archives by Category
       </InputLabel>
       <Select

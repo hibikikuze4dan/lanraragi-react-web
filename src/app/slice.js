@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getNewSearchArchivesArrayAfterDeletingArchiveId } from "../utils";
+import { getSearchStats } from "../storage/archives";
 
 const initialState = {
   archiveOpenedFrom: "random",
@@ -33,7 +34,25 @@ const initialState = {
 
 export const appSlice = createSlice({
   name: "app",
-  initialState,
+  initialState: () => {
+    const {
+      sort: searchSort,
+      direction: searchSortDirection,
+      filter: searchFilter,
+      page: searchPage,
+      category: id,
+    } = getSearchStats();
+    return {
+      ...initialState,
+      searchSort,
+      searchSortDirection,
+      searchFilter,
+      searchPage,
+      searchCategory: {
+        id,
+      },
+    };
+  },
   reducers: {
     updateCurrentArchiveId: (state, action) => {
       state.currentArchiveId = action.payload;

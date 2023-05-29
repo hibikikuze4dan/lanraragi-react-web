@@ -24,7 +24,7 @@ const styles = {
   typography: {
     textTransform: "none",
     fontWeight: "bold",
-    wordWrap: "break-word",
+    wordWrap: "anywhere",
     fontSize: ".8 rem",
     margin: 0,
   },

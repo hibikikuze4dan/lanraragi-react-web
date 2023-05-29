@@ -5,3 +5,13 @@ export const LRR_API_KEY = "LRR_API_KEY";
 export const NUM_ARCHIVES_PER_ROW = "NUM_ARCHIVES_PER_ROW";
 
 export const NUM_ARCHIVES_TO_RENDER = "NUM_ARCHIVES_TO_RENDER";
+
+export const SEARCH_STATS = "SEARCH_STATS";
+
+export const SEARCH_STATS_DEFAULT = {
+  filter: "",
+  page: 1,
+  sort: "date_added",
+  direction: "desc",
+  category: "",
+};

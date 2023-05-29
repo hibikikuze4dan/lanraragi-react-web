@@ -11,18 +11,25 @@ import {
   updateSectionVisibility,
 } from "../../app/slice";
 import { getArchivesBySearch } from "../../requests/search";
-import { getSearchCategory } from "../../app/selectors";
+import {
+  getSearchCategory,
+  getSearchSort,
+  getSearchSortDirection,
+} from "../../app/selectors";
+import { setSearchStats } from "../../storage/archives";
 
 export const Tags = ({ archiveTags, onClose }) => {
   const dispatch = useDispatch();
   const tagsAsObject = getTagsObjectFromTagsString(archiveTags);
   const searchCategory = useSelector(getSearchCategory);
+  const sort = useSelector(getSearchSort);
+  const sortDirection = useSelector(getSearchSortDirection);
 
   const callNewArchives = async (searchVal) => {
     const arcs = await getArchivesBySearch({
       filter: searchVal,
-      sortby: "date_added",
-      order: "desc",
+      sortby: sort,
+      order: sortDirection,
       start: -1,
       ...(searchCategory?.id && { category: searchCategory?.id }),
     });
@@ -36,6 +43,13 @@ export const Tags = ({ archiveTags, onClose }) => {
     dispatch(setAllSectionVisibilityFalse());
     dispatch(updateSectionVisibility({ search: true }));
     onClose();
+    setSearchStats({
+      filter,
+      page: 1,
+      sort,
+      direction: sortDirection,
+      category: searchCategory?.id ?? "",
+    });
   };
 
   return (

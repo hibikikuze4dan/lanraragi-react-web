@@ -41,7 +41,12 @@ export const Categories = ({ arcId, categories }) => {
       )}
       <Grid item xs={12} sm={12}>
         <FormControl fullWidth>
-          <InputLabel id="category-select-info-dialog">Category</InputLabel>
+          <InputLabel
+            id="category-select-info-dialog"
+            for="category-select-select"
+          >
+            Category
+          </InputLabel>
           <Select
             variant="filled"
             fullWidth
