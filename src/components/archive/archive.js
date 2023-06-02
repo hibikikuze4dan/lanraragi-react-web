@@ -20,7 +20,13 @@ const styles = {
     justifyContent: "space-between",
     backgroundColor: "#363940",
   },
-  image: { height: 300, width: "100%" },
+  image: {
+    height: 300,
+    objectFit: "cover",
+    objectPosition: "left",
+    width: "100%",
+    borderRadius: "4px",
+  },
   typography: {
     textTransform: "none",
     fontWeight: "bold",
@@ -33,6 +39,22 @@ const styles = {
     display: "-webkit-box",
     WebkitLineClamp: "4",
     WebkitBoxOrient: "vertical",
+  },
+  imageWrapper: {
+    overflow: "hiddem",
+    padding: ".5rem .5rem",
+  },
+  infoButton: {
+    backgroundColor: "#43464E",
+    borderRadius: "0 0 4px 0",
+    boxShadow: "none",
+    borderLeft: "1px solid #363940",
+  },
+  readButton: {
+    backgroundColor: "#43464E",
+    borderRadius: "0 0 0 4px",
+    boxShadow: "none",
+    borderRight: "1px solid #363940",
   },
 };
 
@@ -71,7 +93,7 @@ export const Archive = ({
   return (
     <Paper id={`archive_${id}`} style={styles.paper}>
       <div>
-        <div>
+        <div style={styles.imageWrapper}>
           <Loading
             label="Loading thumbnail"
             loading={loading}
@@ -108,7 +130,7 @@ export const Archive = ({
             variant="contained"
             onClick={onPress}
             fullWidth
-            sx={{ backgroundColor: "#43464E", borderRadius: "4px 0 0 4px" }}
+            sx={styles.readButton}
           >
             Read
           </Button>
@@ -119,7 +141,7 @@ export const Archive = ({
             variant="contained"
             onClick={onInfoClick}
             fullWidth
-            sx={{ backgroundColor: "#43464E", borderRadius: "0 4px 4px 0" }}
+            sx={styles.infoButton}
           >
             Info
           </Button>

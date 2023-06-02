@@ -43,7 +43,7 @@ export const Categories = ({ arcId, categories }) => {
         <FormControl fullWidth>
           <InputLabel
             id="category-select-info-dialog"
-            for="category-select-select"
+            htmlFor="category-select-select"
           >
             Category
           </InputLabel>
