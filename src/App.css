@@ -65,3 +65,7 @@ button {
   background-color: inherit;
   border: none;
 }
+
+#display-method-select-select {
+  text-transform: capitalize;
+}

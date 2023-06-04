@@ -1,4 +1,5 @@
 import {
+  DISPLAY_METHOD_WIDE_THUMBNAILS,
   NUM_ARCHIVES_PER_ROW as NUM_ARCHIVES_PER_ROW_STRING,
   NUM_ARCHIVES_TO_RENDER,
 } from "./constants";
@@ -43,4 +44,11 @@ export const setNumArchivesToRender = (viewPort, num) => {
     `${NUM_ARCHIVES_TO_RENDER}`,
     JSON.stringify({ ...jsonValue, [viewPort]: num })
   );
+};
+
+export const getDisplayMethodForWideArchiveThumbnails = () =>
+  localStorage.getItem(DISPLAY_METHOD_WIDE_THUMBNAILS) ?? "contain";
+
+export const setDisplayMethodForWideArchiveThumbnails = (displayMethod) => {
+  localStorage.setItem(DISPLAY_METHOD_WIDE_THUMBNAILS, displayMethod);
 };

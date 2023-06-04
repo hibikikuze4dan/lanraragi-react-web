@@ -6,7 +6,10 @@ import { ArchiveInfoDialog } from "../dialogs/fragments/archive-info-dialog";
 import { getBaseUrl } from "../../storage/requests";
 import { getCurrentArchiveId } from "../../app/selectors";
 import { updateInfoDialogArchiveId } from "../../app/slice";
-import { getNumArchivePerRow } from "../../storage/archives";
+import {
+  getDisplayMethodForWideArchiveThumbnails,
+  getNumArchivePerRow,
+} from "../../storage/archives";
 import { Loading } from "../loading/loading";
 
 export const ArchiveList = ({
@@ -28,6 +31,7 @@ export const ArchiveList = ({
   const secondSliceValue = sliceToRender[1] ?? archives.length;
   const baseUrl = getBaseUrl();
   const columns = getNumArchivePerRow();
+  const wideThumbnailDisplayMethod = getDisplayMethodForWideArchiveThumbnails();
 
   return (
     <div
@@ -79,6 +83,7 @@ export const ArchiveList = ({
                       onInfoClick={onInfoClick}
                       baseUrl={baseUrl}
                       currentArchiveId={currentArchiveId}
+                      wideImageDisplayMethod={wideThumbnailDisplayMethod}
                     />
                   </Grid>
                 );

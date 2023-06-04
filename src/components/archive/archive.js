@@ -16,6 +16,7 @@ export const Archive = ({
   baseUrl,
   currentArchiveId,
   isSearch,
+  wideImageDisplayMethod,
 }) => {
   const [showFullTitle, updateShowFullTitle] = useState(false);
   const src = `http://${baseUrl}${THUMBNAIL_URL.replace(":id", id)}`;
@@ -23,6 +24,10 @@ export const Archive = ({
   const width = dimensions?.width ?? 0;
   const height = dimensions?.height ?? 0;
   const wideImage = width > height;
+  const wideImageStyles = {
+    ...styles.imageWide,
+    ...(wideImageDisplayMethod && { objectFit: wideImageDisplayMethod }),
+  };
 
   const ref = useRef();
 
@@ -49,7 +54,7 @@ export const Archive = ({
               alt={`thumbnail for ${title}`}
               style={{
                 ...styles.image,
-                ...(wideImage ? styles.imageWide : styles.imageLong),
+                ...(wideImage ? wideImageStyles : styles.imageLong),
               }}
               src={src}
               height={height}
