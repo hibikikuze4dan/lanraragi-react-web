@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMaxPages, getSearchPage } from "../../../app/selectors";
 import { updateSearchPage } from "../../../app/slice";
 import { useWidth } from "../../../hooks/useWidth";
-import { setSearchStats } from "../../../storage/archives";
+import { setSearchStats } from "../../../storage/search";
 
 const scroll = () => {
   document

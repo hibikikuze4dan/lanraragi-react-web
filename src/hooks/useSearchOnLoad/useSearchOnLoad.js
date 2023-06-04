@@ -6,7 +6,7 @@ import {
 } from "../../app/selectors";
 import { updateSearchArchives } from "../../app/slice";
 import { getArchivesBySearchThrottled } from "../../requests/search";
-import { getSearchStats } from "../../storage/archives";
+import { getSearchStats } from "../../storage/search";
 
 export const useSearchOnLoad = (searchFilter) => {
   const dispatch = useDispatch();

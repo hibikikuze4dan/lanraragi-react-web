@@ -16,7 +16,7 @@ import {
   getSearchSort,
   getSearchSortDirection,
 } from "../../app/selectors";
-import { setSearchStats } from "../../storage/archives";
+import { setSearchStats } from "../../storage/search";
 
 export const Tags = ({ archiveTags, onClose }) => {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getNewSearchArchivesArrayAfterDeletingArchiveId } from "../utils";
-import { getSearchStats } from "../storage/archives";
+import { getSearchStats } from "../storage/search";
 
 const initialState = {
   archiveOpenedFrom: "random",

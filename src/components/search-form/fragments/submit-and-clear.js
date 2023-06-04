@@ -15,7 +15,7 @@ import {
   getSearchSortDirection,
 } from "../../../app/selectors";
 import { getArchivesBySearch } from "../../../requests/search";
-import { setSearchStats } from "../../../storage/archives";
+import { setSearchStats } from "../../../storage/search";
 
 export const SubmitAndClear = ({
   selectedCategoryId,
