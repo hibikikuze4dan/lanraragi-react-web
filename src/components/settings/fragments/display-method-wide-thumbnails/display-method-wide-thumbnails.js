@@ -27,7 +27,7 @@ export const DisplayMethodWideThumbnails = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Grid container>
+        <Grid container justifyContent="center">
           <Typography>Display method for wide archive thumbails</Typography>
         </Grid>
       </Grid>
