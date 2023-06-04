@@ -80,7 +80,7 @@ export const PageButtons = ({ id, disabled, top = false }) => {
           <FormControl fullWidth>
             <InputLabel
               id={`page-jump-${topCopy}`}
-              for={`page-jump-select-${topCopy}`}
+              htmlFor={`page-jump-select-${topCopy}`}
             >
               Page
             </InputLabel>

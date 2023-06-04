@@ -32,7 +32,7 @@ export const Sort = () => {
     <Grid container spacing={1}>
       <Grid item xs={6}>
         <FormControl fullWidth>
-          <InputLabel id="select-sort-by-label" for="select-sort-by">
+          <InputLabel id="select-sort-by-label" htmlFor="select-sort-by">
             Sort By
           </InputLabel>
           <Select

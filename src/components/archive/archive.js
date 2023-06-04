@@ -1,62 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Button, Grid, Paper } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { Paper } from "@mui/material";
 import { useImageSize } from "react-image-size";
 import { THUMBNAIL_URL } from "../../requests/constants";
-import {
-  setAllSectionVisibilityFalse,
-  updateArchiveOpenedFrom,
-  updateCurrentArchiveId,
-  updatePages,
-  updateSectionVisibility,
-} from "../../app/slice";
 import { Loading } from "../loading/loading";
+import { ARCHIVE_STYLES } from "./constants";
+import { ArchiveActionButtons } from "./fragments/archive-action-buttons";
 
-const styles = {
-  paper: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    backgroundColor: "#363940",
-  },
-  image: {
-    height: 300,
-    objectFit: "cover",
-    objectPosition: "left",
-    width: "100%",
-    borderRadius: "4px",
-  },
-  typography: {
-    textTransform: "none",
-    fontWeight: "bold",
-    wordWrap: "anywhere",
-    fontSize: ".8 rem",
-    margin: 0,
-  },
-  clamp: {
-    overflow: "hidden",
-    display: "-webkit-box",
-    WebkitLineClamp: "4",
-    WebkitBoxOrient: "vertical",
-  },
-  imageWrapper: {
-    overflow: "hiddem",
-    padding: ".5rem .5rem",
-  },
-  infoButton: {
-    backgroundColor: "#43464E",
-    borderRadius: "0 0 4px 0",
-    boxShadow: "none",
-    borderLeft: "1px solid #363940",
-  },
-  readButton: {
-    backgroundColor: "#43464E",
-    borderRadius: "0 0 0 4px",
-    boxShadow: "none",
-    borderRight: "1px solid #363940",
-  },
-};
+const styles = ARCHIVE_STYLES;
 
 export const Archive = ({
   id,
@@ -67,18 +17,13 @@ export const Archive = ({
   currentArchiveId,
   isSearch,
 }) => {
-  const dispatch = useDispatch();
   const [showFullTitle, updateShowFullTitle] = useState(false);
   const src = `http://${baseUrl}${THUMBNAIL_URL.replace(":id", id)}`;
-  const [, { loading }] = useImageSize(src);
+  const [dimensions, { loading }] = useImageSize(src);
+  const width = dimensions?.width ?? 0;
+  const height = dimensions?.height ?? 0;
+  const wideImage = width > height;
 
-  const onPress = useCallback(() => {
-    if (currentArchiveId !== id) dispatch(updatePages([]));
-    dispatch(setAllSectionVisibilityFalse());
-    dispatch(updateSectionVisibility({ images: true }));
-    dispatch(updateCurrentArchiveId(id));
-    dispatch(updateArchiveOpenedFrom(isSearch ? "search" : "random"));
-  }, [id, currentArchiveId, isSearch]);
   const ref = useRef();
 
   const onTitleClick = useCallback(() => {
@@ -86,9 +31,9 @@ export const Archive = ({
   }, [showFullTitle]);
 
   useEffect(() => {
-    if (id === currentArchiveId)
+    if (id === currentArchiveId && !loading)
       ref?.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, [id, currentArchiveId, ref]);
+  }, [id, currentArchiveId, ref, loading]);
 
   return (
     <Paper id={`archive_${id}`} style={styles.paper}>
@@ -97,13 +42,18 @@ export const Archive = ({
           <Loading
             label="Loading thumbnail"
             loading={loading}
-            height={styles.image.height}
+            height={styles.image.maxHeight}
           >
             <img
               id={`archive-img-${index}`}
               alt={`thumbnail for ${title}`}
-              style={styles.image}
+              style={{
+                ...styles.image,
+                ...(wideImage ? styles.imageWide : styles.imageLong),
+              }}
               src={src}
+              height={height}
+              width={width}
               loading="lazy"
             />
           </Loading>
@@ -123,30 +73,13 @@ export const Archive = ({
           </p>
         </button>
       </div>
-      <Grid container>
-        <Grid item xs={6}>
-          <Button
-            aria-label={`Click to read ${title}`}
-            variant="contained"
-            onClick={onPress}
-            fullWidth
-            sx={styles.readButton}
-          >
-            Read
-          </Button>
-        </Grid>
-        <Grid item xs={6}>
-          <Button
-            aria-label={`Click for info and to modify categories for ${title}`}
-            variant="contained"
-            onClick={onInfoClick}
-            fullWidth
-            sx={styles.infoButton}
-          >
-            Info
-          </Button>
-        </Grid>
-      </Grid>
+      <ArchiveActionButtons
+        id={id}
+        title={title}
+        currentArchiveId={currentArchiveId}
+        isSearch={isSearch}
+        onInfoClick={onInfoClick}
+      />
     </Paper>
   );
 };
