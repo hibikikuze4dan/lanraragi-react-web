@@ -8,7 +8,7 @@ import { updateSearchArchives } from "../../app/slice";
 import { getArchivesBySearchThrottled } from "../../requests/search";
 import { getSearchStats } from "../../storage/search";
 
-export const useSearchOnLoad = (searchFilter) => {
+export const useSearchOnLoad = () => {
   const dispatch = useDispatch();
   const { filter, sort: sortby, direction: order, category } = getSearchStats();
   const searchArchives = useSelector(getCurrentSearchArchives);
@@ -31,12 +31,7 @@ export const useSearchOnLoad = (searchFilter) => {
     setLoading(false);
   }, []);
 
-  if (
-    searchFilter === "" &&
-    !searchLoaded &&
-    randomArchives.length &&
-    !loading
-  ) {
+  if (!searchLoaded && randomArchives.length && !loading) {
     callNewArchives(filter);
   }
 

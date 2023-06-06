@@ -42,7 +42,7 @@ export const DisplayMethodWideThumbnails = () => {
             </InputLabel>
 
             <Select
-              variant="filled"
+              variant="outlined"
               fullWidth
               labelId="display-method-select-label"
               id="display-method-select-select"

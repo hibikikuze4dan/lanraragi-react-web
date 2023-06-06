@@ -17,7 +17,7 @@ export const Random = ({ display }) => {
   const count = getNumArchivesToRender()[breakpoint];
   const randomArchives = useSelector(getCurrentRandomArchives);
   const { random: israndomLoading } = useSelector(getLoading);
-  useSearchOnLoad("");
+  useSearchOnLoad();
 
   const callNewArchives = useCallback(async () => {
     dispatch(updateLoading({ random: true }));

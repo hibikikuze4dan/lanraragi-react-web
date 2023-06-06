@@ -24,9 +24,19 @@ export const Archive = ({
   const width = dimensions?.width ?? 0;
   const height = dimensions?.height ?? 0;
   const wideImage = width > height;
+  const diffBetweenMaxHeightAndImageHeight = 300 - height;
+  const isDiffBetweenMaxHeightAndImageHeightPositive =
+    diffBetweenMaxHeightAndImageHeight > 0;
+  const extraMargin = isDiffBetweenMaxHeightAndImageHeightPositive
+    ? `${diffBetweenMaxHeightAndImageHeight * 0.5}px`
+    : 0;
   const wideImageStyles = {
     ...styles.imageWide,
     ...(wideImageDisplayMethod && { objectFit: wideImageDisplayMethod }),
+    ...(isDiffBetweenMaxHeightAndImageHeightPositive && {
+      marginTop: extraMargin,
+      marginBottom: extraMargin,
+    }),
   };
 
   const ref = useRef();
