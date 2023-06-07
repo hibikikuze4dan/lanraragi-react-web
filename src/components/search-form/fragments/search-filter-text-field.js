@@ -1,31 +1,61 @@
-import React, { useState } from "react";
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { debounce } from "lodash";
-import { TextField } from "@mui/material";
-import { updateSearchFilter } from "../../../app/slice";
-import { getSearchFilter } from "../../../app/selectors";
+import { Autocomplete, TextField, createFilterOptions } from "@mui/material";
+import { updateSearchFilter, updateTags } from "../../../app/slice";
+import { getAutocompleteTags, getSearchFilter } from "../../../app/selectors";
+import { getTags } from "../../../requests/tags";
+
+const filterOptions = createFilterOptions({
+  limit: 25,
+});
 
 export const SearchFilterTextField = () => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState(useSelector(getSearchFilter));
+  const tags = useSelector(getAutocompleteTags);
+  const searchFilter = useSelector(getSearchFilter);
 
-  const onChangeText = debounce((e) => {
-    dispatch(updateSearchFilter(e.target.value));
+  const onChangeText = debounce((event, newValue) => {
+    dispatch(updateSearchFilter(newValue || event.target.value));
   }, 250);
-  const onChange = (e) => {
-    setValue(e.target.value);
-    onChangeText(e);
+  const onChange = (event, newValue) => {
+    onChangeText(event, newValue);
   };
 
+  useEffect(() => {
+    const getTagsAsync = async () => {
+      const tagsResponse = await getTags();
+      return tagsResponse;
+    };
+    if (!tags.length) {
+      getTagsAsync().then((response) => {
+        dispatch(updateTags(response));
+      });
+    }
+  }, [tags]);
+
   return (
-    <TextField
-      label="Search Filter"
-      placeholder="Search Title, Artist, Series, Language or Tags"
+    <Autocomplete
+      autoHighlight
+      freeSolo
+      filterSelectedOptions
       fullWidth
-      value={value}
+      filterOptions={filterOptions}
+      options={tags}
       onChange={onChange}
-      type="text"
-      sx={{ mb: "1rem" }}
+      value={searchFilter}
+      renderInput={(params) => (
+        <TextField
+          label="Search Filter"
+          placeholder="Search Title, Artist, Series, Language or Tags"
+          fullWidth
+          type="text"
+          sx={{ mb: "1rem" }}
+          onChange={onChange}
+          {...params}
+        />
+      )}
     />
   );
 };

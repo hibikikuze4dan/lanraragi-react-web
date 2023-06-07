@@ -14,6 +14,7 @@ export const useSearchOnLoad = () => {
   const searchArchives = useSelector(getCurrentSearchArchives);
   const randomArchives = useSelector(getCurrentRandomArchives);
   const [loading, setLoading] = useState(false);
+  const [searchFilter, setSearchFilter] = useState("");
   const searchLoaded = searchArchives.length;
 
   const results = { results: searchArchives, loading };
@@ -31,8 +32,14 @@ export const useSearchOnLoad = () => {
     setLoading(false);
   }, []);
 
-  if (!searchLoaded && randomArchives.length && !loading) {
+  if (
+    !searchLoaded &&
+    randomArchives.length &&
+    !loading &&
+    searchFilter !== filter
+  ) {
     callNewArchives(filter);
+    setSearchFilter(filter);
   }
 
   return results;

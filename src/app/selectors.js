@@ -156,3 +156,13 @@ export const getDisplayDeleteSnackbar = createSelector(
   getApp,
   (app) => !!app?.displayDeleteSnackbar
 );
+
+export const getTags = createSelector(getApp, (app) => app?.tags ?? []);
+
+export const getAutocompleteTags = createSelector(getTags, (tags) =>
+  tags.map((tag) => {
+    const namespace = tag?.namespace;
+    const text = tag?.text;
+    return namespace ? `${namespace}:${text}` : text;
+  })
+);

@@ -19,6 +19,7 @@ const initialState = {
   searchPage: 1,
   searchSort: "date_added",
   searchSortDirection: "desc",
+  tags: [],
   sectionVisibility: {
     random: true,
     search: false,
@@ -129,6 +130,9 @@ export const appSlice = createSlice({
         ),
       ];
     },
+    updateTags: (state, { payload }) => {
+      state.tags = [...payload];
+    },
   },
 });
 
@@ -154,6 +158,7 @@ export const {
   updateDisplayDeleteSnackbar,
   deleteArchiveFromRandomArchives,
   deleteArchiveFromSearchArchives,
+  updateTags,
 } = appSlice.actions;
 
 export default appSlice.reducer;

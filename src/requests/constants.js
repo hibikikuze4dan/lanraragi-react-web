@@ -20,6 +20,8 @@ export const MINION_URL = "/api/minion/:jobid";
 
 export const DELETE_ARCHIVE_URL = "/api/archives/:id";
 
+export const TAGS_URL = "/api/database/stats?minweight=1";
+
 export const HEADERS = {
   Authorization: `Bearer ${getApiKey()}`,
 };

@@ -15,16 +15,16 @@ export const getArchivesBySearch = async ({
   start = -1,
   category,
 }) => {
+  const params = new URLSearchParams();
+  params.append("filter", filter);
+  params.append("sortby", sortby);
+  params.append("order", order);
+  params.append("start", start);
+  if (category) params.append("category", category);
+
   const categories = await axios({
     ...config,
-    url: `http://${getBaseUrl()}${SEARCH_URL}`,
-    params: {
-      filter,
-      sortby,
-      order,
-      start,
-      category,
-    },
+    url: `http://${getBaseUrl()}${SEARCH_URL}?${params.toString()}`,
   });
   return categories.data;
 };
