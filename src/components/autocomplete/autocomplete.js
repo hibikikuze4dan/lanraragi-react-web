@@ -101,10 +101,9 @@ export const Autocomplete = ({
       >
         <List sx={styles.list}>
           {listItems.map((item) => (
-            <ListItem>
+            <ListItem key={item}>
               <ListItemButton
                 component="div"
-                key={item}
                 onClick={() => onListItemButtonClick(item)}
               >
                 <Typography>{item}</Typography>
