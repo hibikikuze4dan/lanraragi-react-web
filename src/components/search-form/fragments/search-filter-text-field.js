@@ -2,25 +2,21 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { debounce } from "lodash";
-import { Autocomplete, TextField, createFilterOptions } from "@mui/material";
+import { Autocomplete } from "../../autocomplete/autocomplete";
 import { updateSearchFilter, updateTags } from "../../../app/slice";
 import { getAutocompleteTags, getSearchFilter } from "../../../app/selectors";
 import { getTags } from "../../../requests/tags";
-
-const filterOptions = createFilterOptions({
-  limit: 25,
-});
 
 export const SearchFilterTextField = () => {
   const dispatch = useDispatch();
   const tags = useSelector(getAutocompleteTags);
   const searchFilter = useSelector(getSearchFilter);
 
-  const onChangeText = debounce((event, newValue) => {
-    dispatch(updateSearchFilter(newValue || event.target.value));
+  const onChangeText = debounce((value) => {
+    dispatch(updateSearchFilter(value));
   }, 250);
-  const onChange = (event, newValue) => {
-    onChangeText(event, newValue);
+  const onChange = (value) => {
+    onChangeText(value);
   };
 
   useEffect(() => {
@@ -35,27 +31,5 @@ export const SearchFilterTextField = () => {
     }
   }, [tags]);
 
-  return (
-    <Autocomplete
-      autoHighlight
-      freeSolo
-      filterSelectedOptions
-      fullWidth
-      filterOptions={filterOptions}
-      options={tags}
-      onChange={onChange}
-      value={searchFilter}
-      renderInput={(params) => (
-        <TextField
-          label="Search Filter"
-          placeholder="Search Title, Artist, Series, Language or Tags"
-          fullWidth
-          type="text"
-          sx={{ mb: "1rem" }}
-          onChange={onChange}
-          {...params}
-        />
-      )}
-    />
-  );
+  return <Autocomplete items={tags} onChange={onChange} value={searchFilter} />;
 };

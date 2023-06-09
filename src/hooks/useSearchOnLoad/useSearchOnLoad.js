@@ -14,7 +14,7 @@ export const useSearchOnLoad = () => {
   const searchArchives = useSelector(getCurrentSearchArchives);
   const randomArchives = useSelector(getCurrentRandomArchives);
   const [loading, setLoading] = useState(false);
-  const [searchFilter, setSearchFilter] = useState("");
+  const [searchFilter, setSearchFilter] = useState(null);
   const searchLoaded = searchArchives.length;
 
   const results = { results: searchArchives, loading };
