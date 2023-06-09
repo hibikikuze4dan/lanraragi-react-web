@@ -31,5 +31,13 @@ export const SearchFilterTextField = () => {
     }
   }, [tags]);
 
-  return <Autocomplete items={tags} onChange={onChange} value={searchFilter} />;
+  return (
+    <Autocomplete
+      label="Search Filter"
+      placeholder="Search Title, Artist, Series, Language or Tags"
+      items={tags}
+      onChange={onChange}
+      value={searchFilter}
+    />
+  );
 };

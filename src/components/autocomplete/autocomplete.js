@@ -31,6 +31,7 @@ export const Autocomplete = ({
   items = [],
   maxItems = 25,
   onChange,
+  placeholder,
 }) => {
   const [textFieldValue, setTextFieldValue] = useState(value ?? "");
   const [focused, setFocued] = useState(false);
@@ -79,6 +80,7 @@ export const Autocomplete = ({
         fullWidth
         value={textFieldValue}
         onChange={onTextFieldChange}
+        placeholder={placeholder}
         InputProps={{
           endAdornment: textFieldValue ? (
             <IconButton
