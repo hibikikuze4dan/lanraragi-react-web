@@ -38,6 +38,7 @@ export const SearchFilterTextField = () => {
       items={tags}
       onChange={onChange}
       value={searchFilter}
+      maxItems={5}
     />
   );
 };

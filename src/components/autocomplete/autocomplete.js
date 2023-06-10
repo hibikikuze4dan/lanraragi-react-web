@@ -11,19 +11,7 @@ import {
 } from "@mui/material";
 import { matchSorter } from "match-sorter";
 import React, { useCallback, useRef, useState } from "react";
-
-const styles = {
-  popper: {
-    width: "calc(100% - 32px)",
-    backgroundColor: "#121212",
-    zIndex: 5,
-  },
-  list: {
-    maxHeight: "500px",
-    overflowY: "scroll",
-    width: "100%",
-  },
-};
+import { AUTOCOMPLETE_STYLES } from "./constants";
 
 export const Autocomplete = ({
   label,
@@ -39,6 +27,7 @@ export const Autocomplete = ({
   const [ref, setRef] = useState(useRef(null));
   const commaSplitTextField = textFieldValue.split(", ");
   const lastIndex = commaSplitTextField.length - 1;
+  const tagSearchValue = commaSplitTextField[lastIndex];
 
   const onTextFieldChange = useCallback(
     (e) => {
@@ -59,10 +48,15 @@ export const Autocomplete = ({
       if (onChange) onChange(newValue);
       setListOpen(false);
     },
-    [textFieldValue, ref]
+    [textFieldValue, ref, onChange]
   );
 
-  const listItems = matchSorter(items, commaSplitTextField[lastIndex], {
+  const onEndAdornmentButtonClick = useCallback(() => {
+    onTextFieldChange({ target: { value: "" } });
+    ref.focus();
+  }, [onTextFieldChange, ref]);
+
+  const listItems = matchSorter(items, tagSearchValue, {
     threshold: matchSorter.rankings.CONTAINS,
   }).slice(0, maxItems);
 
@@ -85,7 +79,7 @@ export const Autocomplete = ({
           endAdornment: textFieldValue ? (
             <IconButton
               aria-label="delete all current search field text"
-              onClick={() => onTextFieldChange({ target: { value: "" } })}
+              onClick={onEndAdornmentButtonClick}
             >
               <Close />
             </IconButton>
@@ -93,18 +87,24 @@ export const Autocomplete = ({
         }}
       />
       <Popper
-        open={listItems.length > 0 && focused && listOpen}
+        open={
+          listItems.length > 0 &&
+          focused &&
+          listOpen &&
+          tagSearchValue.length > 1
+        }
         anchorEl={ref}
         disablePortal
         placement="bottom-start"
-        sx={styles.popper}
+        sx={AUTOCOMPLETE_STYLES.popper}
       >
-        <List sx={styles.list}>
+        <List sx={AUTOCOMPLETE_STYLES.list}>
           {listItems.map((item) => (
-            <ListItem key={item}>
+            <ListItem key={item} sx={{ padding: 0 }}>
               <ListItemButton
                 component="div"
                 onClick={() => onListItemButtonClick(item)}
+                sx={{ padding: ".25rem 0 .25rem .5rem" }}
               >
                 <Typography>{item}</Typography>
               </ListItemButton>
