@@ -12,7 +12,6 @@ export const getArchivesBySearch = async (
   { filter, sortby, order, start = -1, category },
   controller
 ) => {
-  console.log(controller);
   const params = new URLSearchParams();
   params.append("filter", filter);
   params.append("sortby", sortby);
