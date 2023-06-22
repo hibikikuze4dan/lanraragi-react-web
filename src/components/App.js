@@ -9,6 +9,7 @@ import { Navbar } from "./navbar/navbar";
 import Search from "./search/search";
 import { Settings } from "./settings/settings";
 import { SnackbarAlert } from "./snackbar-alert/snackbar-alert";
+import { useSearchOnLoad } from "../hooks/useSearchOnLoad/useSearchOnLoad";
 
 export default function App() {
   const theme = useTheme();
@@ -16,6 +17,7 @@ export default function App() {
   const { random, images, search, settings } = useSelector(
     getSectionVisibilityObject
   );
+  const { loading, controller } = useSearchOnLoad();
 
   const styles = {
     wrapper: {
@@ -36,7 +38,7 @@ export default function App() {
           <Grid className="full-width full-height">
             <Url>
               {random && <Random />}
-              {search && <Search />}
+              {search && <Search loading={loading} controller={controller} />}
               {images && <ImageList />}
               {settings && <Settings />}
             </Url>

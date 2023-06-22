@@ -8,13 +8,11 @@ const config = {
   headers: HEADERS,
 };
 
-export const getArchivesBySearch = async ({
-  filter,
-  sortby,
-  order,
-  start = -1,
-  category,
-}) => {
+export const getArchivesBySearch = async (
+  { filter, sortby, order, start = -1, category },
+  controller
+) => {
+  console.log(controller);
   const params = new URLSearchParams();
   params.append("filter", filter);
   params.append("sortby", sortby);
@@ -25,6 +23,7 @@ export const getArchivesBySearch = async ({
   const categories = await axios({
     ...config,
     url: `http://${getBaseUrl()}${SEARCH_URL}?${params.toString()}`,
+    ...(controller && { signal: controller.signal }),
   });
   return categories.data;
 };

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentSearchArchives,
   getLoading,
-  getSearchFilter,
   getSearchPage,
 } from "../../app/selectors";
 import { updateLoading } from "../../app/slice";
@@ -12,25 +11,24 @@ import { PageButtons } from "../archive-list/fragments/page-buttons";
 import { useWidth } from "../../hooks/useWidth";
 import { getNumArchivesToRender } from "../../storage/archives";
 import { SearchAccordion } from "../accordions/search-accordion/search-accordion";
-import { useSearchOnLoad } from "../../hooks/useSearchOnLoad/useSearchOnLoad";
 
-export const Search = ({ display }) => {
+export const Search = ({ display, loading, controller }) => {
   const dispatch = useDispatch();
   const breakpoint = useWidth();
   const searchArchives = useSelector(getCurrentSearchArchives);
-  const searchFilter = useSelector(getSearchFilter);
   const searchPage = useSelector(getSearchPage);
-  const { search: isSearchLoading } = useSelector(getLoading);
-  const { loading } = useSearchOnLoad(searchFilter);
+  const { search: isSearchLoading, onLoadSearch } = useSelector(getLoading);
   const maxArchivesBreakpoints = getNumArchivesToRender();
   const sliceToRender = [
     searchPage > 1 ? (searchPage - 1) * maxArchivesBreakpoints[breakpoint] : 0,
     maxArchivesBreakpoints[breakpoint] * searchPage,
   ];
+  const archivesLoading = isSearchLoading || onLoadSearch;
 
   useEffect(() => {
-    dispatch(updateLoading({ search: loading }));
-  }, [loading]);
+    dispatch(updateLoading({ onLoadSearch: loading }));
+    if (isSearchLoading && controller) controller.abort();
+  }, [loading, isSearchLoading, controller]);
 
   const header = (
     <>
@@ -47,7 +45,7 @@ export const Search = ({ display }) => {
       archives={searchArchives}
       sliceToRender={sliceToRender}
       isSearch
-      archivesLoading={isSearchLoading}
+      archivesLoading={archivesLoading}
       loadingLabel="Getting archives from search"
       header={header}
       footer={

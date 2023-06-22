@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentRandomArchives,
@@ -13,34 +13,45 @@ export const useSearchOnLoad = () => {
   const { filter, sort: sortby, direction: order, category } = getSearchStats();
   const searchArchives = useSelector(getCurrentSearchArchives);
   const randomArchives = useSelector(getCurrentRandomArchives);
+  // const { search: isSearchLoading, onLoadSearch } = useSelector(getLoading);
   const [loading, setLoading] = useState(false);
   const [searchFilter, setSearchFilter] = useState(null);
+  const [controller] = useState(new AbortController());
   const searchLoaded = searchArchives.length;
 
-  const results = { results: searchArchives, loading };
+  const results = { results: searchArchives, loading, controller };
 
   const callNewArchives = useCallback(async (search) => {
     setLoading(true);
-    const arcs = await getArchivesBySearchThrottled({
-      filter: search,
-      sortby,
-      order,
-      start: -1,
-      ...(category && { category }),
-    });
+    const arcs = await getArchivesBySearchThrottled(
+      {
+        filter: search,
+        sortby,
+        order,
+        start: -1,
+        ...(category && { category }),
+      },
+      controller
+    ).catch(() => ({
+      data: [
+        { id: "error", title: "something went wrong, try searching again" },
+      ],
+    }));
     dispatch(updateSearchArchives(arcs.data));
     setLoading(false);
   }, []);
 
-  if (
-    !searchLoaded &&
-    randomArchives.length &&
-    !loading &&
-    searchFilter !== filter
-  ) {
-    callNewArchives(filter);
-    setSearchFilter(filter);
-  }
+  useEffect(() => {
+    if (
+      !searchLoaded &&
+      randomArchives.length &&
+      !loading &&
+      searchFilter !== filter
+    ) {
+      callNewArchives(filter);
+      setSearchFilter(filter);
+    }
+  }, [searchLoaded, randomArchives, loading, searchFilter, filter]);
 
   return results;
 };

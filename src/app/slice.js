@@ -27,6 +27,7 @@ const initialState = {
     settings: false,
   },
   loading: {
+    onLoadSearch: false,
     search: false,
     random: false,
     images: false,
