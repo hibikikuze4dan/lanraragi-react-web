@@ -23,6 +23,7 @@ const initialState = {
   sectionVisibility: {
     random: true,
     search: false,
+    history: false,
     images: false,
     settings: false,
   },

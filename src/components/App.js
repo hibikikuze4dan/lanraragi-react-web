@@ -10,11 +10,12 @@ import Search from "./search/search";
 import { Settings } from "./settings/settings";
 import { SnackbarAlert } from "./snackbar-alert/snackbar-alert";
 import { useSearchOnLoad } from "../hooks/useSearchOnLoad/useSearchOnLoad";
+import { History } from "./history/history";
 
 export default function App() {
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("sm"));
-  const { random, images, search, settings } = useSelector(
+  const { random, images, search, settings, history } = useSelector(
     getSectionVisibilityObject
   );
   const { loading, controller } = useSearchOnLoad();
@@ -39,6 +40,7 @@ export default function App() {
             <Url>
               {random && <Random />}
               {search && <Search loading={loading} controller={controller} />}
+              {history && <History />}
               {images && <ImageList />}
               {settings && <Settings />}
             </Url>

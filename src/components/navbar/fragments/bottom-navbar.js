@@ -54,6 +54,12 @@ export const BottomNavbar = ({ getNewArchives, openSearchDialog }) => {
         sx={{ color: "white" }}
       />
       <BottomNavigationAction
+        label="History"
+        value="history"
+        icon={<MenuBook color="white" />}
+        sx={{ color: "white" }}
+      />
+      <BottomNavigationAction
         label="Archive"
         value="images"
         icon={<MenuBook color="white" />}

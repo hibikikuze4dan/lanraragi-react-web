@@ -37,6 +37,7 @@ export const SideNavbar = ({ getNewArchives, openSearchDialog }) => {
   const icons = {
     random: <Casino />,
     search: <Search />,
+    history: <MenuBook />,
     images: <MenuBook />,
     settings: <Settings />,
   };

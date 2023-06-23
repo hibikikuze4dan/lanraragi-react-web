@@ -32,7 +32,7 @@ export const useSearchOnLoad = () => {
         ...(category && { category }),
       },
       controller
-    ).catch(() => ({
+    ).catch(() => /* find a better way of handling errors */ ({
       data: [
         { id: "error", title: "something went wrong, try searching again" },
       ],
