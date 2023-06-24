@@ -17,6 +17,7 @@ import {
   getSearchSortDirection,
 } from "../../app/selectors";
 import { setSearchStats } from "../../storage/search";
+import { addSearchToSearchHistory } from "../../storage/history";
 
 export const Tags = ({ archiveTags, onClose }) => {
   const dispatch = useDispatch();
@@ -43,13 +44,15 @@ export const Tags = ({ archiveTags, onClose }) => {
     dispatch(setAllSectionVisibilityFalse());
     dispatch(updateSectionVisibility({ search: true }));
     onClose();
-    setSearchStats({
+    const searchStatsObject = {
       filter,
       page: 1,
       sort,
       direction: sortDirection,
       category: searchCategory?.id ?? "",
-    });
+    };
+    setSearchStats(searchStatsObject);
+    addSearchToSearchHistory(searchStatsObject);
   };
 
   return (

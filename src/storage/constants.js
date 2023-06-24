@@ -17,3 +17,5 @@ export const SEARCH_STATS_DEFAULT = {
   direction: "desc",
   category: "",
 };
+
+export const SEARCH_HISTORY = "SEARCH_HISTORY";

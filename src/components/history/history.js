@@ -1,13 +1,12 @@
 import React from "react";
 import { Tabs } from "../tabs/tabs";
+import { SearchHistory } from "./fragments/search-history";
 
-export const History = () => {
-  return (
-    <Tabs
-      tabData={[
-        { label: "yes", content: "more" },
-        { label: "no", content: "of this shit" },
-      ]}
-    />
-  );
-};
+export const History = () => (
+  <Tabs
+    tabData={[
+      { label: "Search History", content: <SearchHistory /> },
+      { label: "Archive History", content: "Coming Soon" },
+    ]}
+  />
+);

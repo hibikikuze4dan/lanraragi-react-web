@@ -9,12 +9,13 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMaxPages, getSearchPage } from "../../../app/selectors";
 import { updateSearchPage } from "../../../app/slice";
 import { useWidth } from "../../../hooks/useWidth";
 import { setSearchStats } from "../../../storage/search";
+import { updateSearchHistoryLastSearchPage } from "../../../storage/history";
 
 const scroll = () => {
   document
@@ -28,17 +29,23 @@ export const PageButtons = ({ id, disabled, top = false }) => {
   const dispatch = useDispatch();
   const searchPageFromState = useSelector(getSearchPage);
   const maxPage = useSelector(getMaxPages)(breakpoint);
-  const searchPage = searchPageFromState > maxPage ? 1 : searchPageFromState;
+  const outOfBounds = searchPageFromState > maxPage;
+  const searchPage = outOfBounds ? 1 : searchPageFromState;
   const topCopy = top ? "top" : "bottom";
   const pages = Array(maxPage)
     .fill(0)
     .map((_, index) => index + 1);
+
+  useEffect(() => {
+    if (outOfBounds) dispatch(updateSearchPage(1));
+  });
 
   const onBackClick = () => {
     const newPage = searchPage - 1;
     if (!top) scroll();
     dispatch(updateSearchPage(newPage));
     setSearchStats({ page: newPage ?? 1 });
+    updateSearchHistoryLastSearchPage(newPage ?? 1);
   };
   const onForwardClick = () => {
     if (!top) scroll();
@@ -46,12 +53,14 @@ export const PageButtons = ({ id, disabled, top = false }) => {
       const newPage = searchPage + 1;
       dispatch(updateSearchPage(newPage));
       setSearchStats({ page: newPage });
+      updateSearchHistoryLastSearchPage(newPage);
     }
   };
   const onChange = (e) => {
     const newPage = Number(e.target.value);
     dispatch(updateSearchPage(newPage));
     setSearchStats({ page: newPage });
+    updateSearchHistoryLastSearchPage(newPage);
     if (!top) scroll();
   };
 

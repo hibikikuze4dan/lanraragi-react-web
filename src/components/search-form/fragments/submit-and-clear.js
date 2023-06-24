@@ -16,6 +16,7 @@ import {
 } from "../../../app/selectors";
 import { getArchivesBySearch } from "../../../requests/search";
 import { setSearchStats } from "../../../storage/search";
+import { addSearchToSearchHistory } from "../../../storage/history";
 
 export const SubmitAndClear = ({
   selectedCategoryId,
@@ -30,14 +31,15 @@ export const SubmitAndClear = ({
 
   const callNewArchives = useCallback(
     async ({ filter, category, sortby, order }) => {
-      dispatch(updateLoading({ search: true }));
-      const arcs = await getArchivesBySearch({
+      const searchObject = {
         filter,
         sortby,
         order,
         start: -1,
         ...(category && { category }),
-      });
+      };
+      dispatch(updateLoading({ search: true }));
+      const arcs = await getArchivesBySearch(searchObject);
       dispatch(updateSearchArchives(arcs.data));
       dispatch(updateLoading({ search: false }));
     },
@@ -57,13 +59,15 @@ export const SubmitAndClear = ({
       order: searchSortDirection,
     });
     onClose();
-    setSearchStats({
+    const searchStatsObject = {
       filter: searchFilter,
       page: 1,
       sort: searchSort,
       direction: searchSortDirection,
       category: selectedCategoryId,
-    });
+    };
+    setSearchStats(searchStatsObject);
+    addSearchToSearchHistory(searchStatsObject);
   }, [
     searchFilter,
     selectedCategoryId,

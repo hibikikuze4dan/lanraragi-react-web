@@ -4,7 +4,7 @@ import { TabContext, TabPanel } from "@mui/lab";
 import { useWidth } from "../../hooks/useWidth";
 
 export const Tabs = ({ onChange, tabData = [] }) => {
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentTab, setCurrentTab] = useState("0");
   const width = useWidth();
   const smDown = ["sm", "xs"].includes(width);
 
@@ -17,7 +17,7 @@ export const Tabs = ({ onChange, tabData = [] }) => {
   );
 
   return (
-    <div className="full-width">
+    <div className="full-width full-height overflow-scroll">
       <TabContext value={currentTab}>
         <Grid container>
           <MuiTabs
@@ -39,7 +39,7 @@ export const Tabs = ({ onChange, tabData = [] }) => {
                   icon={icon}
                   iconPosition={iconPosition}
                   label={label}
-                  value={index}
+                  value={`${index}`}
                   wrapped
                 />
               );
@@ -49,7 +49,7 @@ export const Tabs = ({ onChange, tabData = [] }) => {
         {tabData.map((tab, index) => {
           const { content, label } = tab;
           return (
-            <TabPanel key={label} value={index}>
+            <TabPanel key={label} value={`${index}`} sx={{ maxHeight: "100%" }}>
               {content}
             </TabPanel>
           );
