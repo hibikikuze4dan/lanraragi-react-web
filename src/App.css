@@ -44,6 +44,10 @@
   max-height: 100svh;
 }
 
+.overflow-scroll {
+  overflow-y: scroll;
+}
+
 .full-width {
   width: 100%;
 }
