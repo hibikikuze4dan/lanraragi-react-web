@@ -3,6 +3,22 @@
   background-color: rgba(24, 24, 26, 1);
 }
 
+body {
+  height: 100svh;
+  max-height: 100svh;
+  max-width: 100svw;
+  width: 100svh;
+  overflow: hidden;
+}
+
+#root {
+  height: 100svh;
+  max-height: 100svh;
+  max-width: 100svw;
+  width: 100svh;
+  overflow: hidden;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
