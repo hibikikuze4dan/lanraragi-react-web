@@ -1,10 +1,4 @@
-import {
-  Casino,
-  History,
-  MenuBook,
-  Search,
-  Settings,
-} from "@mui/icons-material";
+import { Casino, History, Search, Settings } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -63,12 +57,6 @@ export const BottomNavbar = ({ getNewArchives, openSearchDialog }) => {
         label="History"
         value="history"
         icon={<History color="white" />}
-        sx={{ color: "white" }}
-      />
-      <BottomNavigationAction
-        label="Archive"
-        value="images"
-        icon={<MenuBook color="white" />}
         sx={{ color: "white" }}
       />
       <BottomNavigationAction
