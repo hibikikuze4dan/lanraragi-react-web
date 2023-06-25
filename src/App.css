@@ -7,7 +7,7 @@ body {
   height: 100svh;
   max-height: 100svh;
   max-width: 100svw;
-  width: 100svh;
+  width: 100svw;
   overflow: hidden;
 }
 
@@ -15,7 +15,7 @@ body {
   height: 100svh;
   max-height: 100svh;
   max-width: 100svw;
-  width: 100svh;
+  width: 100svw;
   overflow: hidden;
 }
 
