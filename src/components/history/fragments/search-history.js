@@ -84,9 +84,6 @@ export const SearchHistory = () => {
                     Search Filter:
                     <br /> {filter}
                   </Grid>
-                  <Grid item xs={12}>
-                    Previous Page in Results: {page}
-                  </Grid>
                   <Grid item xs={6}>
                     Sorted By:
                     <br />
@@ -94,6 +91,9 @@ export const SearchHistory = () => {
                   </Grid>
                   <Grid item xs={6}>
                     {direction === "desc" ? "Descending" : "Ascending"}
+                  </Grid>
+                  <Grid item xs={12}>
+                    Previous Page in Results: {page}
                   </Grid>
                 </Grid>
               </Button>

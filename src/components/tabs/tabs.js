@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { Tab, Tabs as MuiTabs, Grid } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { TabContext, TabPanel } from "@mui/lab";
@@ -28,19 +29,14 @@ export const Tabs = ({ onChange, tabData = [] }) => {
             sx={{ width: "100%" }}
           >
             {tabData.map((tab, index) => {
-              const { label } = tab;
-              const disabled = tab?.disabled;
-              const icon = tab?.icon;
-              const iconPosition = tab?.iconPosition;
+              const { label, ...otherTabProps } = tab;
               return (
                 <Tab
                   key={label}
-                  disabled={disabled}
-                  icon={icon}
-                  iconPosition={iconPosition}
                   label={label}
                   value={`${index}`}
                   wrapped
+                  {...otherTabProps}
                 />
               );
             })}

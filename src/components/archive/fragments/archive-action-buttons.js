@@ -9,6 +9,7 @@ import {
   updateCurrentArchiveId,
   updateArchiveOpenedFrom,
 } from "../../../app/slice";
+import { addArchiveToArchiveHistory } from "../../../storage/history";
 
 const styles = ARCHIVE_STYLES;
 
@@ -27,7 +28,8 @@ export const ArchiveActionButtons = ({
     dispatch(updateSectionVisibility({ images: true }));
     dispatch(updateCurrentArchiveId(id));
     dispatch(updateArchiveOpenedFrom(isSearch ? "search" : "random"));
-  }, [id, currentArchiveId, isSearch]);
+    addArchiveToArchiveHistory({ id, title });
+  }, [id, currentArchiveId, isSearch, title]);
 
   return (
     <Grid container>

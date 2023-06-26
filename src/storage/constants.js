@@ -19,3 +19,5 @@ export const SEARCH_STATS_DEFAULT = {
 };
 
 export const SEARCH_HISTORY = "SEARCH_HISTORY";
+
+export const ARCHIVE_HISTORY = "ARCHIVE_HISTORY";
