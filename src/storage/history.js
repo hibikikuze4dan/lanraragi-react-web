@@ -43,8 +43,8 @@ export const getArchiveHistory = () => {
 
 export const addArchiveToArchiveHistory = (archiveObject) => {
   const archiveHistory = getArchiveHistory();
-  if (archiveHistory.length > 9) {
-    const minimizedarchiveHistory = archiveHistory.slice(0, 9);
+  if (archiveHistory.length > 19) {
+    const minimizedarchiveHistory = archiveHistory.slice(0, 19);
     localStorage.setItem(
       ARCHIVE_HISTORY,
       JSON.stringify([...minimizedarchiveHistory, archiveObject])

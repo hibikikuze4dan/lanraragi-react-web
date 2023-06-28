@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTagsObjectFromTagsString, isValidUrl } from "../../utils";
 import {
   setAllSectionVisibilityFalse,
+  updateLoading,
   updateSearchArchives,
   updateSearchFilter,
   updateSearchPage,
@@ -35,9 +36,11 @@ export const Tags = ({ archiveTags, onClose }) => {
       ...(searchCategory?.id && { category: searchCategory?.id }),
     });
     dispatch(updateSearchArchives(arcs.data));
+    dispatch(updateLoading({ search: false }));
   };
   const onTagClick = (tagType, tag) => {
     const filter = tagType !== "other" ? `${tagType}:${tag}` : tag;
+    dispatch(updateLoading({ search: true }));
     callNewArchives(filter);
     dispatch(updateSearchFilter(filter));
     dispatch(updateSearchPage(1));

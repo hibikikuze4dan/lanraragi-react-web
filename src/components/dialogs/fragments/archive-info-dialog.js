@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Grid, IconButton, Typography } from "@mui/material";
+import { Button, Grid, IconButton, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Delete } from "@mui/icons-material";
 import { BaseDialog } from "../base-dialog";
@@ -17,7 +17,9 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
   const dispatch = useDispatch();
   const categories = useSelector(getStateCategories);
   const [archiveData, setArchiveData] = useState({});
+  const [showId, setShowId] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+
   const updateShowDelete = useCallback(
     (show) => setShowDelete(show),
     [showDelete]
@@ -29,6 +31,9 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
   const onDeleteIconClick = useCallback(() => {
     updateShowDelete(true);
   }, []);
+  const onTitleClick = useCallback(() => {
+    setShowId(!showId);
+  }, [showId]);
 
   useEffect(() => {
     const getArchiveData = async () => {
@@ -70,6 +75,8 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
       title={!showDelete ? dialogTitle : "Delete Archive?"}
       onClose={onClose}
       open={open}
+      fullWidth
+      maxWidth="md"
     >
       {!showDelete ? (
         <>
@@ -81,7 +88,25 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
                 container
                 sx={{ height: "100%" }}
               >
-                <Typography textAlign="center">{archiveTitle}</Typography>
+                <Button
+                  variant="text"
+                  sx={{ textTransform: "none" }}
+                  onClick={onTitleClick}
+                >
+                  <Typography textAlign="center">
+                    {showId ? (
+                      <>
+                        Archive ID:
+                        <br />
+                        <span style={{ overflowWrap: "anywhere" }}>
+                          {arcId}
+                        </span>
+                      </>
+                    ) : (
+                      archiveTitle
+                    )}
+                  </Typography>
+                </Button>
               </Grid>
             </Grid>
             <Grid item xs={12} sm={6}>

@@ -18,13 +18,21 @@ export const BaseDialog = ({
   title,
   children,
   titleStyles = {},
+  fullWidth = false,
+  maxWidth = "sm",
 }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
   const isElement = isValidElement(title);
 
   return (
-    <Dialog fullScreen={smDown} open={open} onClose={onClose}>
+    <Dialog
+      fullScreen={smDown}
+      open={open}
+      onClose={onClose}
+      fullWidth={fullWidth}
+      maxWidth={maxWidth}
+    >
       <DialogTitle sx={{ padding: 0, ...titleStyles }}>
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
