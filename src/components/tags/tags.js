@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Button, Grid, Link, Typography } from "@mui/material";
 import { DateTime } from "luxon";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,25 +38,28 @@ export const Tags = ({ archiveTags, onClose }) => {
     dispatch(updateSearchArchives(arcs.data));
     dispatch(updateLoading({ search: false }));
   };
-  const onTagClick = (tagType, tag) => {
-    const filter = tagType !== "other" ? `${tagType}:${tag}` : tag;
-    dispatch(updateLoading({ search: true }));
-    callNewArchives(filter);
-    dispatch(updateSearchFilter(filter));
-    dispatch(updateSearchPage(1));
-    dispatch(setAllSectionVisibilityFalse());
-    dispatch(updateSectionVisibility({ search: true }));
-    onClose();
-    const searchStatsObject = {
-      filter,
-      page: 1,
-      sort,
-      direction: sortDirection,
-      category: searchCategory?.id ?? "",
-    };
-    setSearchStats(searchStatsObject);
-    addSearchToSearchHistory(searchStatsObject);
-  };
+  const onTagClick = useCallback(
+    (tagType, tag) => {
+      const filter = tagType !== "other" ? `${tagType}:${tag}` : tag;
+      dispatch(updateLoading({ search: true }));
+      callNewArchives(filter);
+      dispatch(updateSearchFilter(filter));
+      dispatch(updateSearchPage(1));
+      dispatch(setAllSectionVisibilityFalse());
+      dispatch(updateSectionVisibility({ search: true }));
+      onClose();
+      const searchStatsObject = {
+        filter,
+        page: 1,
+        sort,
+        direction: sortDirection,
+        category: searchCategory?.id ?? "",
+      };
+      setSearchStats(searchStatsObject);
+      addSearchToSearchHistory(searchStatsObject);
+    },
+    [sort, sortDirection, searchCategory, callNewArchives]
+  );
 
   return (
     <Grid container spacing={2}>
