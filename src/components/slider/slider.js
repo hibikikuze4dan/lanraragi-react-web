@@ -1,5 +1,5 @@
 import { Grid, Slider as MUISlider, Typography } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useId, useState } from "react";
 
 export const Slider = ({
   defaultValue = 0,
@@ -9,12 +9,14 @@ export const Slider = ({
   size = "medium",
   onChange,
   label = "Slider",
-  labelId,
   value,
   marks = true,
   slotProps = {},
 }) => {
+  const uniqueId = useId();
   const [sliderValue, setSliderValue] = useState(defaultValue);
+  const ariaLabelForThumb = `${uniqueId}-label`;
+
   const onSliderChange = (_, newValue) => {
     setSliderValue(newValue);
     onChange(newValue);
@@ -28,7 +30,7 @@ export const Slider = ({
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography id={labelId}>{label}</Typography>
+        <Typography id={ariaLabelForThumb}>{label}</Typography>
       </Grid>
       <Grid item xs={12}>
         <MUISlider
@@ -41,7 +43,13 @@ export const Slider = ({
           step={step}
           valueLabelDisplay="auto"
           getAriaValueText={getAriaValueText}
-          slotProps={{ ...slotProps }}
+          slotProps={{
+            ...slotProps,
+            input: {
+              ...slotProps?.input,
+              "aria-labelledby": ariaLabelForThumb,
+            },
+          }}
         />
       </Grid>
     </Grid>

@@ -40,10 +40,6 @@ export const NumArchivesForRow = () => {
         value={numArchivesForViewport}
         onChange={onNumArchivesChange}
         label={numArchivesLabel}
-        slotProps={{
-          input: { "aria-labelledby": "num-archives-slider-label" },
-        }}
-        labelId="num-archives-slider-label"
       />
     </div>
   );

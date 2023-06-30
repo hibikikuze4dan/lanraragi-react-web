@@ -43,10 +43,6 @@ export const MaxArchivesForViewPort = () => {
         onChange={onArchiveToRenderChange}
         label={maxArchivesLabel}
         marks={false}
-        slotProps={{
-          input: { "aria-labelledby": "max-archives-for-viewport-label" },
-        }}
-        labelId="max-archives-for-viewport-label"
       />
     </div>
   );
