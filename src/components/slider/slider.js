@@ -1,5 +1,5 @@
 import { Grid, Slider as MUISlider, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 export const Slider = ({
   defaultValue = 0,
@@ -9,19 +9,26 @@ export const Slider = ({
   size = "medium",
   onChange,
   label = "Slider",
+  labelId,
   value,
   marks = true,
+  slotProps = {},
 }) => {
   const [sliderValue, setSliderValue] = useState(defaultValue);
   const onSliderChange = (_, newValue) => {
     setSliderValue(newValue);
     onChange(newValue);
   };
+  const getAriaValueText = useCallback(
+    () =>
+      `Slider currently at ${sliderValue} - Minimum value is ${min} - Maximum value is ${max}`,
+    [sliderValue, min, max]
+  );
 
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography>{label}</Typography>
+        <Typography id={labelId}>{label}</Typography>
       </Grid>
       <Grid item xs={12}>
         <MUISlider
@@ -33,6 +40,8 @@ export const Slider = ({
           marks={marks}
           step={step}
           valueLabelDisplay="auto"
+          getAriaValueText={getAriaValueText}
+          slotProps={{ ...slotProps }}
         />
       </Grid>
     </Grid>
