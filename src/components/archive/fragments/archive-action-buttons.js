@@ -1,6 +1,7 @@
 import { Button, Grid } from "@mui/material";
 import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
+import { DateTime } from "luxon";
 import { ARCHIVE_STYLES } from "../constants";
 import {
   setAllSectionVisibilityFalse,
@@ -28,7 +29,11 @@ export const ArchiveActionButtons = ({
     dispatch(updateSectionVisibility({ images: true }));
     dispatch(updateCurrentArchiveId(id));
     dispatch(updateArchiveOpenedFrom(isSearch ? "search" : "random"));
-    addArchiveToArchiveHistory({ id, title });
+    addArchiveToArchiveHistory({
+      id,
+      title,
+      date: DateTime.now().toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS),
+    });
   }, [id, currentArchiveId, isSearch, title]);
 
   return (
