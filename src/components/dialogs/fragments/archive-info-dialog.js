@@ -58,7 +58,7 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
   const archiveTitle = archiveData?.title ?? "";
   const dialogTitle = (
     <Grid container justifyContent="space-between">
-      <Typography sx={{ alignSelf: "center", ml: "1rem" }} variant="h6">
+      <Typography sx={{ alignSelf: "center", ml: "1rem", fontSize: "1.25rem" }}>
         Archive Info
       </Typography>
       <IconButton
