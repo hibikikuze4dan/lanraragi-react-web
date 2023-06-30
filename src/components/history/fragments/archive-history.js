@@ -38,6 +38,7 @@ export const ArchiveHistory = () => {
         return (
           <Grid item key={`${id} ${date ?? index}`} xs={12} md={6}>
             <Button
+              aria-label={`Click to open archive ${title}`}
               component={Paper}
               fullWidth
               onClick={onClick}
