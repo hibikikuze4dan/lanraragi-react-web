@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Paper } from "@mui/material";
+import { Paper, Grid } from "@mui/material";
 import { useImageSize } from "react-image-size";
 import { THUMBNAIL_URL } from "../../requests/constants";
 import { Loading } from "../loading/loading";
@@ -51,8 +51,8 @@ export const Archive = ({
   }, [id, currentArchiveId, ref, loading]);
 
   return (
-    <Paper id={`archive_${id}`} style={styles.paper}>
-      <div>
+    <Grid xs={1} sm={1} md={1} lg={1} xl={1} item sx={styles.grid}>
+      <Paper id={`archive_${id}`} style={styles.paper}>
         <div style={styles.imageWrapper}>
           <Loading
             label="Loading thumbnail"
@@ -73,29 +73,29 @@ export const Archive = ({
             />
           </Loading>
         </div>
-      </div>
-      <div style={{ padding: "8px" }}>
-        <button type="button" onClick={onTitleClick}>
-          <p
-            id={`archive-text-${index}`}
-            style={{
-              ...styles.typography,
-              ...(!showFullTitle && styles.clamp),
-            }}
-            ref={ref}
-          >
-            {title}
-          </p>
-        </button>
-      </div>
-      <ArchiveActionButtons
-        id={id}
-        title={title}
-        currentArchiveId={currentArchiveId}
-        isSearch={isSearch}
-        onInfoClick={onInfoClick}
-      />
-    </Paper>
+        <div style={{ padding: "8px" }}>
+          <button type="button" onClick={onTitleClick}>
+            <p
+              id={`archive-text-${index}`}
+              style={{
+                ...styles.typography,
+                ...(!showFullTitle && styles.clamp),
+              }}
+              ref={ref}
+            >
+              {title}
+            </p>
+          </button>
+        </div>
+        <ArchiveActionButtons
+          id={id}
+          title={title}
+          currentArchiveId={currentArchiveId}
+          isSearch={isSearch}
+          onInfoClick={onInfoClick}
+        />
+      </Paper>
+    </Grid>
   );
 };
 

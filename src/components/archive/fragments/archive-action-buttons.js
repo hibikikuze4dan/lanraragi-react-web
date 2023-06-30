@@ -23,6 +23,9 @@ export const ArchiveActionButtons = ({
 }) => {
   const dispatch = useDispatch();
 
+  const handleInfoClick = useCallback(() => {
+    onInfoClick(id);
+  }, [id]);
   const onPress = useCallback(() => {
     if (currentArchiveId !== id) dispatch(updatePages([]));
     dispatch(setAllSectionVisibilityFalse());
@@ -40,7 +43,7 @@ export const ArchiveActionButtons = ({
     <Grid container>
       <Grid item xs={6}>
         <Button
-          aria-label={`Click to read ${title}`}
+          aria-label={`Click here to read ${title}`}
           variant="contained"
           onClick={onPress}
           fullWidth
@@ -51,9 +54,9 @@ export const ArchiveActionButtons = ({
       </Grid>
       <Grid item xs={6}>
         <Button
-          aria-label={`Click for info and to modify categories for ${title}`}
+          aria-label={`Click here for info and to modify categories for ${title}`}
           variant="contained"
-          onClick={onInfoClick}
+          onClick={handleInfoClick}
           fullWidth
           sx={styles.infoButton}
         >

@@ -9,7 +9,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMaxPages, getSearchPage } from "../../../app/selectors";
 import { updateSearchPage } from "../../../app/slice";
@@ -38,16 +38,16 @@ export const PageButtons = ({ id, disabled, top = false }) => {
 
   useEffect(() => {
     if (outOfBounds) dispatch(updateSearchPage(1));
-  });
+  }, []);
 
-  const onBackClick = () => {
+  const onBackClick = useCallback(() => {
     const newPage = searchPage - 1;
     if (!top) scroll();
     dispatch(updateSearchPage(newPage));
     setSearchStats({ page: newPage ?? 1 });
     updateSearchHistoryLastSearchPage(newPage ?? 1);
-  };
-  const onForwardClick = () => {
+  }, [top, searchPage]);
+  const onForwardClick = useCallback(() => {
     if (!top) scroll();
     if (maxPage !== searchPage) {
       const newPage = searchPage + 1;
@@ -55,14 +55,17 @@ export const PageButtons = ({ id, disabled, top = false }) => {
       setSearchStats({ page: newPage });
       updateSearchHistoryLastSearchPage(newPage);
     }
-  };
-  const onChange = (e) => {
-    const newPage = Number(e.target.value);
-    dispatch(updateSearchPage(newPage));
-    setSearchStats({ page: newPage });
-    updateSearchHistoryLastSearchPage(newPage);
-    if (!top) scroll();
-  };
+  }, [top, maxPage, searchPage]);
+  const onChange = useCallback(
+    (e) => {
+      const newPage = Number(e.target.value);
+      dispatch(updateSearchPage(newPage));
+      setSearchStats({ page: newPage });
+      updateSearchHistoryLastSearchPage(newPage);
+      if (!top) scroll();
+    },
+    [top]
+  );
 
   return (
     <Grid id={id} item xs={12}>
