@@ -6,12 +6,10 @@ import { getTagsObjectFromTagsString, isValidUrl } from "../../utils";
 import {
   setAllSectionVisibilityFalse,
   updateLoading,
-  updateSearchArchives,
   updateSearchFilter,
   updateSearchPage,
   updateSectionVisibility,
 } from "../../app/slice";
-import { getArchivesBySearch } from "../../requests/search";
 import {
   getSearchCategory,
   getSearchSort,
@@ -27,24 +25,12 @@ export const Tags = ({ archiveTags, onClose }) => {
   const sort = useSelector(getSearchSort);
   const sortDirection = useSelector(getSearchSortDirection);
 
-  const callNewArchives = async (searchVal) => {
-    const arcs = await getArchivesBySearch({
-      filter: searchVal,
-      sortby: sort,
-      order: sortDirection,
-      start: -1,
-      ...(searchCategory?.id && { category: searchCategory?.id }),
-    });
-    dispatch(updateSearchArchives(arcs.data));
-    dispatch(updateLoading({ search: false }));
-  };
   const onTagClick = useCallback(
     (tagType, tag) => {
       const filter = tagType !== "other" ? `${tagType}:${tag}` : tag;
-      dispatch(updateLoading({ search: true }));
-      callNewArchives(filter);
       dispatch(updateSearchFilter(filter));
       dispatch(updateSearchPage(1));
+      dispatch(updateLoading({ search: true }));
       dispatch(setAllSectionVisibilityFalse());
       dispatch(updateSectionVisibility({ search: true }));
       onClose();
@@ -58,7 +44,7 @@ export const Tags = ({ archiveTags, onClose }) => {
       setSearchStats(searchStatsObject);
       addSearchToSearchHistory(searchStatsObject);
     },
-    [sort, sortDirection, searchCategory, callNewArchives]
+    [sort, sortDirection, searchCategory]
   );
 
   return (

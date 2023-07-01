@@ -3,6 +3,7 @@ import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import {
   setAllSectionVisibilityFalse,
+  updateLoading,
   updateSearchCategory,
   updateSearchFilter,
   updateSearchPage,
@@ -20,7 +21,6 @@ export const SearchHistoryButton = ({
   sort,
   direction,
   page,
-  callNewArchives,
 }) => {
   const dispatch = useDispatch();
   const categoryObject = categories.find(({ id }) => id === category);
@@ -31,7 +31,7 @@ export const SearchHistoryButton = ({
     dispatch(updateSearchFilter(filter));
     dispatch(updateSearchSort(sort));
     dispatch(updateSearchSortDirection(direction));
-    callNewArchives(filter, category, sort, direction);
+    dispatch(updateLoading({ search: true }));
     dispatch(setAllSectionVisibilityFalse());
     dispatch(updateSectionVisibility({ search: true }));
     const searchStatsObject = {
