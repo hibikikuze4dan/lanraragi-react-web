@@ -19,7 +19,7 @@ import {
   getLoading,
 } from "../../app/selectors";
 import { getMinionStatus } from "../../requests/minion";
-import { firstLetterToUppercase } from "../../utils";
+import { firstLetterToUppercase, httpOrHttps } from "../../utils";
 import { Loading } from "../loading/loading";
 
 export const ImageList = () => {
@@ -96,7 +96,7 @@ export const ImageList = () => {
     >
       <Loading label="Getting images" loading={gettingImagesFromLRR}>
         {[...pageUrls.slice(0, pagesToRender)].map((page, index) => {
-          const src = `http://${baseUrl}${page}`;
+          const src = `${httpOrHttps()}${baseUrl}${page}`;
           const middle = (index + 1) % (pagesToRender - 5) === 0;
           return (
             <Grid key={src} item xs={12}>

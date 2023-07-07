@@ -2,6 +2,8 @@ export const BASE_URL = "BASE_URL";
 
 export const LRR_API_KEY = "LRR_API_KEY";
 
+export const USE_HTTPS = "USE_HTTPS";
+
 export const NUM_ARCHIVES_PER_ROW = "NUM_ARCHIVES_PER_ROW";
 
 export const NUM_ARCHIVES_TO_RENDER = "NUM_ARCHIVES_TO_RENDER";

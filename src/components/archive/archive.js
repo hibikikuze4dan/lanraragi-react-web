@@ -5,6 +5,7 @@ import { THUMBNAIL_URL } from "../../requests/constants";
 import { Loading } from "../loading/loading";
 import { ARCHIVE_STYLES } from "./constants";
 import { ArchiveActionButtons } from "./fragments/archive-action-buttons";
+import { httpOrHttps } from "../../utils";
 
 const styles = ARCHIVE_STYLES;
 
@@ -19,7 +20,7 @@ export const Archive = ({
   wideImageDisplayMethod,
 }) => {
   const [showFullTitle, updateShowFullTitle] = useState(false);
-  const src = `http://${baseUrl}${THUMBNAIL_URL.replace(":id", id)}`;
+  const src = `${httpOrHttps()}${baseUrl}${THUMBNAIL_URL.replace(":id", id)}`;
   const [dimensions, { loading }] = useImageSize(src);
   const width = dimensions?.width ?? 0;
   const height = dimensions?.height ?? 0;

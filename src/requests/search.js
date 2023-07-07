@@ -2,6 +2,7 @@ import axios from "axios";
 import { throttle } from "lodash";
 import { HEADERS, SEARCH_URL } from "./constants";
 import { getBaseUrl } from "../storage/requests";
+import { httpOrHttps } from "../utils";
 
 const config = {
   method: "get",
@@ -21,7 +22,7 @@ export const getArchivesBySearch = async (
 
   const categories = await axios({
     ...config,
-    url: `http://${getBaseUrl()}${SEARCH_URL}?${params.toString()}`,
+    url: `${httpOrHttps()}${getBaseUrl()}${SEARCH_URL}?${params.toString()}`,
     ...(controller && { signal: controller.signal }),
   });
   return categories.data;

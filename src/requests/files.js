@@ -1,6 +1,7 @@
 import axios from "axios";
 import { FILES_URL } from "./constants";
 import { getApiKey, getBaseUrl } from "../storage/requests";
+import { httpOrHttps } from "../utils";
 
 const config = {
   method: "get",
@@ -12,7 +13,10 @@ export const getArchiveFiles = async (archiveId) =>
     headers: {
       Authorization: `Bearer ${getApiKey()}`,
     },
-    url: `http://${getBaseUrl()}${FILES_URL.replace(":id", archiveId)}`,
+    url: `${httpOrHttps()}${getBaseUrl()}${FILES_URL.replace(
+      ":id",
+      archiveId
+    )}`,
   })
     .then((response) => response.data)
     .catch((error) => {

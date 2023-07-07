@@ -1,6 +1,7 @@
 import axios from "axios";
 import { DELETE_ARCHIVE_URL } from "./constants";
 import { getApiKey, getBaseUrl } from "../storage/requests";
+import { httpOrHttps } from "../utils";
 
 const config = {
   method: "delete",
@@ -12,7 +13,7 @@ export const deleteArchiveById = async (archiveId) =>
     headers: {
       Authorization: `Bearer ${getApiKey()}`,
     },
-    url: `http://${getBaseUrl()}${DELETE_ARCHIVE_URL.replace(
+    url: `${httpOrHttps()}${getBaseUrl()}${DELETE_ARCHIVE_URL.replace(
       ":id",
       archiveId
     )}`,

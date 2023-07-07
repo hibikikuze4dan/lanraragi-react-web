@@ -1,6 +1,7 @@
 import axios from "axios";
 import { HEADERS, TAGS_URL } from "./constants";
 import { getBaseUrl } from "../storage/requests";
+import { httpOrHttps } from "../utils";
 
 const config = {
   method: "get",
@@ -14,7 +15,7 @@ export const getTags = async () => {
   try {
     response = await axios({
       ...config,
-      url: `http://${getBaseUrl()}${TAGS_URL}`,
+      url: `${httpOrHttps()}${getBaseUrl()}${TAGS_URL}`,
     });
   } catch (error) {
     console.log(error);
