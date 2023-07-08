@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Archive from "../archive/archive";
 import { ArchiveInfoDialog } from "../dialogs/fragments/archive-info-dialog";
@@ -32,6 +32,10 @@ export const ArchiveList = ({
   const baseUrl = getBaseUrl();
   const columns = getNumArchivePerRow();
   const wideThumbnailDisplayMethod = getDisplayMethodForWideArchiveThumbnails();
+  const onInfoClick = useCallback((arcId) => {
+    dispatch(updateInfoDialogArchiveId(arcId));
+    updateArchiveInfoModalState({ open: true, arcId });
+  }, []);
 
   return (
     <div
@@ -57,35 +61,18 @@ export const ArchiveList = ({
               .slice(sliceToRender[0], secondSliceValue)
               .map((archive, idx) => {
                 const { arcid, title } = archive;
-                const onInfoClick = () => {
-                  dispatch(updateInfoDialogArchiveId(arcid));
-                  updateArchiveInfoModalState({ open: true, arcId: arcid });
-                };
                 return (
-                  <Grid
+                  <Archive
                     key={arcid}
-                    xs={1}
-                    sm={1}
-                    md={1}
-                    lg={1}
-                    xl={1}
-                    item
-                    sx={{
-                      paddingTop: "0 !important",
-                      paddingBottom: "2rem",
-                    }}
-                  >
-                    <Archive
-                      index={idx}
-                      id={arcid}
-                      title={title}
-                      isSearch={isSearch}
-                      onInfoClick={onInfoClick}
-                      baseUrl={baseUrl}
-                      currentArchiveId={currentArchiveId}
-                      wideImageDisplayMethod={wideThumbnailDisplayMethod}
-                    />
-                  </Grid>
+                    index={idx}
+                    id={arcid}
+                    title={title}
+                    isSearch={isSearch}
+                    onInfoClick={onInfoClick}
+                    baseUrl={baseUrl}
+                    currentArchiveId={currentArchiveId}
+                    wideImageDisplayMethod={wideThumbnailDisplayMethod}
+                  />
                 );
               })}
           </Loading>

@@ -34,7 +34,7 @@ export const DeleteArchive = ({ onClose, arcId, title, onBack }) => {
     >
       <Grid item>
         <Typography gutterBottom>
-          Are you sure you want to delete the following archive?
+          Are you sure you want to delete the following archive from storage?
         </Typography>
         <Typography>{title}</Typography>
       </Grid>

@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Button, Grid, Link, Typography } from "@mui/material";
 import { DateTime } from "luxon";
 import { useDispatch, useSelector } from "react-redux";
 import { getTagsObjectFromTagsString, isValidUrl } from "../../utils";
 import {
   setAllSectionVisibilityFalse,
-  updateSearchArchives,
+  updateLoading,
   updateSearchFilter,
   updateSearchPage,
   updateSectionVisibility,
 } from "../../app/slice";
-import { getArchivesBySearch } from "../../requests/search";
 import {
   getSearchCategory,
   getSearchSort,
@@ -26,34 +25,27 @@ export const Tags = ({ archiveTags, onClose }) => {
   const sort = useSelector(getSearchSort);
   const sortDirection = useSelector(getSearchSortDirection);
 
-  const callNewArchives = async (searchVal) => {
-    const arcs = await getArchivesBySearch({
-      filter: searchVal,
-      sortby: sort,
-      order: sortDirection,
-      start: -1,
-      ...(searchCategory?.id && { category: searchCategory?.id }),
-    });
-    dispatch(updateSearchArchives(arcs.data));
-  };
-  const onTagClick = (tagType, tag) => {
-    const filter = tagType !== "other" ? `${tagType}:${tag}` : tag;
-    callNewArchives(filter);
-    dispatch(updateSearchFilter(filter));
-    dispatch(updateSearchPage(1));
-    dispatch(setAllSectionVisibilityFalse());
-    dispatch(updateSectionVisibility({ search: true }));
-    onClose();
-    const searchStatsObject = {
-      filter,
-      page: 1,
-      sort,
-      direction: sortDirection,
-      category: searchCategory?.id ?? "",
-    };
-    setSearchStats(searchStatsObject);
-    addSearchToSearchHistory(searchStatsObject);
-  };
+  const onTagClick = useCallback(
+    (tagType, tag) => {
+      const filter = tagType !== "other" ? `${tagType}:${tag}` : tag;
+      dispatch(updateSearchFilter(filter));
+      dispatch(updateSearchPage(1));
+      dispatch(updateLoading({ search: true }));
+      dispatch(setAllSectionVisibilityFalse());
+      dispatch(updateSectionVisibility({ search: true }));
+      onClose();
+      const searchStatsObject = {
+        filter,
+        page: 1,
+        sort,
+        direction: sortDirection,
+        category: searchCategory?.id ?? "",
+      };
+      setSearchStats(searchStatsObject);
+      addSearchToSearchHistory(searchStatsObject);
+    },
+    [sort, sortDirection, searchCategory]
+  );
 
   return (
     <Grid container spacing={2}>

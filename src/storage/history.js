@@ -8,7 +8,7 @@ export const getSearchHistory = () => {
 export const addSearchToSearchHistory = (searchObject) => {
   const searchHistory = getSearchHistory();
   if (searchHistory.length > 9) {
-    const minimizedSearchHistory = searchHistory.slice(0, 9);
+    const minimizedSearchHistory = searchHistory.slice(1, 10);
     localStorage.setItem(
       SEARCH_HISTORY,
       JSON.stringify([...minimizedSearchHistory, searchObject])
@@ -43,8 +43,8 @@ export const getArchiveHistory = () => {
 
 export const addArchiveToArchiveHistory = (archiveObject) => {
   const archiveHistory = getArchiveHistory();
-  if (archiveHistory.length > 9) {
-    const minimizedarchiveHistory = archiveHistory.slice(0, 9);
+  if (archiveHistory.length > 19) {
+    const minimizedarchiveHistory = archiveHistory.slice(1, 20);
     localStorage.setItem(
       ARCHIVE_HISTORY,
       JSON.stringify([...minimizedarchiveHistory, archiveObject])

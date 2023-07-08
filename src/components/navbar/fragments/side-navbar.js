@@ -2,11 +2,11 @@ import { Casino, History, Search, Settings } from "@mui/icons-material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppBar, Button } from "@mui/material";
+import { getSectionVisibilityObjectForSideNavbar } from "../../../app/selectors";
 import {
-  getSectionVisibilityObjectForSideNavbar,
-  getSectionVisibilityObjectWithAllFalse,
-} from "../../../app/selectors";
-import { updateSectionVisibility } from "../../../app/slice";
+  setAllSectionVisibilityFalse,
+  updateSectionVisibility,
+} from "../../../app/slice";
 import { scrollIntoViewByElement } from "../../../utils";
 
 const styles = {
@@ -33,7 +33,6 @@ export const SideNavbar = ({ getNewArchives, openSearchDialog }) => {
   const sectionVisibility = useSelector(
     getSectionVisibilityObjectForSideNavbar
   );
-  const allFalse = useSelector(getSectionVisibilityObjectWithAllFalse);
   const icons = {
     random: <Casino />,
     search: <Search />,
@@ -46,7 +45,8 @@ export const SideNavbar = ({ getNewArchives, openSearchDialog }) => {
       <div>
         {sectionVisibility.map(({ id, label, visible }) => {
           const onClick = () => {
-            dispatch(updateSectionVisibility({ ...allFalse, [id]: true }));
+            dispatch(setAllSectionVisibilityFalse());
+            dispatch(updateSectionVisibility({ [id]: true }));
             if (id === "random" && visible) {
               getNewArchives();
               scrollIntoViewByElement("#archive-text-0", 750);

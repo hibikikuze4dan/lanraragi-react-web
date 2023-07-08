@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateSearchCategory,
   updateSearchPage,
-  updateSearchArchives,
   updateSearchFilter,
   updateLoading,
 } from "../../../app/slice";
@@ -14,7 +13,6 @@ import {
   getSearchSort,
   getSearchSortDirection,
 } from "../../../app/selectors";
-import { getArchivesBySearch } from "../../../requests/search";
 import { setSearchStats } from "../../../storage/search";
 import { addSearchToSearchHistory } from "../../../storage/history";
 
@@ -29,22 +27,6 @@ export const SubmitAndClear = ({
   const searchSort = useSelector(getSearchSort);
   const searchSortDirection = useSelector(getSearchSortDirection);
 
-  const callNewArchives = useCallback(
-    async ({ filter, category, sortby, order }) => {
-      const searchObject = {
-        filter,
-        sortby,
-        order,
-        start: -1,
-        ...(category && { category }),
-      };
-      dispatch(updateLoading({ search: true }));
-      const arcs = await getArchivesBySearch(searchObject);
-      dispatch(updateSearchArchives(arcs.data));
-      dispatch(updateLoading({ search: false }));
-    },
-    []
-  );
   const onSubmit = useCallback(() => {
     dispatch(updateSearchPage(1));
     dispatch(
@@ -52,13 +34,9 @@ export const SubmitAndClear = ({
         categories.find(({ id }) => id === selectedCategoryId) ?? {}
       )
     );
-    callNewArchives({
-      filter: searchFilter,
-      category: selectedCategoryId,
-      sortby: searchSort,
-      order: searchSortDirection,
-    });
+    dispatch(updateLoading({ search: true }));
     onClose();
+
     const searchStatsObject = {
       filter: searchFilter,
       page: 1,
@@ -82,12 +60,7 @@ export const SubmitAndClear = ({
     dispatch(updateSearchCategory({}));
     dispatch(updateSearchFilter(""));
     setSelectedCategoryId("");
-    callNewArchives({
-      filter: "",
-      category: "",
-      sortby: searchSort,
-      order: searchSortDirection,
-    });
+    dispatch(updateLoading({ search: true }));
     onClose();
     setSearchStats({
       filter: "",

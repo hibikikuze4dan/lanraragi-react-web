@@ -19,6 +19,10 @@ export const ARCHIVE_STYLES = {
     WebkitLineClamp: "4",
     WebkitBoxOrient: "vertical",
   },
+  grid: {
+    paddingTop: "0 !important",
+    paddingBottom: "2rem",
+  },
   imageWrapper: {
     overflow: "hiddem",
     padding: ".5rem .5rem",

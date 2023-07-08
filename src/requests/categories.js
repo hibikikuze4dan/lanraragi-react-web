@@ -6,6 +6,7 @@ import {
   ARCHIVE_CATEGORY_URL,
 } from "./constants";
 import { getApiKey, getBaseUrl } from "../storage/requests";
+import { httpOrHttps } from "../utils";
 
 const config = {
   method: "get",
@@ -15,7 +16,7 @@ const config = {
 export const getCategories = async () => {
   const categories = await axios({
     ...config,
-    url: `http://${getBaseUrl()}${CATEGORIES_URL}`,
+    url: `${httpOrHttps()}${getBaseUrl()}${CATEGORIES_URL}`,
   });
   return categories.data;
 };
@@ -25,7 +26,7 @@ export const getArchiveCategories = async (arcId) => {
   try {
     response = await axios({
       ...config,
-      url: `http://${getBaseUrl()}${ARCHIVE_CATEGORY_URL.replace(
+      url: `${httpOrHttps()}${getBaseUrl()}${ARCHIVE_CATEGORY_URL.replace(
         ":id",
         arcId
       )}`,
@@ -43,7 +44,7 @@ export const updateCategory = async ({ catId, arcId }) => {
     result = await axios({
       method: "put",
       headers: HEADERS,
-      url: `http://${getBaseUrl()}${UPDATE_CATEGORY_URL}`
+      url: `${httpOrHttps()}${getBaseUrl()}${UPDATE_CATEGORY_URL}`
         .replace(":id", catId)
         .replace(":archive", arcId),
       params: { key: `${getApiKey()}` }

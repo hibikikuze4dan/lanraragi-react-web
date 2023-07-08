@@ -1,3 +1,5 @@
+import { getUseHttps } from "./storage/requests";
+
 /* eslint-disable indent */
 export const scrollIntoViewByElement = (selector, timeout = 0) => {
   const element = document.querySelector(selector);
@@ -68,3 +70,5 @@ export const getNewSearchArchivesArrayAfterDeletingArchiveId = (
   newArchives.splice(arcIndex, 1);
   return newArchives;
 };
+
+export const httpOrHttps = () => (getUseHttps() ? "https://" : "http://");

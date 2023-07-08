@@ -1,6 +1,7 @@
 import { Button, Grid } from "@mui/material";
 import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
+import { DateTime } from "luxon";
 import { ARCHIVE_STYLES } from "../constants";
 import {
   setAllSectionVisibilityFalse,
@@ -22,20 +23,27 @@ export const ArchiveActionButtons = ({
 }) => {
   const dispatch = useDispatch();
 
+  const handleInfoClick = useCallback(() => {
+    onInfoClick(id);
+  }, [id]);
   const onPress = useCallback(() => {
     if (currentArchiveId !== id) dispatch(updatePages([]));
     dispatch(setAllSectionVisibilityFalse());
     dispatch(updateSectionVisibility({ images: true }));
     dispatch(updateCurrentArchiveId(id));
     dispatch(updateArchiveOpenedFrom(isSearch ? "search" : "random"));
-    addArchiveToArchiveHistory({ id, title });
+    addArchiveToArchiveHistory({
+      id,
+      title,
+      date: DateTime.now().toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS),
+    });
   }, [id, currentArchiveId, isSearch, title]);
 
   return (
     <Grid container>
       <Grid item xs={6}>
         <Button
-          aria-label={`Click to read ${title}`}
+          aria-label={`Click here to read ${title}`}
           variant="contained"
           onClick={onPress}
           fullWidth
@@ -46,9 +54,9 @@ export const ArchiveActionButtons = ({
       </Grid>
       <Grid item xs={6}>
         <Button
-          aria-label={`Click for info and to modify categories for ${title}`}
+          aria-label={`Click here for info and to modify categories for ${title}`}
           variant="contained"
-          onClick={onInfoClick}
+          onClick={handleInfoClick}
           fullWidth
           sx={styles.infoButton}
         >

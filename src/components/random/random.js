@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid } from "@mui/material";
 import { Casino } from "@mui/icons-material";
@@ -31,18 +31,21 @@ export const Random = ({ display }) => {
     if (!israndomLoading) callNewArchives();
   }, []);
 
-  const footer = (
-    <Grid container justifyContent="center" sx={{ pt: "1rem" }}>
-      <Grid item xs={12} sm={8}>
-        <Button
-          fullWidth
-          onClick={callNewArchives}
-          sx={{ textTransform: "none" }}
-        >
-          <Casino sx={{ mr: ".5rem" }} /> More Archives
-        </Button>
+  const footer = useMemo(
+    () => (
+      <Grid container justifyContent="center" sx={{ pt: "1rem" }}>
+        <Grid item xs={12} sm={8}>
+          <Button
+            fullWidth
+            onClick={callNewArchives}
+            sx={{ textTransform: "none" }}
+          >
+            <Casino sx={{ mr: ".5rem" }} /> More Archives
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
+    ),
+    []
   );
 
   return (

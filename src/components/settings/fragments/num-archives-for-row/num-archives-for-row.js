@@ -10,6 +10,7 @@ export const NumArchivesForRow = () => {
   const [numArchives, updateNumArchives] = useState(getNumArchivePerRow());
   const width = useWidth();
   const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+  const numArchivesForViewport = numArchives[width];
 
   const onNumArchivesChange = useCallback(
     (value) => {
@@ -19,7 +20,6 @@ export const NumArchivesForRow = () => {
     [width, numArchives]
   );
 
-  const numArchivesForViewport = numArchives[width];
   const portraitOrLandscape = isPortrait ? "Portrait" : "Landscape";
 
   const numArchivesLabel = (

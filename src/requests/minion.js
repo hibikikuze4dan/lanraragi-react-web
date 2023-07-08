@@ -1,6 +1,7 @@
 import axios from "axios";
 import { MINION_URL } from "./constants";
 import { getApiKey, getBaseUrl } from "../storage/requests";
+import { httpOrHttps } from "../utils";
 
 const config = {
   method: "get",
@@ -14,7 +15,10 @@ export const getMinionStatus = async (jobId) => {
       headers: {
         Authorization: `Bearer ${getApiKey()}`,
       },
-      url: `http://${getBaseUrl()}${MINION_URL.replace(":jobid", jobId)}`,
+      url: `${httpOrHttps()}${getBaseUrl()}${MINION_URL.replace(
+        ":jobid",
+        jobId
+      )}`,
     });
   } catch (error) {
     console.log(error);
