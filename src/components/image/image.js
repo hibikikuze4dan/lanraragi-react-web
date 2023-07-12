@@ -2,6 +2,9 @@ import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useImageSize } from "react-image-size";
 import { Loading } from "../loading/loading";
+import {
+  getDisplayMethodForWideArchive
+} from "../../storage/archives";
 
 export const Image = ({
   uri,
@@ -19,9 +22,22 @@ export const Image = ({
   let imageWidth = 1;
   let imageHeight = 1;
   const tooWide = imageLoaded ? dimensions.width > deviceWidth : false;
-  const renderedImageHeight = dimensions ? height : window.innerHeight;
-  const renderedImageWidth =
-    mdUp && dimensions && !tooWide ? dimensions.width : "100%";
+  const displayMethod = getDisplayMethodForWideArchive();
+  let renderedImageHeight;
+  let renderedImageWidth;
+  if (displayMethod === "contain") {
+    renderedImageHeight = "100%";
+    renderedImageWidth = "100%";
+  } else if (displayMethod === "cover") {
+    renderedImageHeight = dimensions ? dimensions.height : "100%";;
+    renderedImageWidth = dimensions ? dimensions.width : "100%";
+  } else if (displayMethod === "fill") {
+    renderedImageHeight = dimensions ? height : window.innerHeight;
+    renderedImageWidth = mdUp && dimensions && !tooWide ? dimensions.width : "100%";
+  } else {
+    renderedImageHeight = dimensions ? dimensions.height : "100%";
+    renderedImageWidth = dimensions ? dimensions.width : "100%";
+  }
 
   if (imageLoaded) {
     imageHeight = dimensions?.height;
@@ -57,7 +73,7 @@ export const Image = ({
             placeholder="Something"
             src={uri}
             ref={middle ? setObserverTarget : null}
-            style={{ objectFit: "fill" }}
+            style={{ objectFit: displayMethod }}
           />
         </button>
       )}

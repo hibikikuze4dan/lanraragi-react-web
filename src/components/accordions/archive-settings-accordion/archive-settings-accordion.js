@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { BaseAccordion } from "../base-accordion";
 import { NumArchivesForRow } from "../../settings/fragments/num-archives-for-row/num-archives-for-row";
 import { MaxArchivesForViewPort } from "../../settings/fragments/max-archives-for-viewport/max-archives-for-viewport";
-import { DisplayMethodWideThumbnails } from "../../settings/fragments/display-method-wide-thumbnails/display-method-wide-thumbnails";
+import { DisplayMethodWide } from "../../settings/fragments/display-method-wide/display-method-wide";
 
 export const ArchiveSettingsAccordion = () => {
   const [open, setOpen] = useState(false);
@@ -20,7 +20,7 @@ export const ArchiveSettingsAccordion = () => {
           <MaxArchivesForViewPort />
         </Grid>
         <Grid item xs={12}>
-          <DisplayMethodWideThumbnails />
+          <DisplayMethodWide />
         </Grid>
       </Grid>
     </BaseAccordion>

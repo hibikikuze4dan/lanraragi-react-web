@@ -1,5 +1,5 @@
 import {
-  DISPLAY_METHOD_WIDE_THUMBNAILS,
+  DISPLAY_METHOD_WIDE,
   NUM_ARCHIVES_PER_ROW as NUM_ARCHIVES_PER_ROW_STRING,
   NUM_ARCHIVES_TO_RENDER,
 } from "./constants";
@@ -46,9 +46,9 @@ export const setNumArchivesToRender = (viewPort, num) => {
   );
 };
 
-export const getDisplayMethodForWideArchiveThumbnails = () =>
-  localStorage.getItem(DISPLAY_METHOD_WIDE_THUMBNAILS) ?? "contain";
+export const getDisplayMethodForWideArchive = () =>
+  localStorage.getItem(DISPLAY_METHOD_WIDE) ?? "contain";
 
-export const setDisplayMethodForWideArchiveThumbnails = (displayMethod) => {
-  localStorage.setItem(DISPLAY_METHOD_WIDE_THUMBNAILS, displayMethod);
+export const setDisplayMethodForWideArchive = (displayMethod) => {
+  localStorage.setItem(DISPLAY_METHOD_WIDE, displayMethod);
 };
