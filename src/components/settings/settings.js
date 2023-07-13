@@ -5,7 +5,11 @@ import { ArchiveSettingsAccordion } from "../accordions/archive-settings-accordi
 import { ImageSettingsAccordion } from "../accordions/image-settings-accordion/image-settings-accordion";
 
 export const Settings = () => (
-  <Grid container justifyContent="center">
+  <Grid
+    className="overflow-scroll full-height"
+    container
+    justifyContent="center"
+  >
     <Grid item xs={10} md={7}>
       <div style={{ paddingTop: "3rem" }}>
         <UrlAccordion />
