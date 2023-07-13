@@ -17,6 +17,7 @@ export const deleteArchiveById = async (archiveId) =>
       ":id",
       archiveId
     )}`,
+    params: { key: `${getApiKey()}` }
   })
     .then((response) => response.data)
     .catch((error) => {

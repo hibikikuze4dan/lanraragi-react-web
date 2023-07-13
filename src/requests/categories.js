@@ -5,7 +5,7 @@ import {
   UPDATE_CATEGORY_URL,
   ARCHIVE_CATEGORY_URL,
 } from "./constants";
-import { getBaseUrl } from "../storage/requests";
+import { getApiKey, getBaseUrl } from "../storage/requests";
 import { httpOrHttps } from "../utils";
 
 const config = {
@@ -47,6 +47,7 @@ export const updateCategory = async ({ catId, arcId }) => {
       url: `${httpOrHttps()}${getBaseUrl()}${UPDATE_CATEGORY_URL}`
         .replace(":id", catId)
         .replace(":archive", arcId),
+      params: { key: `${getApiKey()}` }
     });
   } catch (error) {
     result = { data: { error: error.message } };
