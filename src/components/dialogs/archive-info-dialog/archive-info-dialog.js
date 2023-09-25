@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Grid, IconButton, Typography } from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Delete } from "@mui/icons-material";
 import { BaseDialog } from "../base-dialog";
@@ -12,12 +12,12 @@ import getCategories, {
   getArchiveCategories,
 } from "../../../requests/categories";
 import { DeleteArchive } from "../../delete-archive/delete-archive";
+import { IdTitleCopyButton } from "./id-title-copy";
 
 export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
   const dispatch = useDispatch();
   const categories = useSelector(getStateCategories);
   const [archiveData, setArchiveData] = useState({});
-  const [showId, setShowId] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
 
   const updateShowDelete = useCallback(
@@ -31,9 +31,6 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
   const onDeleteIconClick = useCallback(() => {
     updateShowDelete(true);
   }, []);
-  const onTitleClick = useCallback(() => {
-    setShowId(!showId);
-  }, [showId]);
 
   useEffect(() => {
     const getArchiveData = async () => {
@@ -82,32 +79,7 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
         <>
           <Grid container spacing={4} sx={{ padding: "2rem 0 1rem 0" }}>
             <Grid item xs={12} sm={6}>
-              <Grid
-                alignContent="center"
-                justifyContent="center"
-                container
-                sx={{ height: "100%" }}
-              >
-                <Button
-                  variant="text"
-                  sx={{ textTransform: "none" }}
-                  onClick={onTitleClick}
-                >
-                  <Typography textAlign="center">
-                    {showId ? (
-                      <>
-                        Archive ID:
-                        <br />
-                        <span style={{ overflowWrap: "anywhere" }}>
-                          {arcId}
-                        </span>
-                      </>
-                    ) : (
-                      archiveTitle
-                    )}
-                  </Typography>
-                </Button>
-              </Grid>
+              <IdTitleCopyButton arcId={arcId} archiveTitle={archiveTitle} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Categories arcId={arcId} categories={categories} />

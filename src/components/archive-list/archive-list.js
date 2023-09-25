@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Archive from "../archive/archive";
-import { ArchiveInfoDialog } from "../dialogs/fragments/archive-info-dialog";
+import { ArchiveInfoDialog } from "../dialogs/archive-info-dialog";
 import { getBaseUrl } from "../../storage/requests";
 import { getCurrentArchiveId } from "../../app/selectors";
 import { updateInfoDialogArchiveId } from "../../app/slice";
