@@ -9,8 +9,21 @@ export const IdTitleCopyButton = ({ arcId, archiveTitle }) => {
     setShowId(!showId);
   }, [showId]);
 
-  const onCopyIconButtonClick = () => {
-    navigator.clipboard.writeText(showId ? arcId : archiveTitle);
+  const onCopyIconButtonClick = async () => {
+    try {
+      const permissions = await navigator.permissions.query({
+        name: "clipboard-write",
+      });
+      if (permissions.state === "granted" || permissions.state === "prompt") {
+        await navigator.clipboard.writeText(showId ? arcId : archiveTitle);
+      } else {
+        throw new Error(
+          "Can't access the clipboard. Check your browser permissions."
+        );
+      }
+    } catch (error) {
+      console.log("Error copying to clipboard:", error);
+    }
   };
 
   return (
