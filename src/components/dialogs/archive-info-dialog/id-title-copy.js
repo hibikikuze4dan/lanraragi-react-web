@@ -1,7 +1,6 @@
 /* eslint-disable arrow-body-style */
 import React, { useCallback, useState } from "react";
-import { Grid, IconButton, Typography } from "@mui/material";
-import { AbcOutlined, Pin } from "@mui/icons-material";
+import { Button, Grid, Typography } from "@mui/material";
 
 export const IdTitleCopyButton = ({ arcId, archiveTitle }) => {
   const [showId, setShowId] = useState(false);
@@ -16,7 +15,7 @@ export const IdTitleCopyButton = ({ arcId, archiveTitle }) => {
       container
       sx={{ height: "100%" }}
     >
-      <Grid item xs={10}>
+      <Grid item xs={12}>
         <Typography textAlign="center">
           {showId ? (
             <>
@@ -29,14 +28,14 @@ export const IdTitleCopyButton = ({ arcId, archiveTitle }) => {
           )}
         </Typography>
       </Grid>
-      <Grid item xs={2}>
-        <IconButton
+      <Grid item xs={12}>
+        <Button
           aria-label={`Click here to show Archive ${!showId ? "ID" : "Title"}`}
           onClick={onSwitch}
           style={{ width: "100%", height: "100%", borderRadius: "unset" }}
         >
-          {showId ? <AbcOutlined /> : <Pin />}
-        </IconButton>
+          Display Archive {showId ? "Title" : "ID"}
+        </Button>
       </Grid>
     </Grid>
   );
