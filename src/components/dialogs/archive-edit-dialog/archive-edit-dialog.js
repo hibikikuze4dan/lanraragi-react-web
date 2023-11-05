@@ -1,13 +1,17 @@
 /* eslint-disable function-paren-newline */
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Grid, TextField, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
 import getArchiveMetaData, {
   updateArchiveMetadata,
 } from "../../../requests/metadata";
 import { getArchiveCategories } from "../../../requests/categories";
 import { BaseDialog } from "../base-dialog";
+import { Loading } from "../../loading/loading";
+import { updateDisplaySnackbar } from "../../../app/slice";
 
 export const ArchiveEditDialog = ({ arcId, onCloseProp, open }) => {
+  const dispatch = useDispatch();
   const [archiveData, setArchiveData] = useState({});
   const [updateResponse, setUpdateResponse] = useState({
     error: "",
@@ -15,6 +19,7 @@ export const ArchiveEditDialog = ({ arcId, onCloseProp, open }) => {
     success: 0,
     successMessage: null,
   });
+  const archiveDataLoaded = archiveData?.title && archiveData?.tags;
 
   const onClose = useCallback(() => {
     onCloseProp();
@@ -25,20 +30,27 @@ export const ArchiveEditDialog = ({ arcId, onCloseProp, open }) => {
       title: archiveData?.title,
       tags: archiveData?.tags,
     })
-      .then((res) =>
+      .then((res) => {
         setUpdateResponse({
           ...res,
           successMessage:
             "Congrats! The archive's information has been updated!",
-        })
-      )
+        });
+        onClose();
+        dispatch(
+          updateDisplaySnackbar({
+            open: true,
+            type: "UPDATE_ARCHIVE_INFO_SUCCESS",
+          })
+        );
+      })
       .catch(() =>
         setUpdateResponse({
           ...updateResponse,
           error: "Sorry, something seems to have gone wrong.",
         })
       );
-  });
+  }, [archiveData, onClose, dispatch, arcId]);
 
   useEffect(() => {
     const getArchiveData = async () => {
@@ -70,41 +82,49 @@ export const ArchiveEditDialog = ({ arcId, onCloseProp, open }) => {
       maxWidth="md"
     >
       <Grid container spacing={4} sx={{ padding: "2rem 0 1rem 0" }}>
-        <Grid item xs={12}>
-          <TextField
-            label="Title"
-            value={archiveData?.title}
-            placeholder="Current Title"
-            onChange={(e) =>
-              setArchiveData({ ...archiveData, title: e.target.value })
-            }
-            type="text"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Tags"
-            multiline
-            rows={8}
-            value={archiveData?.tags}
-            placeholder="Current Tags"
-            onChange={(e) =>
-              setArchiveData({ ...archiveData, tags: e.target.value })
-            }
-            type="text"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container justifyContent="center">
-            <Grid item xs={6}>
-              <Button fullWidth onClick={onUpdateButtonClick}>
-                Update Archive
-              </Button>
+        {archiveDataLoaded ? (
+          <>
+            <Grid item xs={12}>
+              <TextField
+                id="edit-title-inputfield"
+                label="Title"
+                value={archiveData?.title}
+                placeholder="Current Title"
+                onChange={(e) =>
+                  setArchiveData({ ...archiveData, title: e.target.value })
+                }
+                type="text"
+                fullWidth
+              />
             </Grid>
-          </Grid>
-        </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="edit-tags-inputfield"
+                label="Tags"
+                multiline
+                rows={8}
+                value={archiveData?.tags}
+                placeholder="Current Tags"
+                onChange={(e) =>
+                  setArchiveData({ ...archiveData, tags: e.target.value })
+                }
+                type="text"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container justifyContent="center">
+                <Grid item xs={6}>
+                  <Button fullWidth onClick={onUpdateButtonClick}>
+                    Update Archive
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </>
+        ) : (
+          <Loading label="Getting archive info" loading centerText />
+        )}
       </Grid>
     </BaseDialog>
   );

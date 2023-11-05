@@ -3,17 +3,17 @@ import { IconButton } from "@mui/material";
 import React from "react";
 import { ARCHIVE_STYLES } from "../constants";
 
-export const EditArchiveButton = ({ onEditClick, id }) => {
+export const EditArchiveButton = ({ onEditClick, id, title }) => {
   const onClick = () => {
     onEditClick(id);
   };
   return (
     <IconButton
+      aria-label={`Click to Edit Archive Info for ${title}`}
       onClick={onClick}
-      size="large"
       style={ARCHIVE_STYLES.editIconButton}
     >
-      <Edit style={{ mixBlendMode: "difference" }} />
+      <Edit style={{ color: "white" }} />
     </IconButton>
   );
 };

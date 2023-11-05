@@ -1,3 +1,4 @@
+/* eslint-disable function-paren-newline */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable indent */
 import { getUseHttps } from "./storage/requests";
@@ -25,6 +26,15 @@ export const scrollByCoordinates = (
 
 const removeStartingBlankSpaceIfPresent = (str) =>
   str.indexOf(" ") === 0 ? `${str.slice(1)}` : str;
+
+export const spaceAfterComma = (str) => {
+  const splitString = str.split(",");
+  return splitString
+    .map((arrStr, ind) =>
+      arrStr.indexOf(" ") !== 0 && ind !== 0 ? ` ${arrStr}` : arrStr
+    )
+    .join(",");
+};
 
 export const tagSeperator = (tag) => {
   const separatorIndex = tag.indexOf(":");

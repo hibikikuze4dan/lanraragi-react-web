@@ -1,15 +1,16 @@
 import { Alert, Snackbar } from "@mui/material";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDisplayDeleteSnackbar } from "../../app/selectors";
-import { updateDisplayDeleteSnackbar } from "../../app/slice";
+import { getDisplaySnackbar } from "../../app/selectors";
+import { updateDisplaySnackbar } from "../../app/slice";
+import { SNACKBAR_COPIES } from "./constants";
 
 export const SnackbarAlert = () => {
   const dispatch = useDispatch();
-  const open = useSelector(getDisplayDeleteSnackbar);
+  const { open, type } = useSelector(getDisplaySnackbar);
 
   const onClose = useCallback(() => {
-    dispatch(updateDisplayDeleteSnackbar(false));
+    dispatch(updateDisplaySnackbar({ open: false, type: "" }));
   }, []);
 
   return (
@@ -20,7 +21,7 @@ export const SnackbarAlert = () => {
       open={open}
       onClose={onClose}
     >
-      <Alert severity="success">Archive Successfully Deleted!</Alert>
+      <Alert severity="success">{SNACKBAR_COPIES[type]}</Alert>
     </Snackbar>
   );
 };

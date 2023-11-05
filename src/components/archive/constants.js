@@ -60,5 +60,6 @@ export const ARCHIVE_STYLES = {
     right: "7px",
     top: "10px",
     width: "fit-content",
+    backgroundColor: "grey",
   },
 };

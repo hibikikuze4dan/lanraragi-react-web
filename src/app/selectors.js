@@ -152,9 +152,9 @@ export const getSearchCategory = createSelector(
 
 export const getLoading = createSelector(getApp, (app) => app?.loading ?? {});
 
-export const getDisplayDeleteSnackbar = createSelector(
+export const getDisplaySnackbar = createSelector(
   getApp,
-  (app) => !!app?.displayDeleteSnackbar
+  (app) => app?.displaySnackbar ?? {}
 );
 
 export const getTags = createSelector(getApp, (app) => app?.tags ?? []);

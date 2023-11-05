@@ -2,7 +2,13 @@
 import React from "react";
 import { CircularProgress, Grid, Typography } from "@mui/material";
 
-export const Loading = ({ children, label, loading = true, height = 0 }) => {
+export const Loading = ({
+  children,
+  label,
+  loading = true,
+  height = 0,
+  centerText = false,
+}) => {
   const styles = {
     container: {
       minHeight: `${height || window.innerHeight}px`,
@@ -20,7 +26,9 @@ export const Loading = ({ children, label, loading = true, height = 0 }) => {
       sx={styles.container}
     >
       <Grid item xs={12}>
-        <Typography>{label}</Typography>
+        <Typography style={{ ...(centerText && { textAlign: "center" }) }}>
+          {label}
+        </Typography>
       </Grid>
       <CircularProgress size={80} />
     </Grid>

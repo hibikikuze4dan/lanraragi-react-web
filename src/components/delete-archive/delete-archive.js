@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import {
   deleteArchiveFromRandomArchives,
   deleteArchiveFromSearchArchives,
-  updateDisplayDeleteSnackbar,
+  updateDisplaySnackbar,
 } from "../../app/slice";
 import { deleteArchiveById } from "../../requests/delete";
 
@@ -15,7 +15,7 @@ export const DeleteArchive = ({ onClose, arcId, title, onBack }) => {
     if (response.success) {
       dispatch(deleteArchiveFromRandomArchives(arcId));
       dispatch(deleteArchiveFromSearchArchives(arcId));
-      dispatch(updateDisplayDeleteSnackbar(true));
+      dispatch(updateDisplaySnackbar({ open: true, type: "DELETE_ARCHIVE" }));
     }
     onClose();
     onBack(false);

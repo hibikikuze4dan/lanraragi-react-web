@@ -97,7 +97,7 @@ export const Archive = ({
           isSearch={isSearch}
           onInfoClick={onInfoClick}
         />
-        <EditArchiveButton id={id} onEditClick={onEditClick} />
+        <EditArchiveButton id={id} title={title} onEditClick={onEditClick} />
       </Paper>
     </Grid>
   );

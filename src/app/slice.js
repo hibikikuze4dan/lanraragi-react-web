@@ -8,7 +8,10 @@ const initialState = {
   categories: [],
   currentArchiveId: "",
   displayNavbar: true,
-  displayDeleteSnackbar: false,
+  displaySnackbar: {
+    open: false,
+    type: "",
+  },
   infoDialogArchiveId: "",
   pages: [],
   randomArchives: [],
@@ -116,8 +119,8 @@ export const appSlice = createSlice({
     updateSearchSortDirection: (state, { payload }) => {
       state.searchSortDirection = payload;
     },
-    updateDisplayDeleteSnackbar: (state, { payload }) => {
-      state.displayDeleteSnackbar = payload;
+    updateDisplaySnackbar: (state, { payload }) => {
+      state.displaySnackbar = { ...payload };
     },
     deleteArchiveFromRandomArchives: (state, { payload }) => {
       state.randomArchives = [
@@ -157,7 +160,7 @@ export const {
   updateSearchSort,
   updateSearchSortDirection,
   updateLoading,
-  updateDisplayDeleteSnackbar,
+  updateDisplaySnackbar,
   deleteArchiveFromRandomArchives,
   deleteArchiveFromSearchArchives,
   updateTags,
