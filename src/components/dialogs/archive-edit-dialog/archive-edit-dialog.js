@@ -31,25 +31,42 @@ export const ArchiveEditDialog = ({ arcId, onCloseProp, open }) => {
       tags: archiveData?.tags,
     })
       .then((res) => {
-        setUpdateResponse({
-          ...res,
-          successMessage:
-            "Congrats! The archive's information has been updated!",
-        });
-        onClose();
-        dispatch(
+        if (res?.success === 1) {
+          setUpdateResponse({
+            ...res,
+            successMessage:
+              "Congrats! The archive's information has been updated!",
+          });
+          onClose();
+          dispatch(
+            updateDisplaySnackbar({
+              open: true,
+              type: "UPDATE_ARCHIVE_INFO_SUCCESS",
+            })
+          );
+        } else {
+          onClose();
           updateDisplaySnackbar({
             open: true,
-            type: "UPDATE_ARCHIVE_INFO_SUCCESS",
-          })
-        );
+            type: "UPDATE_ARCHIVE_INFO_FAILURE",
+            severity: "error",
+          });
+          console.log(res?.error ?? "Unknow error with updating archive info");
+        }
       })
-      .catch(() =>
+      .catch((err) => {
         setUpdateResponse({
           ...updateResponse,
           error: "Sorry, something seems to have gone wrong.",
-        })
-      );
+        });
+        onClose();
+        updateDisplaySnackbar({
+          open: true,
+          type: "UPDATE_ARCHIVE_INFO_FAILURE",
+          severity: "error",
+        });
+        console.log(err);
+      });
   }, [archiveData, onClose, dispatch, arcId]);
 
   useEffect(() => {

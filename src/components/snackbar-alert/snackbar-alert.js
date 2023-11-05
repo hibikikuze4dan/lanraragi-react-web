@@ -7,10 +7,10 @@ import { SNACKBAR_COPIES } from "./constants";
 
 export const SnackbarAlert = () => {
   const dispatch = useDispatch();
-  const { open, type } = useSelector(getDisplaySnackbar);
+  const { open, type, severity } = useSelector(getDisplaySnackbar);
 
   const onClose = useCallback(() => {
-    dispatch(updateDisplaySnackbar({ open: false, type: "" }));
+    dispatch(updateDisplaySnackbar({ open: false, type: "", severity: "" }));
   }, []);
 
   return (
@@ -21,7 +21,7 @@ export const SnackbarAlert = () => {
       open={open}
       onClose={onClose}
     >
-      <Alert severity="success">{SNACKBAR_COPIES[type]}</Alert>
+      <Alert severity={severity ?? "success"}>{SNACKBAR_COPIES[type]}</Alert>
     </Snackbar>
   );
 };
