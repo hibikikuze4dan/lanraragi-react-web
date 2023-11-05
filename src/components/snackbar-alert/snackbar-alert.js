@@ -21,7 +21,7 @@ export const SnackbarAlert = () => {
       open={open}
       onClose={onClose}
     >
-      <Alert severity={severity ?? "success"}>{SNACKBAR_COPIES[type]}</Alert>
+      <Alert severity={severity || "success"}>{SNACKBAR_COPIES[type]}</Alert>
     </Snackbar>
   );
 };
