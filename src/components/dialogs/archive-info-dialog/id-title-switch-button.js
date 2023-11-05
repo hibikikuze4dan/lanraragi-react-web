@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 
-export const IdTitleCopyButton = ({ arcId, archiveTitle }) => {
+export const IdTitleSwitchButton = ({ arcId, archiveTitle }) => {
   const [showId, setShowId] = useState(false);
   const onSwitch = useCallback(() => {
     setShowId(!showId);

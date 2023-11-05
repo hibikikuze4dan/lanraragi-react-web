@@ -17,4 +17,22 @@ export const getArchiveMetaData = async (arcId) => {
   return metadata.data;
 };
 
+export const updateArchiveMetadata = async ({ id, title, tags }) => {
+  if (!id) return Error("No archive Id supplied");
+  const formData = new FormData();
+  if (title) formData.append("title", title);
+  if (tags) formData.append("tags", tags);
+  const metadata = await axios.put(
+    `${httpOrHttps()}${getBaseUrl()}${METADATA_URL.replace(":id", id)}`,
+    formData,
+    {
+      headers: {
+        ...HEADERS,
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return metadata.data;
+};
+
 export default getArchiveMetaData;

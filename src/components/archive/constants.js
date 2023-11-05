@@ -5,6 +5,7 @@ export const ARCHIVE_STYLES = {
     flexDirection: "column",
     justifyContent: "space-between",
     backgroundColor: "#363940",
+    position: "relative",
   },
   typography: {
     textTransform: "none",
@@ -53,5 +54,11 @@ export const ARCHIVE_STYLES = {
     objectFit: "fill",
     objectPosition: "center",
     maxWidth: `${300 * (500 / 700)}px`,
+  },
+  editIconButton: {
+    position: "absolute",
+    right: "7px",
+    top: "10px",
+    width: "fit-content",
   },
 };

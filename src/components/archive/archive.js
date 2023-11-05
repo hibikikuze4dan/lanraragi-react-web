@@ -6,6 +6,7 @@ import { Loading } from "../loading/loading";
 import { ARCHIVE_STYLES } from "./constants";
 import { ArchiveActionButtons } from "./fragments/archive-action-buttons";
 import { httpOrHttps } from "../../utils";
+import { EditArchiveButton } from "./fragments/edit-archive-button";
 
 const styles = ARCHIVE_STYLES;
 
@@ -14,6 +15,7 @@ export const Archive = ({
   title,
   index,
   onInfoClick,
+  onEditClick,
   baseUrl,
   currentArchiveId,
   isSearch,
@@ -95,6 +97,7 @@ export const Archive = ({
           isSearch={isSearch}
           onInfoClick={onInfoClick}
         />
+        <EditArchiveButton id={id} onEditClick={onEditClick} />
       </Paper>
     </Grid>
   );

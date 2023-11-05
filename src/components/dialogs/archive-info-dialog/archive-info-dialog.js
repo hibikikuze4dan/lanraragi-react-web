@@ -12,7 +12,7 @@ import getCategories, {
   getArchiveCategories,
 } from "../../../requests/categories";
 import { DeleteArchive } from "../../delete-archive/delete-archive";
-import { IdTitleCopyButton } from "./id-title-copy";
+import { IdTitleSwitchButton } from "./id-title-switch-button";
 
 export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
   const dispatch = useDispatch();
@@ -79,7 +79,7 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
         <>
           <Grid container spacing={4} sx={{ padding: "2rem 0 1rem 0" }}>
             <Grid item xs={12} sm={6}>
-              <IdTitleCopyButton arcId={arcId} archiveTitle={archiveTitle} />
+              <IdTitleSwitchButton arcId={arcId} archiveTitle={archiveTitle} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Categories arcId={arcId} categories={categories} />

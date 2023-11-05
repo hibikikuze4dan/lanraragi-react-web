@@ -1,6 +1,7 @@
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable indent */
 import { getUseHttps } from "./storage/requests";
 
-/* eslint-disable indent */
 export const scrollIntoViewByElement = (selector, timeout = 0) => {
   const element = document.querySelector(selector);
   return element
@@ -22,6 +23,9 @@ export const scrollByCoordinates = (
     timeout
   );
 
+const removeStartingBlankSpaceIfPresent = (str) =>
+  str.indexOf(" ") === 0 ? `${str.slice(1)}` : str;
+
 export const tagSeperator = (tag) => {
   const separatorIndex = tag.indexOf(":");
   if (separatorIndex === -1) return ["", tag];
@@ -31,10 +35,12 @@ export const tagSeperator = (tag) => {
 };
 
 export const getTagsObjectFromTagsString = (tags) => {
-  const tagsArray = tags.split(", ");
+  const tagsArray = tags.split(",");
   return tagsArray.length
     ? tagsArray.reduce((acc, tag) => {
-        const [tagType, tagValue] = tagSeperator(tag);
+        const [tagType, tagValue] = tagSeperator(
+          removeStartingBlankSpaceIfPresent(tag)
+        );
         const typeToSearchFor = tagType || "other";
         const currentTagTypeValues = acc[typeToSearchFor] ?? [];
         const exists = currentTagTypeValues.includes(tagValue);

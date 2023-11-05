@@ -11,6 +11,7 @@ import {
   getNumArchivePerRow,
 } from "../../storage/archives";
 import { Loading } from "../loading/loading";
+import { ArchiveEditDialog } from "../dialogs/archive-edit-dialog/archive-edit-dialog";
 
 export const ArchiveList = ({
   archives = [],
@@ -28,6 +29,10 @@ export const ArchiveList = ({
     open: false,
     arcId: "",
   });
+  const [archiveEditModalState, updateArchiveEditModalState] = useState({
+    open: false,
+    arcId: "",
+  });
   const secondSliceValue = sliceToRender[1] ?? archives.length;
   const baseUrl = getBaseUrl();
   const columns = getNumArchivePerRow();
@@ -35,6 +40,9 @@ export const ArchiveList = ({
   const onInfoClick = useCallback((arcId) => {
     dispatch(updateInfoDialogArchiveId(arcId));
     updateArchiveInfoModalState({ open: true, arcId });
+  }, []);
+  const onEditClick = useCallback((arcId) => {
+    updateArchiveEditModalState({ open: true, arcId });
   }, []);
 
   return (
@@ -69,6 +77,7 @@ export const ArchiveList = ({
                     title={title}
                     isSearch={isSearch}
                     onInfoClick={onInfoClick}
+                    onEditClick={onEditClick}
                     baseUrl={baseUrl}
                     currentArchiveId={currentArchiveId}
                     wideImageDisplayMethod={wideThumbnailDisplayMethod}
@@ -85,6 +94,13 @@ export const ArchiveList = ({
         }
         open={archiveInfoModalState.open}
         arcId={archiveInfoModalState.arcId}
+      />
+      <ArchiveEditDialog
+        arcId={archiveEditModalState.arcId}
+        onCloseProp={() =>
+          updateArchiveEditModalState({ ...archiveEditModalState, open: false })
+        }
+        open={archiveEditModalState.open}
       />
     </div>
   );
