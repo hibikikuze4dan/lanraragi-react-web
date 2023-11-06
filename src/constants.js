@@ -13,3 +13,5 @@ export const NUM_ARCHIVES_FOR_RENDER = {
   lg: 25,
   xl: 40,
 };
+
+export const GENERAL_TAG_TYPE = "other/misc";

@@ -3,6 +3,7 @@
 /* eslint-disable indent */
 import { trimEnd } from "lodash";
 import { getUseHttps } from "./storage/requests";
+import { GENERAL_TAG_TYPE } from "./constants";
 
 export const scrollIntoViewByElement = (selector, timeout = 0) => {
   const element = document.querySelector(selector);
@@ -57,7 +58,7 @@ export const getTagsObjectFromTagsString = (tags) => {
         const [tagType, tagValue] = tagSeperator(
           removeStartingBlankSpaceIfPresent(tag)
         );
-        const typeToSearchFor = tagType || "other/misc";
+        const typeToSearchFor = tagType || GENERAL_TAG_TYPE;
         const currentTagTypeValues = acc[typeToSearchFor] ?? [];
         const exists = currentTagTypeValues.includes(tagValue);
         return {
@@ -75,7 +76,7 @@ export const stringifyTagsObject = (tagsObject) => {
   const tagsObjectKeys = Object.keys(tagsObject);
   return tagsObjectKeys.reduce((cumulator, currentTagType, ind) => {
     const tagTypeArrayAsString =
-      currentTagType !== "other/misc"
+      currentTagType !== GENERAL_TAG_TYPE
         ? tagsObject[currentTagType]
             .map((tag) => `${currentTagType}: ${tag}`)
             .join(", ")

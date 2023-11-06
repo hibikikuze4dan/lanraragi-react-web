@@ -17,6 +17,7 @@ import {
 } from "../../app/selectors";
 import { setSearchStats } from "../../storage/search";
 import { addSearchToSearchHistory } from "../../storage/history";
+import { GENERAL_TAG_TYPE } from "../../constants";
 
 export const Tags = ({ archiveTags, onClose }) => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export const Tags = ({ archiveTags, onClose }) => {
 
   const onTagClick = useCallback(
     (tagType, tag) => {
-      const filter = tagType !== "other/misc" ? `${tagType}:${tag}` : tag;
+      const filter = tagType !== GENERAL_TAG_TYPE ? `${tagType}:${tag}` : tag;
       dispatch(updateSearchFilter(filter));
       dispatch(updateSearchPage(1));
       dispatch(updateLoading({ search: true }));
