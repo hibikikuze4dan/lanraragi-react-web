@@ -21,6 +21,7 @@ import {
 import { getMinionStatus } from "../../requests/minion";
 import { firstLetterToUppercase, httpOrHttps } from "../../utils";
 import { Loading } from "../loading/loading";
+import { Rating } from "../rating/rating";
 
 export const ImageList = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,9 @@ export const ImageList = () => {
         dispatch(updateLoading({ images: false }));
         return;
       }
+      // The timeout is to give the Lanraragi API a bit more time to
+      // finish extracting the images. Was experiencing messed up
+      // images without it
       setTimeout(() => dispatch(updatePages(newPagesData.pages)), 1000);
       dispatch(updateLoading({ images: false }));
     };
@@ -111,6 +115,9 @@ export const ImageList = () => {
             </Grid>
           );
         })}
+        <Grid item xs={12} sx={{ p: "1rem 0 1rem 0" }}>
+          <Rating arcId={arcId} />
+        </Grid>
       </Loading>
       <Grid item xs={12}>
         <Grid container justifyContent="center">

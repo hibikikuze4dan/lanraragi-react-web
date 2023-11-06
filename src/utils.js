@@ -1,6 +1,7 @@
 /* eslint-disable function-paren-newline */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable indent */
+import { trimEnd } from "lodash";
 import { getUseHttps } from "./storage/requests";
 
 export const scrollIntoViewByElement = (selector, timeout = 0) => {
@@ -27,6 +28,11 @@ export const scrollByCoordinates = (
 const removeStartingBlankSpaceIfPresent = (str) =>
   str.indexOf(" ") === 0 ? `${str.slice(1)}` : str;
 
+/**
+ * For strings with one or more commas following the initial character
+ *
+ * Ex: 'one,two,three' would become 'one, two, three'
+ */
 export const spaceAfterComma = (str) => {
   const splitString = str.split(",");
   return splitString
@@ -41,7 +47,7 @@ export const tagSeperator = (tag) => {
   if (separatorIndex === -1) return ["", tag];
   const [tagType] = tag.match(/^[^:]*:\s*/gm);
   const [, tagValue] = tag.split(/^[^:]*:\s*/gm);
-  return [tagType.replace(":", ""), tagValue];
+  return [trimEnd(tagType.replace(":", "")), tagValue];
 };
 
 export const getTagsObjectFromTagsString = (tags) => {
@@ -51,7 +57,7 @@ export const getTagsObjectFromTagsString = (tags) => {
         const [tagType, tagValue] = tagSeperator(
           removeStartingBlankSpaceIfPresent(tag)
         );
-        const typeToSearchFor = tagType || "other";
+        const typeToSearchFor = tagType || "other/misc";
         const currentTagTypeValues = acc[typeToSearchFor] ?? [];
         const exists = currentTagTypeValues.includes(tagValue);
         return {
@@ -63,6 +69,20 @@ export const getTagsObjectFromTagsString = (tags) => {
         };
       }, {})
     : {};
+};
+
+export const stringifyTagsObject = (tagsObject) => {
+  const tagsObjectKeys = Object.keys(tagsObject);
+  return tagsObjectKeys.reduce((cumulator, currentTagType, ind) => {
+    const tagTypeArrayAsString =
+      currentTagType !== "other/misc"
+        ? tagsObject[currentTagType]
+            .map((tag) => `${currentTagType}: ${tag}`)
+            .join(", ")
+        : tagsObject[currentTagType].join(", ");
+    const endComma = ind !== tagsObjectKeys.length - 1 ? ", " : "";
+    return cumulator + tagTypeArrayAsString + endComma;
+  }, "");
 };
 
 export const isValidUrl = (urlString) => {
