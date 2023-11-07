@@ -1,3 +1,4 @@
+/* eslint-disable function-paren-newline */
 import { createSlice } from "@reduxjs/toolkit";
 import { getNewSearchArchivesArrayAfterDeletingArchiveId } from "../utils";
 import { getSearchStats } from "../storage/search";
@@ -135,6 +136,31 @@ export const appSlice = createSlice({
         ),
       ];
     },
+    updateArchiveTags: (state, { payload }) => {
+      if (!payload?.tags) return;
+      const { arcId, tags } = payload;
+      const arcIdForArchive = arcId ?? state.currentArchiveId;
+      const searchArchives = [...state.searchArchives];
+      const randomArchives = [...state.randomArchives];
+      const bothArchiveTypes = [searchArchives, randomArchives];
+      const [searchIndex, randomIndex] = bothArchiveTypes.map((archives) =>
+        archives.findIndex((arc) => arc.arcid === arcIdForArchive)
+      );
+      if (searchIndex !== -1) {
+        searchArchives[searchIndex] = {
+          ...searchArchives[searchIndex],
+          tags,
+        };
+      }
+      if (randomIndex !== -1) {
+        randomArchives[randomIndex] = {
+          ...randomArchives[randomIndex],
+          tags,
+        };
+      }
+      state.searchArchives = [...searchArchives];
+      state.randomArchives = [...randomArchives];
+    },
     updateTags: (state, { payload }) => {
       state.tags = [...payload];
     },
@@ -164,6 +190,7 @@ export const {
   deleteArchiveFromRandomArchives,
   deleteArchiveFromSearchArchives,
   updateTags,
+  updateArchiveTags,
 } = appSlice.actions;
 
 export default appSlice.reducer;

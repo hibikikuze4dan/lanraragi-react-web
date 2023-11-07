@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DateTime } from "luxon";
 import {
   setAllSectionVisibilityFalse,
+  updateArchiveOpenedFrom,
   updateCurrentArchiveId,
   updatePages,
   updateSectionVisibility,
@@ -20,6 +21,7 @@ export const ArchiveHistoryButton = ({ title, id }) => {
     dispatch(setAllSectionVisibilityFalse());
     dispatch(updateSectionVisibility({ images: true }));
     dispatch(updateCurrentArchiveId(id));
+    dispatch(updateArchiveOpenedFrom("history"));
     addArchiveToArchiveHistory({
       id,
       title,

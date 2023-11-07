@@ -1,17 +1,19 @@
 /* eslint-disable function-paren-newline */
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Grid, TextField, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { Button, Grid, TextField } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import getArchiveMetaData, {
   updateArchiveMetadata,
 } from "../../../requests/metadata";
 import { getArchiveCategories } from "../../../requests/categories";
 import { BaseDialog } from "../base-dialog";
 import { Loading } from "../../loading/loading";
-import { updateDisplaySnackbar } from "../../../app/slice";
+import { updateArchiveTags, updateDisplaySnackbar } from "../../../app/slice";
+import { getVisibleSection } from "../../../app/selectors";
 
 export const ArchiveEditDialog = ({ arcId, onCloseProp, open }) => {
   const dispatch = useDispatch();
+  const openPage = useSelector(getVisibleSection);
   const [archiveData, setArchiveData] = useState({});
   const [updateResponse, setUpdateResponse] = useState({
     error: "",
@@ -37,6 +39,13 @@ export const ArchiveEditDialog = ({ arcId, onCloseProp, open }) => {
             successMessage:
               "Congrats! The archive's information has been updated!",
           });
+          dispatch(
+            updateArchiveTags({
+              arcId,
+              searchOrRandom: openPage,
+              tags: archiveData?.tags,
+            })
+          );
           onClose();
           dispatch(
             updateDisplaySnackbar({
@@ -82,17 +91,9 @@ export const ArchiveEditDialog = ({ arcId, onCloseProp, open }) => {
     if (arcId) getArchiveData();
   }, [arcId, setArchiveData]);
 
-  const dialogTitle = (
-    <Grid container justifyContent="space-between">
-      <Typography sx={{ alignSelf: "center", ml: "1rem", fontSize: "1.25rem" }}>
-        Edit Archive Info
-      </Typography>
-    </Grid>
-  );
-
   return (
     <BaseDialog
-      title={dialogTitle}
+      title="Edit Archive Info"
       onClose={onClose}
       open={open}
       fullWidth

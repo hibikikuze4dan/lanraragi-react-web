@@ -68,12 +68,13 @@ export const ArchiveList = ({
             {archives
               .slice(sliceToRender[0], secondSliceValue)
               .map((archive, idx) => {
-                const { arcid, title } = archive;
+                const { arcid, title, tags } = archive;
                 return (
                   <Archive
-                    key={arcid}
+                    key={`${title}-${arcid}`}
                     index={idx}
                     id={arcid}
+                    tags={tags}
                     title={title}
                     isSearch={isSearch}
                     onInfoClick={onInfoClick}

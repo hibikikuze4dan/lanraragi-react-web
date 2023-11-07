@@ -5,13 +5,16 @@ import { THUMBNAIL_URL } from "../../requests/constants";
 import { Loading } from "../loading/loading";
 import { ARCHIVE_STYLES } from "./constants";
 import { ArchiveActionButtons } from "./fragments/archive-action-buttons";
-import { httpOrHttps } from "../../utils";
+import { getTagsObjectFromTagsString, httpOrHttps } from "../../utils";
 import { EditArchiveButton } from "./fragments/edit-archive-button";
+import { Rating } from "../rating/rating";
+import { getRatingType } from "../../storage/ratings";
 
 const styles = ARCHIVE_STYLES;
 
 export const Archive = ({
   id,
+  tags,
   title,
   index,
   onInfoClick,
@@ -41,6 +44,8 @@ export const Archive = ({
       marginBottom: extraMargin,
     }),
   };
+  const rating =
+    getTagsObjectFromTagsString(tags ?? "")?.[getRatingType()]?.[0] ?? null;
 
   const ref = useRef();
 
@@ -90,6 +95,11 @@ export const Archive = ({
             </p>
           </button>
         </div>
+        {rating && (
+          <div>
+            <Rating readOnly arcId={id} size="small" ratingProp={rating} />
+          </div>
+        )}
         <ArchiveActionButtons
           id={id}
           title={title}

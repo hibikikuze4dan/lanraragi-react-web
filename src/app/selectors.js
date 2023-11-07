@@ -64,6 +64,14 @@ export const getSectionVisibilityObject = createSelector(getApp, (app) => ({
   ...app.sectionVisibility,
 }));
 
+export const getVisibleSection = createSelector(
+  getSectionVisibilityObject,
+  (sectionVisibilityObject) =>
+    Object.keys(sectionVisibilityObject).find(
+      (section) => sectionVisibilityObject[section] === true
+    )
+);
+
 export const getSectionVisibilityObjectWithAllFalse = createSelector(
   getSectionVisibilityObject,
   (sectionVisibilityObject) =>
