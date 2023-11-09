@@ -33,13 +33,10 @@ export const getArchiveImage = async (imgSrc) => {
     responseType: "blob",
     responseEncoding: "base64",
   })
-    .then((response) => {
-      console.log(response);
-      return response.data;
-    })
+    .then((response) => response.data)
     .catch((error) => {
       console.log(error);
-      return "";
+      return null;
     });
   return data;
 };
