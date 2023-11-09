@@ -9,9 +9,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { matchSorter } from "match-sorter";
-import React, { useCallback, useRef, useState } from "react";
+import React from "react";
 import { AUTOCOMPLETE_STYLES } from "./constants";
+import { useAutocompleteLogic } from "./useAutocompleteLogic";
 
 export const Autocomplete = ({
   label,
@@ -21,44 +21,19 @@ export const Autocomplete = ({
   onChange,
   placeholder,
 }) => {
-  const [textFieldValue, setTextFieldValue] = useState(value ?? "");
-  const [focused, setFocued] = useState(false);
-  const [listOpen, setListOpen] = useState(false);
-  const [ref, setRef] = useState(useRef(null));
-  const commaSplitTextField = textFieldValue.split(", ");
-  const lastIndex = commaSplitTextField.length - 1;
-  const tagSearchValue = commaSplitTextField[lastIndex];
-
-  const onTextFieldChange = useCallback(
-    (e) => {
-      const newTextFieldValue = e?.target?.value ?? "";
-      setTextFieldValue(newTextFieldValue);
-      if (onChange) onChange(newTextFieldValue);
-      if (!listOpen) setListOpen(true);
-    },
-    [onChange]
-  );
-
-  const onListItemButtonClick = useCallback(
-    (item) => {
-      commaSplitTextField[lastIndex] = `${item}, `;
-      const newValue = commaSplitTextField.join(", ");
-      setTextFieldValue(newValue);
-      ref.focus();
-      if (onChange) onChange(newValue);
-      setListOpen(false);
-    },
-    [textFieldValue, ref, onChange]
-  );
-
-  const onEndAdornmentButtonClick = useCallback(() => {
-    onTextFieldChange({ target: { value: "" } });
-    ref.focus();
-  }, [onTextFieldChange, ref]);
-
-  const listItems = matchSorter(items, tagSearchValue, {
-    threshold: matchSorter.rankings.CONTAINS,
-  }).slice(0, maxItems);
+  const {
+    focused,
+    setFocued,
+    setRef,
+    onEndAdornmentButtonClick,
+    onListItemButtonClick,
+    listItems,
+    tagSearchValue,
+    textFieldValue,
+    onTextFieldChange,
+    listOpen,
+    ref,
+  } = useAutocompleteLogic({ value, onChange, items, maxItems });
 
   return (
     <div
