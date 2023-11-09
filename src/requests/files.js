@@ -22,3 +22,24 @@ export const getArchiveFiles = async (archiveId) =>
     .catch((error) => {
       console.log(error);
     });
+
+export const getArchiveImage = async (imgSrc) => {
+  const data = await axios({
+    ...config,
+    headers: {
+      Authorization: `Bearer ${getApiKey()}`,
+    },
+    url: imgSrc,
+    responseType: "blob",
+    responseEncoding: "base64",
+  })
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+      return "";
+    });
+  return data;
+};

@@ -26,12 +26,12 @@ export const Archive = ({
     wideImage,
     wideImageStyles,
     onTitleClick,
-    loading,
     src,
     height,
     width,
     showFullTitle,
     ref,
+    revokeImageUrl,
   } = useArchiveLogic({
     id,
     baseUrl,
@@ -46,7 +46,7 @@ export const Archive = ({
         <div style={styles.imageWrapper}>
           <Loading
             label="Loading thumbnail"
-            loading={loading}
+            loading={!src}
             height={styles.image.maxHeight}
           >
             <img
@@ -56,10 +56,11 @@ export const Archive = ({
                 ...styles.image,
                 ...(wideImage ? wideImageStyles : styles.imageLong),
               }}
+              loading="lazy"
               src={src}
               height={height}
               width={width}
-              loading="lazy"
+              onLoad={revokeImageUrl}
             />
           </Loading>
         </div>

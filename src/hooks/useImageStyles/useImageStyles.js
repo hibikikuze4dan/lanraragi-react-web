@@ -6,7 +6,7 @@ export const useImageStyles = ({ src }) => {
   const windowSize = useWindowSize();
   const displayMethod = getImagesDisplayMethod();
   const [imageDimensions, { loading: isImageLoading, error: errorMessage }] =
-    useImageSize(src);
+    useImageSize(src ?? "");
 
   const imageHeight = imageDimensions?.height;
   const imageWidth = imageDimensions?.width;

@@ -4,6 +4,7 @@ import { getTagsObjectFromTagsString, httpOrHttps } from "../../utils";
 import { THUMBNAIL_URL } from "../../requests/constants";
 import { ARCHIVE_STYLES } from "./constants";
 import { getRatingType } from "../../storage/ratings";
+import { useImageBlobUrl } from "../../hooks/useImageBlobUrl/useImageBlobUrl";
 
 export const useArchiveLogic = ({
   id,
@@ -13,8 +14,10 @@ export const useArchiveLogic = ({
   currentArchiveId,
 }) => {
   const [showFullTitle, updateShowFullTitle] = useState(false);
-  const src = `${httpOrHttps()}${baseUrl}${THUMBNAIL_URL.replace(":id", id)}`;
-  const [dimensions, { loading }] = useImageSize(src);
+  const { url: src, revokeImageUrl } = useImageBlobUrl(
+    `${httpOrHttps()}${baseUrl}${THUMBNAIL_URL.replace(":id", id)}`
+  );
+  const [dimensions] = useImageSize(src);
   const width = dimensions?.width ?? 0;
   const height = dimensions?.height ?? 0;
   const wideImage = width > height;
@@ -46,20 +49,20 @@ export const useArchiveLogic = ({
   }, [showFullTitle]);
 
   useEffect(() => {
-    if (id === currentArchiveId && !loading)
+    if (id === currentArchiveId)
       ref?.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, [id, currentArchiveId, ref, loading]);
+  }, [id, currentArchiveId, ref]);
 
   return {
     rating,
     wideImageStyles,
     onTitleClick,
     wideImage,
-    loading,
     src,
     height,
     width,
     showFullTitle,
     ref,
+    revokeImageUrl,
   };
 };
