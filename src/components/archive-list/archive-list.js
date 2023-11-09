@@ -25,6 +25,7 @@ export const ArchiveList = ({
 }) => {
   const dispatch = useDispatch();
   const currentArchiveId = useSelector(getCurrentArchiveId);
+  const [imagesLoaded, setImagesLoaded] = useState(archives.length);
   const [archiveInfoModalState, updateArchiveInfoModalState] = useState({
     open: false,
     arcId: "",
@@ -71,16 +72,19 @@ export const ArchiveList = ({
                 const { arcid, title, tags } = archive;
                 return (
                   <Archive
-                    key={`${title}-${arcid}`}
-                    index={idx}
-                    id={arcid}
-                    tags={tags}
-                    title={title}
-                    isSearch={isSearch}
-                    onInfoClick={onInfoClick}
-                    onEditClick={onEditClick}
                     baseUrl={baseUrl}
                     currentArchiveId={currentArchiveId}
+                    id={arcid}
+                    imagesLoaded={imagesLoaded}
+                    index={idx}
+                    isSearch={isSearch}
+                    key={`${title}-${arcid}`}
+                    numOfArchivesRendered={archives.length}
+                    onEditClick={onEditClick}
+                    onInfoClick={onInfoClick}
+                    setImagesLoaded={setImagesLoaded}
+                    tags={tags}
+                    title={title}
                     wideImageDisplayMethod={wideThumbnailDisplayMethod}
                   />
                 );

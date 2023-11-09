@@ -8,11 +8,14 @@ import { useImageBlobUrl } from "../../hooks/useImageBlobUrl/useImageBlobUrl";
 import { getNoFunModeEnabled } from "../../storage/images";
 
 export const useArchiveLogic = ({
-  id,
   baseUrl,
-  wideImageDisplayMethod,
-  tags,
   currentArchiveId,
+  id,
+  imagesLoaded,
+  numOfArchivesRendered,
+  setImagesLoaded,
+  tags,
+  wideImageDisplayMethod,
 }) => {
   const [showFullTitle, updateShowFullTitle] = useState(false);
   const stringifiedSrc = `${httpOrHttps()}${baseUrl}${THUMBNAIL_URL.replace(
@@ -53,13 +56,23 @@ export const useArchiveLogic = ({
   }, [showFullTitle]);
 
   useEffect(() => {
-    if (id === currentArchiveId && ref?.current) {
-      ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    console.log(id, ref, numOfArchivesRendered, imagesLoaded);
+    if (
+      id === currentArchiveId &&
+      ref?.current &&
+      numOfArchivesRendered === imagesLoaded
+    ) {
+      setTimeout(
+        () =>
+          ref.current.scrollIntoView({ behavior: "smooth", block: "center" }),
+        500
+      );
     }
-  }, [id, currentArchiveId, ref]);
+  }, [id, currentArchiveId, ref, numOfArchivesRendered, imagesLoaded]);
 
   const onLoad = () => {
     if (revokeImageUrl) revokeImageUrl();
+    setImagesLoaded(imagesLoaded + 1);
   };
 
   return {
@@ -74,5 +87,6 @@ export const useArchiveLogic = ({
     ref,
     revokeImageUrl,
     onLoad,
+    allImagesLoaded: numOfArchivesRendered <= imagesLoaded,
   };
 };

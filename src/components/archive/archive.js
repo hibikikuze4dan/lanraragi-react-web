@@ -1,6 +1,5 @@
 import React from "react";
 import { Paper, Grid } from "@mui/material";
-import { Loading } from "../loading/loading";
 import { ARCHIVE_STYLES } from "./constants";
 import { ArchiveActionButtons } from "./fragments/archive-action-buttons";
 import { EditArchiveButton } from "./fragments/edit-archive-button";
@@ -10,59 +9,60 @@ import { useArchiveLogic } from "./useArchiveLogic";
 const styles = ARCHIVE_STYLES;
 
 export const Archive = ({
-  id,
-  tags,
-  title,
-  index,
-  onInfoClick,
-  onEditClick,
   baseUrl,
   currentArchiveId,
+  id,
+  imagesLoaded,
+  index,
   isSearch,
+  onEditClick,
+  onInfoClick,
+  numOfArchivesRendered,
+  setImagesLoaded,
+  tags,
+  title,
   wideImageDisplayMethod,
 }) => {
   const {
+    allImagesLoaded,
+    height,
+    onLoad,
+    onTitleClick,
     rating,
+    ref,
+    showFullTitle,
+    src,
     wideImage,
     wideImageStyles,
-    onTitleClick,
-    src,
-    height,
     width,
-    showFullTitle,
-    ref,
-    onLoad,
   } = useArchiveLogic({
-    id,
     baseUrl,
-    wideImageDisplayMethod,
-    tags,
     currentArchiveId,
+    id,
+    imagesLoaded,
+    numOfArchivesRendered,
+    setImagesLoaded,
+    tags,
+    wideImageDisplayMethod,
   });
 
   return (
     <Grid xs={1} sm={1} md={1} lg={1} xl={1} item sx={styles.grid}>
       <Paper id={`archive_${id}`} style={styles.paper}>
         <div style={styles.imageWrapper}>
-          <Loading
-            label="Loading thumbnail"
-            loading={!src}
-            height={styles.image.maxHeight}
-          >
-            <img
-              id={`archive-img-${index}`}
-              alt={`thumbnail for ${title}`}
-              style={{
-                ...styles.image,
-                ...(wideImage ? wideImageStyles : styles.imageLong),
-              }}
-              loading="lazy"
-              src={src}
-              height={height}
-              width={width}
-              onLoad={onLoad}
-            />
-          </Loading>
+          <img
+            id={`archive-img-${index}`}
+            alt={`thumbnail for ${title}`}
+            style={{
+              ...styles.image,
+              ...(wideImage ? wideImageStyles : styles.imageLong),
+              visibility: allImagesLoaded ? "unset" : "hidden",
+            }}
+            src={src}
+            height={height}
+            width={width}
+            onLoad={onLoad}
+          />
         </div>
         <div style={{ padding: "8px" }}>
           <button type="button" onClick={onTitleClick}>
