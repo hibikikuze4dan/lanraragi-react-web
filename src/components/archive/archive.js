@@ -31,7 +31,7 @@ export const Archive = ({
     width,
     showFullTitle,
     ref,
-    revokeImageUrl,
+    onLoad,
   } = useArchiveLogic({
     id,
     baseUrl,
@@ -60,7 +60,7 @@ export const Archive = ({
               src={src}
               height={height}
               width={width}
-              onLoad={revokeImageUrl}
+              onLoad={onLoad}
             />
           </Loading>
         </div>
@@ -72,7 +72,6 @@ export const Archive = ({
                 ...styles.typography,
                 ...(!showFullTitle && styles.clamp),
               }}
-              ref={ref}
             >
               {title}
             </p>
@@ -92,6 +91,7 @@ export const Archive = ({
         />
         <EditArchiveButton id={id} title={title} onEditClick={onEditClick} />
       </Paper>
+      <span ref={ref} />
     </Grid>
   );
 };

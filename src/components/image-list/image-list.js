@@ -5,6 +5,7 @@ import { Loading } from "../loading/loading";
 import { Rating } from "../rating/rating";
 import { useImageListLogic } from "./useImageListLogic";
 import { BlobImage } from "../image/blob-image";
+import Image from "../image/image";
 
 export const ImageList = () => {
   const {
@@ -19,7 +20,10 @@ export const ImageList = () => {
     pageUrls,
     setFinalTarget,
     setObserverTarget,
+    useBlobImages,
   } = useImageListLogic();
+
+  const ImageToUse = useBlobImages ? BlobImage : Image;
 
   return (
     <Grid
@@ -36,7 +40,7 @@ export const ImageList = () => {
           const middle = (index + 1) % (pagesToRender - 5) === 0;
           return (
             <Grid key={src} item xs={12}>
-              <BlobImage
+              <ImageToUse
                 uri={src}
                 middle={middle}
                 setObserverTarget={setObserverTarget}

@@ -17,6 +17,7 @@ import {
 } from "../../app/slice";
 import { getArchiveFiles } from "../../requests/files";
 import { getMinionStatus } from "../../requests/minion";
+import { getNoFunModeEnabled } from "../../storage/images";
 
 export const useImageListLogic = () => {
   const dispatch = useDispatch();
@@ -84,6 +85,8 @@ export const useImageListLogic = () => {
     dispatch(updateSectionVisibility({ [archiveOpenedFrom]: true }));
   }, [archiveOpenedFrom]);
 
+  const useBlobImages = getNoFunModeEnabled() === "Yes";
+
   return {
     archiveOpenedFrom,
     arcId,
@@ -98,5 +101,6 @@ export const useImageListLogic = () => {
     setFinalTarget,
     setObserverTarget,
     width,
+    useBlobImages,
   };
 };
