@@ -56,7 +56,6 @@ export const useArchiveLogic = ({
   }, [showFullTitle]);
 
   useEffect(() => {
-    console.log(id, ref, numOfArchivesRendered, imagesLoaded);
     if (
       id === currentArchiveId &&
       ref?.current &&
