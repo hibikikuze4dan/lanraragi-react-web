@@ -78,7 +78,7 @@ export const stringifyTagsObject = (tagsObject) => {
     const tagTypeArrayAsString =
       currentTagType !== GENERAL_TAG_TYPE
         ? tagsObject[currentTagType]
-            .map((tag) => `${currentTagType}: ${tag}`)
+            .map((tag) => `${currentTagType}:${tag}`)
             .join(", ")
         : tagsObject[currentTagType].join(", ");
     const endComma = ind !== tagsObjectKeys.length - 1 ? ", " : "";
