@@ -74,18 +74,20 @@ export const useArchiveLogic = ({
     setImagesLoaded(imagesLoaded + 1);
   };
 
+  const allImagesLoaded = numOfArchivesRendered <= imagesLoaded;
+
   return {
-    rating,
-    wideImageStyles,
-    onTitleClick,
-    wideImage,
-    src,
+    allImagesLoaded,
     height,
-    width,
-    showFullTitle,
+    onLoad,
+    onTitleClick,
+    rating,
     ref,
     revokeImageUrl,
-    onLoad,
-    allImagesLoaded: numOfArchivesRendered <= imagesLoaded,
+    showFullTitle,
+    src,
+    wideImage,
+    wideImageStyles,
+    width,
   };
 };

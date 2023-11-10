@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { Loading } from "../loading/loading";
 import { useImageStyles } from "../../hooks/useImageStyles/useImageStyles";
 import { useImageBlobUrl } from "../../hooks/useImageBlobUrl/useImageBlobUrl";
@@ -8,6 +8,11 @@ export const BlobImage = ({ uri, setObserverTarget, middle, onImageClick }) => {
   const { styles, width, height } = useImageStyles({
     src: uri,
   });
+  const [loaded, setLoaded] = useState(false);
+  const onLoad = useCallback(() => {
+    setLoaded(true);
+    setTimeout(() => revokeImageUrl(), 1000);
+  }, [setLoaded, revokeImageUrl]);
 
   return (
     <Loading loading={!url}>
@@ -21,12 +26,12 @@ export const BlobImage = ({ uri, setObserverTarget, middle, onImageClick }) => {
             alt={uri}
             loading="lazy"
             src={url}
-            onLoad={revokeImageUrl}
+            onLoad={onLoad}
             height={height}
             width={width}
             placeholder="Archive Image"
             ref={middle ? setObserverTarget : null}
-            style={{ ...styles }}
+            style={{ ...styles, display: loaded ? "unset" : "hidden" }}
           />
         </button>
       )}
