@@ -1,19 +1,12 @@
 import axios from "axios";
-import { HEADERS, RANDOM_URL } from "./constants";
-import { getApiKey, getBaseUrl } from "../storage/requests";
+import { RANDOM_URL } from "./constants";
+import { getBaseUrl } from "../storage/requests";
 import { httpOrHttps } from "../utils";
-
-const config = {
-  method: "get",
-  headers: HEADERS,
-};
+import { getConfig } from "./request-utils";
 
 export const getRandomArchives = async (count = 10) =>
   axios({
-    ...config,
-    headers: {
-      Authorization: `Bearer ${getApiKey()}`,
-    },
+    ...getConfig(),
     url: `${httpOrHttps()}${getBaseUrl()}${RANDOM_URL}?count=${count}`,
   })
     .then((response) => response.data.data)

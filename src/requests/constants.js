@@ -22,6 +22,6 @@ export const DELETE_ARCHIVE_URL = "/api/archives/:id";
 
 export const TAGS_URL = "/api/database/stats?minweight=1";
 
-export const HEADERS = {
+export const GET_HEADERS = () => ({
   Authorization: `Bearer ${getApiKey()}`,
-};
+});

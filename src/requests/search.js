@@ -1,13 +1,9 @@
 import axios from "axios";
 import { throttle } from "lodash";
-import { HEADERS, SEARCH_URL } from "./constants";
+import { SEARCH_URL } from "./constants";
 import { getBaseUrl } from "../storage/requests";
 import { httpOrHttps } from "../utils";
-
-const config = {
-  method: "get",
-  headers: HEADERS,
-};
+import { getConfig } from "./request-utils";
 
 export const getArchivesBySearch = async (
   { filter, sortby, order, start = -1, category },
@@ -21,7 +17,7 @@ export const getArchivesBySearch = async (
   if (category) params.append("category", category);
 
   const categories = await axios({
-    ...config,
+    ...getConfig(),
     url: `${httpOrHttps()}${getBaseUrl()}${SEARCH_URL}?${params.toString()}`,
     ...(controller && { signal: controller.signal }),
   });

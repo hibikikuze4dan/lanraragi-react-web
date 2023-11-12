@@ -1,21 +1,17 @@
 import axios from "axios";
 import {
-  HEADERS,
+  GET_HEADERS,
   CATEGORIES_URL,
   UPDATE_CATEGORY_URL,
   ARCHIVE_CATEGORY_URL,
 } from "./constants";
 import { getApiKey, getBaseUrl } from "../storage/requests";
 import { httpOrHttps } from "../utils";
-
-const config = {
-  method: "get",
-  headers: HEADERS,
-};
+import { getConfig } from "./request-utils";
 
 export const getCategories = async () => {
   const categories = await axios({
-    ...config,
+    ...getConfig(),
     url: `${httpOrHttps()}${getBaseUrl()}${CATEGORIES_URL}`,
   });
   return categories.data;
@@ -25,7 +21,7 @@ export const getArchiveCategories = async (arcId) => {
   let response = null;
   try {
     response = await axios({
-      ...config,
+      ...getConfig(),
       url: `${httpOrHttps()}${getBaseUrl()}${ARCHIVE_CATEGORY_URL.replace(
         ":id",
         arcId
@@ -43,11 +39,11 @@ export const updateCategory = async ({ catId, arcId }) => {
   try {
     result = await axios({
       method: "put",
-      headers: HEADERS,
+      headers: { ...GET_HEADERS() },
       url: `${httpOrHttps()}${getBaseUrl()}${UPDATE_CATEGORY_URL}`
         .replace(":id", catId)
         .replace(":archive", arcId),
-      params: { key: `${getApiKey()}` }
+      params: { key: `${getApiKey()}` },
     });
   } catch (error) {
     result = { data: { error: error.message } };
