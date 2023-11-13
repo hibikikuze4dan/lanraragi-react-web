@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { isEmpty } from "lodash";
 import getArchiveMetaData, {
   updateArchiveMetadata,
 } from "../../../requests/metadata";
@@ -17,7 +18,7 @@ export const useArchiveEditDialogModalLogic = ({ onCloseProp, arcId }) => {
     success: 0,
     successMessage: null,
   });
-  const archiveDataReady = archiveData?.tags && archiveData?.title;
+  const archiveDataReady = !isEmpty(archiveData);
 
   const onClose = useCallback(() => {
     if (onCloseProp) onCloseProp();
