@@ -25,7 +25,10 @@ export const ArchiveList = ({
 }) => {
   const dispatch = useDispatch();
   const currentArchiveId = useSelector(getCurrentArchiveId);
-  const [imagesLoaded, setImagesLoaded] = useState(archives.length);
+  const [imagesLoaded, setImagesLoaded] = useState([]);
+  const incrementImagesLoaded = useCallback(() => {
+    setImagesLoaded(imagesLoaded + 1);
+  }, [imagesLoaded, setImagesLoaded]);
   const [archiveInfoModalState, updateArchiveInfoModalState] = useState({
     open: false,
     arcId: "",
@@ -68,7 +71,7 @@ export const ArchiveList = ({
           <Loading loading={archivesLoading} label={loadingLabel}>
             {archives
               .slice(sliceToRender[0], secondSliceValue)
-              .map((archive, idx) => {
+              .map((archive, idx, arr) => {
                 const { arcid, title, tags } = archive;
                 return (
                   <Archive
@@ -79,7 +82,8 @@ export const ArchiveList = ({
                     index={idx}
                     isSearch={isSearch}
                     key={`${title}-${arcid}`}
-                    numOfArchivesRendered={archives.length}
+                    numOfArchivesRendered={arr.length}
+                    onArchiveImageLoad={incrementImagesLoaded}
                     onEditClick={onEditClick}
                     onInfoClick={onInfoClick}
                     setImagesLoaded={setImagesLoaded}

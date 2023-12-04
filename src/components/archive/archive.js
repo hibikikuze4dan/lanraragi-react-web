@@ -15,6 +15,7 @@ export const Archive = ({
   imagesLoaded,
   index,
   isSearch,
+  onArchiveImageLoad,
   onEditClick,
   onInfoClick,
   numOfArchivesRendered,
@@ -24,7 +25,6 @@ export const Archive = ({
   wideImageDisplayMethod,
 }) => {
   const {
-    allImagesLoaded,
     height,
     onLoad,
     onTitleClick,
@@ -41,6 +41,7 @@ export const Archive = ({
     id,
     imagesLoaded,
     numOfArchivesRendered,
+    onArchiveImageLoad,
     setImagesLoaded,
     tags,
     wideImageDisplayMethod,
@@ -49,14 +50,13 @@ export const Archive = ({
   return (
     <Grid xs={1} sm={1} md={1} lg={1} xl={1} item sx={styles.grid}>
       <Paper id={`archive_${id}`} style={styles.paper}>
-        <div style={styles.imageWrapper}>
+        <div style={{ ...styles.imageWrapper }}>
           <img
             id={`archive-img-${index}`}
             alt={`thumbnail for ${title}`}
             style={{
               ...styles.image,
               ...(wideImage ? wideImageStyles : styles.imageLong),
-              visibility: allImagesLoaded ? "unset" : "hidden",
             }}
             src={src}
             height={height}

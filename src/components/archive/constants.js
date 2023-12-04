@@ -25,6 +25,7 @@ export const ARCHIVE_STYLES = {
     paddingBottom: "2rem",
   },
   imageWrapper: {
+    minHeight: "300px",
     overflow: "hiddem",
     padding: ".5rem .5rem",
   },

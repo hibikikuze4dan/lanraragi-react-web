@@ -11,9 +11,7 @@ export const useArchiveLogic = ({
   baseUrl,
   currentArchiveId,
   id,
-  imagesLoaded,
   numOfArchivesRendered,
-  setImagesLoaded,
   tags,
   wideImageDisplayMethod,
 }) => {
@@ -56,34 +54,25 @@ export const useArchiveLogic = ({
   }, [showFullTitle]);
 
   useEffect(() => {
-    if (
-      id === currentArchiveId &&
-      ref?.current &&
-      numOfArchivesRendered === imagesLoaded
-    ) {
+    if (id === currentArchiveId && ref?.current) {
       setTimeout(
         () =>
           ref.current.scrollIntoView({ behavior: "smooth", block: "center" }),
         500
       );
     }
-  }, [id, currentArchiveId, ref, numOfArchivesRendered, imagesLoaded]);
+  }, [id, currentArchiveId, ref, numOfArchivesRendered]);
 
   const onLoad = () => {
     if (revokeImageUrl) revokeImageUrl();
-    setImagesLoaded(imagesLoaded + 1);
   };
 
-  const allImagesLoaded = numOfArchivesRendered <= imagesLoaded;
-
   return {
-    allImagesLoaded,
     height,
     onLoad,
     onTitleClick,
     rating,
     ref,
-    revokeImageUrl,
     showFullTitle,
     src,
     wideImage,
