@@ -1,39 +1,34 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { Loading } from "../loading/loading";
-import { useImageStyles } from "../../hooks/useImageStyles/useImageStyles";
 import { useImageBlobUrl } from "../../hooks/useImageBlobUrl/useImageBlobUrl";
 
 export const BlobImage = ({ uri, setObserverTarget, middle, onImageClick }) => {
   const { url, revokeImageUrl } = useImageBlobUrl(uri);
-  const { styles, width, height } = useImageStyles({
-    src: uri,
-  });
-  const [loaded, setLoaded] = useState(false);
   const onLoad = useCallback(() => {
-    setLoaded(true);
     setTimeout(() => revokeImageUrl(), 1000);
-  }, [setLoaded, revokeImageUrl]);
+  }, [revokeImageUrl]);
 
   return (
     <Loading loading={!url}>
       {url && (
-        <button
-          type="button"
-          onClick={onImageClick}
-          style={{ backgroundColor: "transparent", border: "none" }}
-        >
-          <img
-            alt={uri}
-            loading="lazy"
-            src={url}
-            onLoad={onLoad}
-            height={height}
-            width={width}
-            placeholder="Archive Image"
-            ref={middle ? setObserverTarget : null}
-            style={{ ...styles, display: loaded ? "unset" : "hidden" }}
-          />
-        </button>
+        <div className="w-full flex justify-center">
+          <button
+            className="w-fit"
+            type="button"
+            onClick={onImageClick}
+            style={{ backgroundColor: "transparent", border: "none" }}
+          >
+            <img
+              alt={uri}
+              className="w-max max-w-full h-auto"
+              loading="lazy"
+              src={url}
+              onLoad={onLoad}
+              placeholder="Archive Image"
+              ref={middle ? setObserverTarget : null}
+            />
+          </button>
+        </div>
       )}
     </Loading>
   );

@@ -32,14 +32,13 @@ export const ImageList = () => {
       className="overflow"
       justifyContent="center"
       id={`images-list-${arcId}`}
-      sx={{ backgroundColor: "rgba(24, 24, 26, 1)" }}
     >
       <Loading label="Getting images" loading={gettingImagesFromLRR}>
         {[...pageUrls.slice(0, pagesToRender)].map((page, index) => {
           const src = `${httpOrHttps()}${baseUrl}${page}`;
           const middle = (index + 1) % (pagesToRender - 5) === 0;
           return (
-            <Grid key={src} item xs={12}>
+            <Grid className="py-2" key={src} item xs={12}>
               <ImageToUse
                 uri={src}
                 middle={middle}
@@ -49,7 +48,7 @@ export const ImageList = () => {
             </Grid>
           );
         })}
-        <Grid item xs={12} sx={{ p: "1rem 0 1rem 0" }}>
+        <Grid className="py-4" item xs={12}>
           <Rating arcId={arcId} />
         </Grid>
       </Loading>
@@ -57,16 +56,16 @@ export const ImageList = () => {
         <Grid container justifyContent="center">
           <Grid item xs={8}>
             <Button
+              className="normal-case mt-8"
               onClick={onBackClick}
               fullWidth
-              sx={{ textTransform: "none", mt: "2rem" }}
             >
               Back to {firstLetterToUppercase(archiveOpenedFrom)}
             </Button>
           </Grid>
         </Grid>
-        <div ref={setFinalTarget} style={{ width: "100%", height: "10svh" }} />
-        <div style={{ width: "100%", height: "65svh" }} />
+        <div className="w-full h-1/6" ref={setFinalTarget} />
+        <div className="w-full h-96" />
       </Grid>
     </Grid>
   );
