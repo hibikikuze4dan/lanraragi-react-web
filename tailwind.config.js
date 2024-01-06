@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       maxWidth: {
-        screen: "100svh",
+        screen: "100svw",
       },
     },
   },

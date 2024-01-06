@@ -14,7 +14,7 @@ export const SearchAccordion = () => {
   const title = (
     <Grid container justifyContent="center">
       <Typography>Search</Typography>
-      <Icon sx={{ ml: ".5rem" }} />
+      <Icon className="ml-2" />
     </Grid>
   );
 

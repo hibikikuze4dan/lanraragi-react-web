@@ -9,10 +9,10 @@ export const BaseAccordion = ({
   accordionTitleId,
 }) => (
   <Accordion
+    className="bg-[#43464E]"
     expanded={open}
     onChange={onChange}
     TransitionProps={{ mountOnEnter: true, unmountOnExit: true }}
-    sx={{ backgroundColor: "#43464E" }}
   >
     <AccordionSummary id={accordionTitleId}>{title}</AccordionSummary>
     <AccordionDetails>{children}</AccordionDetails>

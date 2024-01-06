@@ -32,8 +32,8 @@ export const Categories = ({ arcId, categories }) => {
     <Grid container>
       {response && (
         <Alert
+          className="mx-0 mt-0 mb-4"
           severity={response?.error ? "error" : "success"}
-          sx={{ margin: "0 0 1rem 0" }}
         >
           {response?.error ?? ""}
           {response?.successMessage ?? ""}
@@ -48,6 +48,7 @@ export const Categories = ({ arcId, categories }) => {
             Category
           </InputLabel>
           <Select
+            className="mx-0 mt-0 mb-4"
             variant="filled"
             fullWidth
             labelId="category-select-info-dialog"
@@ -56,7 +57,6 @@ export const Categories = ({ arcId, categories }) => {
             label="Category"
             onChange={onChange}
             native
-            sx={{ margin: "0 0 1rem 0" }}
           >
             <option value="" aria-label="none" />
             {categoriesToShow.map((cat) => (

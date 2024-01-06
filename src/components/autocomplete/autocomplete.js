@@ -10,7 +10,6 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { AUTOCOMPLETE_STYLES } from "./constants";
 import { useAutocompleteLogic } from "./useAutocompleteLogic";
 
 export const Autocomplete = ({
@@ -62,6 +61,7 @@ export const Autocomplete = ({
         }}
       />
       <Popper
+        className="popper bg-[#121212] z-10"
         open={
           listItems.length > 0 &&
           focused &&
@@ -71,15 +71,14 @@ export const Autocomplete = ({
         anchorEl={ref}
         disablePortal
         placement="bottom-start"
-        sx={AUTOCOMPLETE_STYLES.popper}
       >
-        <List sx={AUTOCOMPLETE_STYLES.list}>
+        <List className="max-h-[175px] overflow-y-scroll w-full">
           {listItems.map((item) => (
-            <ListItem key={item} sx={{ padding: 0 }}>
+            <ListItem className="p-0" key={item}>
               <ListItemButton
+                className="py-1 pl-2"
                 component="div"
                 onClick={() => onListItemButtonClick(item)}
-                sx={{ padding: ".25rem 0 .25rem .5rem" }}
               >
                 <Typography>{item}</Typography>
               </ListItemButton>

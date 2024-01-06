@@ -18,19 +18,19 @@ export const PageButtons = ({ id, disabled, top = false }) => {
   return (
     <Grid id={id} item xs={12}>
       <Grid
+        className="pb-4 text-slate-50"
         container
         justifyContent={mdDown ? "space-around" : "center"}
         alignContent="center"
         spacing={2}
-        sx={{ pb: "1rem", color: "white" }}
       >
         <Grid container item xs={4} sm={5}>
           <Button
+            className="bg-[#43464E]"
             fullWidth
             onClick={onBackClick}
             variant="contained"
             disabled={disabled}
-            sx={{ backgroundColor: "#43464E" }}
           >
             <ArrowBack />
             Prev
@@ -65,11 +65,11 @@ export const PageButtons = ({ id, disabled, top = false }) => {
         </Grid>
         <Grid container item xs={4} sm={5}>
           <Button
+            className="bg-[#43464E]"
             fullWidth
             onClick={onForwardClick}
             variant="contained"
             disabled={disabled}
-            sx={{ backgroundColor: "#43464E" }}
           >
             Next
             <ArrowForward />
