@@ -55,9 +55,7 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
   const archiveTitle = archiveData?.title ?? "";
   const dialogTitle = (
     <Grid container justifyContent="space-between">
-      <Typography sx={{ alignSelf: "center", ml: "1rem", fontSize: "1.25rem" }}>
-        Archive Info
-      </Typography>
+      <Typography className="self-center ml-1 text-xl">Archive Info</Typography>
       <IconButton
         aria-label="Open Delete Archive Section"
         onClick={onDeleteIconClick}
@@ -77,7 +75,7 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
     >
       {!showDelete ? (
         <>
-          <Grid container spacing={4} sx={{ padding: "2rem 0 1rem 0" }}>
+          <Grid className="px-0 pt-8 pb-4" container spacing={4}>
             <Grid item xs={12} sm={6}>
               <IdTitleSwitchButton arcId={arcId} archiveTitle={archiveTitle} />
             </Grid>
@@ -89,7 +87,7 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
             Categories:{" "}
             {archiveData?.categories?.map((cat) => cat?.name ?? "").join(", ")}
           </Typography>
-          <Typography sx={{ padding: "1rem 0" }}>
+          <Typography className="py-4 px-0">
             Pages: {archiveData?.pagecount ?? 0}
           </Typography>
           <Tags onClose={onClose} archiveTags={archiveData?.tags ?? ""} />

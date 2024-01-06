@@ -26,10 +26,10 @@ export const DeleteArchive = ({ onClose, arcId, title, onBack }) => {
 
   return (
     <Grid
+      className="h-full mt-8"
       container
       direction="column"
       justifyContent="center"
-      sx={{ height: "100%", mt: "2rem" }}
       spacing={2}
     >
       <Grid item>

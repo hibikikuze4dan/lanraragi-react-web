@@ -1,3 +1,4 @@
+/* eslint-disable no-confusing-arrow */
 /* eslint-disable react/jsx-no-useless-fragment */
 import React from "react";
 import { CircularProgress, Grid, Typography } from "@mui/material";
@@ -6,31 +7,22 @@ export const Loading = ({
   children,
   label,
   loading = true,
-  height = 0,
   centerText = false,
-}) => {
-  const styles = {
-    container: {
-      minHeight: `${height || window.innerHeight}px`,
-      width: "100%",
-    },
-  };
-
-  return !loading ? (
+}) =>
+  !loading ? (
     <>{children}</>
   ) : (
     <Grid
+      className="w-full min-h-16"
       container
       alignContent="center"
       justifyContent="center"
-      sx={styles.container}
     >
       <Grid item xs={12}>
-        <Typography style={{ ...(centerText && { textAlign: "center" }) }}>
+        <Typography className={`${centerText ? "text-center" : ""}`}>
           {label}
         </Typography>
       </Grid>
       <CircularProgress size={80} />
     </Grid>
   );
-};

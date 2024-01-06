@@ -22,7 +22,7 @@ export const ArchiveEditDialog = ({ arcId, onCloseProp, open }) => {
       fullWidth
       maxWidth="md"
     >
-      <Grid container spacing={4} sx={{ padding: "2rem 0 1rem 0" }}>
+      <Grid className="pt-8 pb-4 px-0" container spacing={4}>
         {archiveDataReady ? (
           <>
             <Grid item xs={12}>

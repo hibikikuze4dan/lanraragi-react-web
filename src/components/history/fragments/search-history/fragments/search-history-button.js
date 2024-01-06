@@ -47,10 +47,10 @@ export const SearchHistoryButton = ({
 
   return (
     <Button
+      className="normal-case"
       component={Paper}
       fullWidth
       onClick={onClick}
-      sx={{ textTransform: "none" }}
     >
       <Grid container spacing={1}>
         <Grid item xs={6}>

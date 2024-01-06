@@ -10,10 +10,10 @@ export const IdTitleSwitchButton = ({ arcId, archiveTitle }) => {
 
   return (
     <Grid
+      className="h-full"
       alignContent="center"
       justifyContent="center"
       container
-      sx={{ height: "100%" }}
     >
       <Grid item xs={12}>
         <Typography textAlign="center">
@@ -21,7 +21,7 @@ export const IdTitleSwitchButton = ({ arcId, archiveTitle }) => {
             <>
               Archive ID:
               <br />
-              <span style={{ overflowWrap: "anywhere" }}>{arcId}</span>
+              <span className="overflow-wrap-anywhere">{arcId}</span>
             </>
           ) : (
             archiveTitle
@@ -31,8 +31,8 @@ export const IdTitleSwitchButton = ({ arcId, archiveTitle }) => {
       <Grid item xs={12}>
         <Button
           aria-label={`Click here to show Archive ${!showId ? "ID" : "Title"}`}
+          className="w-full h-full rounded-none"
           onClick={onSwitch}
-          style={{ width: "100%", height: "100%", borderRadius: "unset" }}
         >
           Display Archive {showId ? "Title" : "ID"}
         </Button>

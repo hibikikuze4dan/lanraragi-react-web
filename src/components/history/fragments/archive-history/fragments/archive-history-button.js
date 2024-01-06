@@ -32,10 +32,10 @@ export const ArchiveHistoryButton = ({ title, id }) => {
   return (
     <Button
       aria-label={`Click to open archive ${title}`}
+      className="normal-case h-full"
       component={Paper}
       fullWidth
       onClick={onClick}
-      sx={{ textTransform: "none", height: "100%" }}
     >
       {title}
     </Button>

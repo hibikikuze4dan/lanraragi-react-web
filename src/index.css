@@ -16,6 +16,10 @@ code {
     monospace;
 }
 
+.no-border {
+  border: none;
+}
+
 .clamp {
   overflow: hidden;
   display: -webkit-box;
@@ -25,4 +29,8 @@ code {
 
 .popper {
   width: calc(100% - 32px);
+}
+
+.overflow-wrap-anywhere {
+  overflow-wrap: anywhere;
 }

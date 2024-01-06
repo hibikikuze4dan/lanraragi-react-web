@@ -13,10 +13,9 @@ export const BlobImage = ({ uri, setObserverTarget, middle, onImageClick }) => {
       {url && (
         <div className="w-full flex justify-center">
           <button
-            className="w-fit"
+            className="w-fit no-border bg-transparent"
             type="button"
             onClick={onImageClick}
-            style={{ backgroundColor: "transparent", border: "none" }}
           >
             <img
               alt={uri}
