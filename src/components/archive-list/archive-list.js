@@ -6,16 +6,12 @@ import { ArchiveInfoDialog } from "../dialogs/archive-info-dialog";
 import { getBaseUrl } from "../../storage/requests";
 import { getCurrentArchiveId } from "../../app/selectors";
 import { updateInfoDialogArchiveId } from "../../app/slice";
-import {
-  getDisplayMethodForWideArchiveThumbnails,
-  getNumArchivePerRow,
-} from "../../storage/archives";
+import { getNumArchivePerRow } from "../../storage/archives";
 import { Loading } from "../loading/loading";
 import { ArchiveEditDialog } from "../dialogs/archive-edit-dialog/archive-edit-dialog";
 
 export const ArchiveList = ({
   archives = [],
-  display,
   sliceToRender = [0, null],
   isSearch = false,
   archivesLoading = false,
@@ -25,10 +21,6 @@ export const ArchiveList = ({
 }) => {
   const dispatch = useDispatch();
   const currentArchiveId = useSelector(getCurrentArchiveId);
-  const [imagesLoaded, setImagesLoaded] = useState([]);
-  const incrementImagesLoaded = useCallback(() => {
-    setImagesLoaded(imagesLoaded + 1);
-  }, [imagesLoaded, setImagesLoaded]);
   const [archiveInfoModalState, updateArchiveInfoModalState] = useState({
     open: false,
     arcId: "",
@@ -40,7 +32,6 @@ export const ArchiveList = ({
   const secondSliceValue = sliceToRender[1] ?? archives.length;
   const baseUrl = getBaseUrl();
   const columns = getNumArchivePerRow();
-  const wideThumbnailDisplayMethod = getDisplayMethodForWideArchiveThumbnails();
   const onInfoClick = useCallback((arcId) => {
     dispatch(updateInfoDialogArchiveId(arcId));
     updateArchiveInfoModalState({ open: true, arcId });
@@ -50,23 +41,10 @@ export const ArchiveList = ({
   }, []);
 
   return (
-    <div
-      className="full-height"
-      style={{
-        display,
-        overflowY: "scroll",
-      }}
-    >
-      <div style={{ padding: "2rem 1rem 75svh 1rem" }}>
+    <div className="full-height overflow-y-scroll">
+      <div className="pt-8 px-4 pb-[75svh]">
         {header}
-        <Grid
-          container
-          columns={columns}
-          spacing={2}
-          sx={{
-            marginTop: 0,
-          }}
-        >
+        <Grid className="mt-0" container columns={columns} spacing={2}>
           <div id="archives-top" />
           <Loading loading={archivesLoading} label={loadingLabel}>
             {archives
@@ -78,18 +56,14 @@ export const ArchiveList = ({
                     baseUrl={baseUrl}
                     currentArchiveId={currentArchiveId}
                     id={arcid}
-                    imagesLoaded={imagesLoaded}
                     index={idx}
                     isSearch={isSearch}
                     key={`${title}-${arcid}`}
                     numOfArchivesRendered={arr.length}
-                    onArchiveImageLoad={incrementImagesLoaded}
                     onEditClick={onEditClick}
                     onInfoClick={onInfoClick}
-                    setImagesLoaded={setImagesLoaded}
                     tags={tags}
                     title={title}
-                    wideImageDisplayMethod={wideThumbnailDisplayMethod}
                   />
                 );
               })}

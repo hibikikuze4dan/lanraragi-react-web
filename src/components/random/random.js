@@ -33,14 +33,10 @@ export const Random = ({ display }) => {
 
   const footer = useMemo(
     () => (
-      <Grid container justifyContent="center" sx={{ pt: "1rem" }}>
+      <Grid className="pt-4" container justifyContent="center">
         <Grid item xs={12} sm={8}>
-          <Button
-            fullWidth
-            onClick={callNewArchives}
-            sx={{ textTransform: "none" }}
-          >
-            <Casino sx={{ mr: ".5rem" }} /> More Archives
+          <Button className="normal-case" fullWidth onClick={callNewArchives}>
+            <Casino className="mr-2" /> More Archives
           </Button>
         </Grid>
       </Grid>

@@ -74,7 +74,7 @@ export const Search = ({ display, loading, controller }) => {
 
   const header = (
     <>
-      <div style={{ marginBottom: "1.5rem" }}>
+      <div className="mb-6">
         <SearchAccordion />
       </div>
       <PageButtons id="page-buttons-top" top disabled={isSearchLoading} />
