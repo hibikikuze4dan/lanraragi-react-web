@@ -1,77 +1,53 @@
 import React from "react";
 import { Paper, Grid } from "@mui/material";
-import { ARCHIVE_STYLES } from "./constants";
 import { ArchiveActionButtons } from "./fragments/archive-action-buttons";
 import { EditArchiveButton } from "./fragments/edit-archive-button";
 import { Rating } from "../rating/rating";
 import { useArchiveLogic } from "./useArchiveLogic";
 
-const styles = ARCHIVE_STYLES;
-
 export const Archive = ({
   baseUrl,
   currentArchiveId,
   id,
-  imagesLoaded,
   index,
   isSearch,
-  onArchiveImageLoad,
   onEditClick,
   onInfoClick,
   numOfArchivesRendered,
-  setImagesLoaded,
   tags,
   title,
-  wideImageDisplayMethod,
 }) => {
-  const {
-    height,
-    onLoad,
-    onTitleClick,
-    rating,
-    ref,
-    showFullTitle,
-    src,
-    wideImage,
-    wideImageStyles,
-    width,
-  } = useArchiveLogic({
-    baseUrl,
-    currentArchiveId,
-    id,
-    imagesLoaded,
-    numOfArchivesRendered,
-    onArchiveImageLoad,
-    setImagesLoaded,
-    tags,
-    wideImageDisplayMethod,
-  });
+  const { onLoad, onTitleClick, rating, ref, showFullTitle, src } =
+    useArchiveLogic({
+      baseUrl,
+      currentArchiveId,
+      id,
+      numOfArchivesRendered,
+      tags,
+    });
 
   return (
-    <Grid xs={1} sm={1} md={1} lg={1} xl={1} item sx={styles.grid}>
-      <Paper id={`archive_${id}`} style={styles.paper}>
-        <div style={{ ...styles.imageWrapper }}>
+    <Grid xs={1} sm={1} md={1} lg={1} xl={1} item>
+      <Paper
+        className="h-full flex flex-col justify-between relative bg-[#363940]"
+        id={`archive_${id}`}
+      >
+        <div className="overflow-hidden min-h-[300px] p-2 flex flex-col justify-center">
           <img
+            className="object-contain w-max max-w-full max-h-[300px] rounded"
             id={`archive-img-${index}`}
             alt={`thumbnail for ${title}`}
-            style={{
-              ...styles.image,
-              ...(wideImage ? wideImageStyles : styles.imageLong),
-            }}
             src={src}
-            height={height}
-            width={width}
             onLoad={onLoad}
           />
         </div>
-        <div style={{ padding: "8px" }}>
+        <div className="p-2">
           <button type="button" onClick={onTitleClick}>
             <p
+              className={`normal-case font-bold m-0 text-sm ${
+                showFullTitle ? "" : "clamp"
+              }`}
               id={`archive-text-${index}`}
-              style={{
-                ...styles.typography,
-                ...(!showFullTitle && styles.clamp),
-              }}
             >
               {title}
             </p>

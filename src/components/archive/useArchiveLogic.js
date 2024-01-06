@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useImageSize } from "react-image-size";
 import { getTagsObjectFromTagsString, httpOrHttps } from "../../utils";
 import { THUMBNAIL_URL } from "../../requests/constants";
-import { ARCHIVE_STYLES } from "./constants";
 import { getRatingType } from "../../storage/ratings";
 import { useImageBlobUrl } from "../../hooks/useImageBlobUrl/useImageBlobUrl";
 import { getNoFunModeEnabled } from "../../storage/images";
@@ -13,7 +11,6 @@ export const useArchiveLogic = ({
   id,
   numOfArchivesRendered,
   tags,
-  wideImageDisplayMethod,
 }) => {
   const [showFullTitle, updateShowFullTitle] = useState(false);
   const stringifiedSrc = `${httpOrHttps()}${baseUrl}${THUMBNAIL_URL.replace(
@@ -22,24 +19,6 @@ export const useArchiveLogic = ({
   )}`;
   const { url, revokeImageUrl } = useImageBlobUrl(stringifiedSrc);
   const src = getNoFunModeEnabled() === "No" ? stringifiedSrc : url;
-  const [dimensions] = useImageSize(src);
-  const width = dimensions?.width ?? 0;
-  const height = dimensions?.height ?? 0;
-  const wideImage = width > height;
-  const diffBetweenMaxHeightAndImageHeight = 300 - height;
-  const isDiffBetweenMaxHeightAndImageHeightPositive =
-    diffBetweenMaxHeightAndImageHeight > 0;
-  const extraMargin = isDiffBetweenMaxHeightAndImageHeightPositive
-    ? `${diffBetweenMaxHeightAndImageHeight * 0.5}px`
-    : 0;
-  const wideImageStyles = {
-    ...ARCHIVE_STYLES.imageWide,
-    ...(wideImageDisplayMethod && { objectFit: wideImageDisplayMethod }),
-    ...(isDiffBetweenMaxHeightAndImageHeightPositive && {
-      marginTop: extraMargin,
-      marginBottom: extraMargin,
-    }),
-  };
   const ratingFromTags =
     getTagsObjectFromTagsString(tags ?? "")?.[getRatingType()]?.[0] ?? null;
   const rating =
@@ -68,15 +47,11 @@ export const useArchiveLogic = ({
   };
 
   return {
-    height,
     onLoad,
     onTitleClick,
     rating,
     ref,
     showFullTitle,
     src,
-    wideImage,
-    wideImageStyles,
-    width,
   };
 };
