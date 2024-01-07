@@ -15,11 +15,11 @@ export const SearchForm = ({ onClose }) => {
 
   return (
     <Grid
+      className="h-full pt-8"
       container
       justifyContent="center"
       alignContent="center"
       spacing={2}
-      sx={{ height: "100%", pt: "2rem" }}
     >
       <Grid item xs={12}>
         <SearchCategoriesSelect

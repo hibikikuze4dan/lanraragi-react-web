@@ -53,12 +53,12 @@ export const Sort = () => {
       </Grid>
       <Grid item xs={6}>
         <Button
+          className="normal-case h-full"
           onClick={onSortOrderButtonClick}
           aria-label={`Currently ${copy} - click to toggle`}
           fullWidth
-          sx={{ textTransform: "none", height: "100%" }}
         >
-          <Icon sx={{ mr: ".5rem" }} /> {copy}
+          <Icon className="mr-2" /> {copy}
         </Button>
       </Grid>
     </Grid>

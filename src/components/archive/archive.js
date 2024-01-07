@@ -32,7 +32,7 @@ export const Archive = ({
         className="h-full flex flex-col justify-between relative bg-[#363940]"
         id={`archive_${id}`}
       >
-        <div className="overflow-hidden min-h-[300px] p-2 flex flex-col justify-center">
+        <div className="overflow-hidden min-h-[300px] p-2 flex flex-row justify-center">
           <img
             className="object-contain w-max max-w-full max-h-[300px] rounded"
             id={`archive-img-${index}`}

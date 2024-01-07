@@ -58,17 +58,17 @@ export const Tags = ({ archiveTags, onClose }) => {
               const validUrl = isValidUrl(tag);
               return (
                 <Grid
+                  className="overflow-hidden text-ellipsis"
                   key={`${tagType}:${tag}`}
                   item
                   xs={4}
                   sm={3}
-                  sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
                 >
                   {!validUrl && (
                     <Button
+                      className="normal-case p-0"
                       fullWidth
                       variant="text"
-                      sx={{ textTransform: "none", padding: 0 }}
                       onClick={() => onTagClick(tagType, tag)}
                     >
                       {tagType === "date_added"
@@ -78,12 +78,12 @@ export const Tags = ({ archiveTags, onClose }) => {
                   )}
                   {validUrl && (
                     <Link
+                      className="noraml-case"
                       target="_blank"
                       rel="noreferrer"
                       href={tag}
                       underline="hover"
                       variant="button"
-                      sx={{ textTransform: "none" }}
                     >
                       {tag}
                     </Link>

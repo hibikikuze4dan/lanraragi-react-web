@@ -20,6 +20,10 @@ code {
   border: none;
 }
 
+.grey-border {
+  border: 1px solid grey !important;
+}
+
 .clamp {
   overflow: hidden;
   display: -webkit-box;

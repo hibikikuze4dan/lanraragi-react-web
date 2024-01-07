@@ -9,25 +9,6 @@ import {
 } from "../../../app/slice";
 import { scrollIntoViewByElement } from "../../../utils";
 
-const styles = {
-  appBar: {
-    height: "100svh",
-    width: "fit-content",
-    display: "flex",
-    backgroundColor: "rgba(30, 30, 30, 1)",
-    border: "1px solid grey",
-    justifyContent: "space-around",
-  },
-  button: {
-    display: "flex",
-    flexDirection: "column",
-    textTransform: "none",
-    padding: "4px 4px",
-    marginBottom: "1.5rem",
-    color: "white",
-  },
-};
-
 export const SideNavbar = ({ getNewArchives, openSearchDialog }) => {
   const dispatch = useDispatch();
   const sectionVisibility = useSelector(
@@ -41,7 +22,10 @@ export const SideNavbar = ({ getNewArchives, openSearchDialog }) => {
   };
 
   return (
-    <AppBar position="static" sx={styles.appBar}>
+    <AppBar
+      className="h-svh w-fit flex bg-[#1e1e1e] justify-around grey-border"
+      position="static"
+    >
       <div>
         {sectionVisibility.map(({ id, label, visible }) => {
           const onClick = () => {
@@ -56,7 +40,11 @@ export const SideNavbar = ({ getNewArchives, openSearchDialog }) => {
           };
 
           return id !== "images" ? (
-            <Button onClick={onClick} key={id} sx={styles.button}>
+            <Button
+              className="flex flex-col normal-case p-1 mb-6 text-slate-50"
+              onClick={onClick}
+              key={id}
+            >
               {icons[id]}
               {label}
             </Button>

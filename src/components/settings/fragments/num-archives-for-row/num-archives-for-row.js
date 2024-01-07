@@ -31,7 +31,7 @@ export const NumArchivesForRow = () => {
   );
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div className="p-4">
       <Slider
         min={1}
         max={10}

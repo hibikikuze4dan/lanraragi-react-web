@@ -11,7 +11,7 @@ export const Settings = () => (
     justifyContent="center"
   >
     <Grid item xs={10} md={7}>
-      <div style={{ paddingTop: "3rem", paddingBottom: "6rem" }}>
+      <div className="pt-12 pb-24">
         <UrlAccordion />
         <ArchiveSettingsAccordion />
         <ImageSettingsAccordion />

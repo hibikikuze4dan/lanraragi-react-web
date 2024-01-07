@@ -20,21 +20,13 @@ export default function App() {
   );
   const { loading, controller } = useSearchOnLoad();
 
-  const styles = {
-    wrapper: {
-      ...(mdUp && { display: "flex", flexDirection: "row" }),
-      ...(!mdUp && { height: `${(11 / 12) * 100}svh` }),
-    },
-    topDiv: {
-      height: "100svh",
-      ...(mdUp && { display: "flex", flexDirection: "row" }),
-    },
-  };
-
   return (
-    <div style={styles.topDiv}>
+    <div className="static h-svh md:flex md:flex-row">
       {mdUp && <Navbar />}
-      <div id="top-div" className="full-width" style={styles.wrapper}>
+      <div
+        id="top-div"
+        className="full-width h-[91svh] sm:h-svh md:flex md:flex-row"
+      >
         <div className="full-width full-height">
           <Grid className="full-width full-height">
             <Url>

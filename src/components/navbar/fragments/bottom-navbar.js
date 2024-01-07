@@ -29,41 +29,33 @@ export const BottomNavbar = ({ getNewArchives, openSearchDialog }) => {
 
   return (
     <BottomNavigation
+      className="absolute bottom-0 right-0 left-0 z-10 bg-[#1e1e1e] h-[9svh]"
       onChange={onChange}
       showLabels
-      sx={{
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1,
-        height: `${(1 / 12) * 100}svh`,
-        backgroundColor: "rgb(30, 30, 30)",
-      }}
     >
       <BottomNavigationAction
+        className="text-slate-50"
         label="Random"
         value="random"
         icon={<Casino color="white" />}
-        sx={{ color: "white" }}
       />
       <BottomNavigationAction
+        className="text-slate-50"
         label="Search"
         value="search"
         icon={<Search color="white" />}
-        sx={{ color: "white" }}
       />
       <BottomNavigationAction
+        className="text-slate-50"
         label="History"
         value="history"
         icon={<History color="white" />}
-        sx={{ color: "white" }}
       />
       <BottomNavigationAction
+        className="text-slate-50"
         label="Settings"
         value="settings"
         icon={<Settings color="white" />}
-        sx={{ color: "white" }}
       />
     </BottomNavigation>
   );

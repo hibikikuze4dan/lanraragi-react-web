@@ -44,7 +44,7 @@ export const ArchiveList = ({
     <div className="full-height overflow-y-scroll">
       <div className="pt-8 px-4 pb-[75svh]">
         {header}
-        <Grid className="mt-0" container columns={columns} spacing={2}>
+        <Grid className="mt-0 mb-6" container columns={columns} spacing={2}>
           <div id="archives-top" />
           <Loading loading={archivesLoading} label={loadingLabel}>
             {archives

@@ -22,11 +22,11 @@ export const Tabs = ({ onChange, tabData = [] }) => {
       <TabContext value={currentTab}>
         <Grid container>
           <MuiTabs
+            className="w-full"
             centered={!smDown}
             onChange={onTabsChange}
             value={currentTab}
             variant={smDown ? "fullWidth" : "standard"}
-            sx={{ width: "100%" }}
           >
             {tabData.map((tab, index) => {
               const { label, ...otherTabProps } = tab;
@@ -45,7 +45,7 @@ export const Tabs = ({ onChange, tabData = [] }) => {
         {tabData.map((tab, index) => {
           const { content, label } = tab;
           return (
-            <TabPanel key={label} value={`${index}`} sx={{ maxHeight: "100%" }}>
+            <TabPanel className="max-h-full" key={label} value={`${index}`}>
               {content}
             </TabPanel>
           );

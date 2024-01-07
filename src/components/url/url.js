@@ -2,6 +2,7 @@
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Grid, TextField, Typography } from "@mui/material";
+import classnames from "classnames";
 import {
   getApiKey,
   getBaseUrl,
@@ -11,17 +12,6 @@ import {
   storeUseHttps,
 } from "../../storage/requests";
 import { updateSectionVisibility } from "../../app/slice";
-
-const styles = {
-  outerGrid: {
-    padding: "4rem 3rem",
-    height: `${window.innerHeight}px`,
-  },
-  outerGridSettings: {
-    height: "auto",
-    padding: "4rem 1rem",
-  },
-};
 
 export const Url = ({ children, isSettings = false }) => {
   const dispatch = useDispatch();
@@ -47,10 +37,10 @@ export const Url = ({ children, isSettings = false }) => {
 
   return !getBaseUrl() || isSettings ? (
     <Grid
-      style={{
-        ...styles.outerGrid,
-        ...(isSettings && styles.outerGridSettings),
-      }}
+      className={classnames(
+        { "h-auto px-4 py-16": isSettings },
+        { "h-svh py-16 px-12": !isSettings }
+      )}
       container
       alignContent="center"
       spacing={4}

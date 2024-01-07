@@ -61,7 +61,7 @@ export const Autocomplete = ({
         }}
       />
       <Popper
-        className="popper bg-[#121212] z-10"
+        className="popper bg-[#121212] z-20"
         open={
           listItems.length > 0 &&
           focused &&

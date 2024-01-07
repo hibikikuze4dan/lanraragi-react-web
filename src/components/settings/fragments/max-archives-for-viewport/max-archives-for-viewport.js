@@ -33,7 +33,7 @@ export const MaxArchivesForViewPort = () => {
   );
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div className="p-4">
       <Slider
         min={10}
         max={100}
