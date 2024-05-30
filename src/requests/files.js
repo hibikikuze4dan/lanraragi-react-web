@@ -21,6 +21,7 @@ export const getArchiveFiles = async (archiveId) =>
     .then((response) => response.data)
     .catch((error) => {
       console.log(error);
+      return {};
     });
 
 export const getArchiveImage = async (imgSrc) => {

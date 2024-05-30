@@ -38,3 +38,11 @@ code {
 .overflow-wrap-anywhere {
   overflow-wrap: anywhere;
 }
+
+.svh-half {
+  height: 50svh;
+}
+
+.svh-ninety {
+  height: 90svh;
+}

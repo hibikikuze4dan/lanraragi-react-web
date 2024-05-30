@@ -12,7 +12,7 @@ export const DeleteArchive = ({ onClose, arcId, title, onBack }) => {
   const dispatch = useDispatch();
   const onDelete = useCallback(async () => {
     const response = await deleteArchiveById(arcId);
-    if (response.success) {
+    if (response?.success) {
       dispatch(deleteArchiveFromRandomArchives(arcId));
       dispatch(deleteArchiveFromSearchArchives(arcId));
       dispatch(updateDisplaySnackbar({ open: true, type: "DELETE_ARCHIVE" }));

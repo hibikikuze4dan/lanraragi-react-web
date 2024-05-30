@@ -2,9 +2,12 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import React from "react";
 import { CircularProgress, Grid, Typography } from "@mui/material";
+import classNames from "classnames";
 
 export const Loading = ({
   children,
+  outerGridClassName = "",
+  fullHeight = true,
   label,
   loading = true,
   centerText = false,
@@ -13,7 +16,11 @@ export const Loading = ({
     <>{children}</>
   ) : (
     <Grid
-      className="w-full min-h-16"
+      className={classNames(
+        "w-full min-h-16",
+        { "h-full": fullHeight },
+        outerGridClassName
+      )}
       container
       alignContent="center"
       justifyContent="center"

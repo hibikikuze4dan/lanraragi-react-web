@@ -35,10 +35,10 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
   useEffect(() => {
     const getArchiveData = async () => {
       const metaData = await getArchiveMetaData(arcId);
-      const categoriesData = await getArchiveCategories(arcId);
+      const categoriesArray = await getArchiveCategories(arcId);
       setArchiveData({
         ...metaData,
-        categories: categoriesData?.categories ?? [],
+        categories: categoriesArray ?? [],
       });
     };
 
@@ -47,7 +47,8 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
 
   useEffect(() => {
     const getCats = async () => {
-      dispatch(updateCategories(await getCategories()));
+      const categoriesArray = await getCategories();
+      dispatch(updateCategories(categoriesArray));
     };
     if (!categories.length) getCats();
   }, [categories]);

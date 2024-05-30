@@ -2,7 +2,7 @@ import axios from "axios";
 import { TAGS_URL } from "./constants";
 import { getBaseUrl } from "../storage/requests";
 import { httpOrHttps } from "../utils";
-import { getConfig } from "./request-utils";
+import { getRequestConfig } from "./request-utils";
 
 const EXCLUDED_NAMSPACES = ["date_added", "source"];
 
@@ -10,7 +10,7 @@ export const getTags = async () => {
   let response = null;
   try {
     response = await axios({
-      ...getConfig(),
+      ...getRequestConfig(),
       url: `${httpOrHttps()}${getBaseUrl()}${TAGS_URL}`,
     });
   } catch (error) {

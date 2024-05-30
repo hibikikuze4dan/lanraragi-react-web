@@ -32,12 +32,10 @@ export const useSearchOnLoad = () => {
         ...(category && { category }),
       },
       controller
-    ).catch(() => /* find a better way of handling errors */ ({
-      data: [
-        { id: "error", title: "something went wrong, try searching again" },
-      ],
-    }));
-    dispatch(updateSearchArchives(arcs.data));
+    ).catch(() => /* find a better way of handling errors */ [
+      { id: "error", title: "something went wrong, try searching again" },
+    ]);
+    dispatch(updateSearchArchives(arcs));
     setLoading(false);
   }, []);
 

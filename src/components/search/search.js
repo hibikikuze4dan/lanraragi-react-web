@@ -45,7 +45,7 @@ export const Search = ({ display, loading, controller }) => {
         ...(category && { category }),
       };
       const arcs = await getArchivesBySearch(searchObject);
-      dispatch(updateSearchArchives(arcs.data));
+      dispatch(updateSearchArchives(arcs));
       dispatch(updateLoading({ search: false }));
     },
     []

@@ -9,7 +9,11 @@ export const Image = ({ uri, setObserverTarget, middle, onImageClick }) => {
   });
 
   return (
-    <Loading loading={loading}>
+    <Loading
+      fullHeight={false}
+      outerGridClassName="pb-20 mb-20 svh-ninety"
+      loading={loading}
+    >
       {errorMessage && <Typography>Sorry, something went wrong</Typography>}
       {!loading && (
         <div className="w-full flex justify-center">

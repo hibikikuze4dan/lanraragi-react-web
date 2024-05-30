@@ -10,7 +10,7 @@ export const useImageBlobUrl = (imgSrc) => {
   useEffect(() => {
     if (!imageBlob)
       getArchiveImage(imgSrc).then((res) => {
-        setImageBlob(URL.createObjectURL(res));
+        if (res) setImageBlob(URL.createObjectURL(res));
       });
   }, [imgSrc, setImageBlob]);
 

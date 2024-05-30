@@ -18,8 +18,9 @@ export const Random = ({ display }) => {
   const { random: israndomLoading } = useSelector(getLoading);
 
   const callNewArchives = useCallback(async () => {
+    const randomArchiveArray = await getRandomArchives(count);
     dispatch(updateLoading({ random: true }));
-    dispatch(updateRandomArchives(await getRandomArchives(count)));
+    dispatch(updateRandomArchives(randomArchiveArray));
     dispatch(updateLoading({ random: false }));
   }, [count]);
 

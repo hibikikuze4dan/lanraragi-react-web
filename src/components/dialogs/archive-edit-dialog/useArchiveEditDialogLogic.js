@@ -79,10 +79,10 @@ export const useArchiveEditDialogModalLogic = ({ onCloseProp, arcId }) => {
   useEffect(() => {
     const getArchiveData = async () => {
       const metaData = await getArchiveMetaData(arcId);
-      const categoriesData = await getArchiveCategories(arcId);
+      const categoriesArray = await getArchiveCategories(arcId);
       setArchiveData({
         ...metaData,
-        categories: categoriesData?.categories ?? [],
+        categories: categoriesArray ?? [],
       });
     };
 

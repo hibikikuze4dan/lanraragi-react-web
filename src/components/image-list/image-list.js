@@ -16,6 +16,7 @@ export const ImageList = () => {
     observerRoot,
     onBackClick,
     onImageClick,
+    pagesError,
     pagesToRender,
     pageUrls,
     setFinalTarget,
@@ -33,25 +34,32 @@ export const ImageList = () => {
       justifyContent="center"
       id={`images-list-${arcId}`}
     >
-      <Loading label="Getting images" loading={gettingImagesFromLRR}>
-        {[...pageUrls.slice(0, pagesToRender)].map((page, index) => {
-          const src = `${httpOrHttps()}${baseUrl}${page}`;
-          const middle = (index + 1) % (pagesToRender - 5) === 0;
-          return (
-            <Grid className="py-2" key={src} item xs={12}>
-              <ImageToUse
-                uri={src}
-                middle={middle}
-                setObserverTarget={setObserverTarget}
-                onImageClick={onImageClick}
-              />
-            </Grid>
-          );
-        })}
-        <Grid className="py-4" item xs={12}>
-          <Rating arcId={arcId} />
+      {pagesError ? (
+        <Grid item xs={12}>
+          Sorry, something went wrong while trying to get the archive pages.
         </Grid>
-      </Loading>
+      ) : (
+        <Loading label="Getting images" loading={gettingImagesFromLRR}>
+          {[...pageUrls.slice(0, pagesToRender)].map((page, index) => {
+            const src = `${httpOrHttps()}${baseUrl}${page}`;
+            const middle = (index + 1) % (pagesToRender - 5) === 0;
+            return (
+              <Grid className="my-2" key={src} item xs={12}>
+                <ImageToUse
+                  uri={src}
+                  middle={middle}
+                  setObserverTarget={setObserverTarget}
+                  onImageClick={onImageClick}
+                />
+              </Grid>
+            );
+          })}
+          <Grid className="py-4" item xs={12}>
+            <Rating arcId={arcId} />
+          </Grid>
+        </Loading>
+      )}
+
       <Grid item xs={12}>
         <Grid container justifyContent="center">
           <Grid item xs={8}>

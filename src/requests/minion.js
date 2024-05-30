@@ -24,5 +24,6 @@ export const getMinionStatus = async (jobId) => {
     console.log(error);
     response = { data: null };
   }
+
   return response.data;
 };

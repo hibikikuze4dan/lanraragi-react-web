@@ -17,10 +17,10 @@ export const deleteArchiveById = async (archiveId) =>
       ":id",
       archiveId
     )}`,
-    params: { key: `${getApiKey()}` }
+    params: { key: `${getApiKey()}` },
   })
-    .then((response) => response.data)
+    .then((response) => response?.data ?? {})
     .catch((error) => {
       console.log(error);
-      return { error: "Sorry, something went wrong" };
+      return {};
     });

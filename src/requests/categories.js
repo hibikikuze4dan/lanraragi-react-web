@@ -7,21 +7,22 @@ import {
 } from "./constants";
 import { getApiKey, getBaseUrl } from "../storage/requests";
 import { httpOrHttps } from "../utils";
-import { getConfig } from "./request-utils";
+import { getRequestConfig } from "./request-utils";
 
 export const getCategories = async () => {
-  const categories = await axios({
-    ...getConfig(),
+  const categoriesResponse = await axios({
+    ...getRequestConfig(),
     url: `${httpOrHttps()}${getBaseUrl()}${CATEGORIES_URL}`,
   });
-  return categories.data;
+
+  return categoriesResponse?.data ?? [];
 };
 
 export const getArchiveCategories = async (arcId) => {
   let response = null;
   try {
     response = await axios({
-      ...getConfig(),
+      ...getRequestConfig(),
       url: `${httpOrHttps()}${getBaseUrl()}${ARCHIVE_CATEGORY_URL.replace(
         ":id",
         arcId
@@ -29,9 +30,9 @@ export const getArchiveCategories = async (arcId) => {
     });
   } catch (error) {
     console.log(error);
-    response = { data: { errorMessage: "Sorry, something went wrong" } };
   }
-  return response.data;
+
+  return response?.data?.categories ?? [];
 };
 
 export const updateCategory = async ({ catId, arcId }) => {
@@ -46,9 +47,10 @@ export const updateCategory = async ({ catId, arcId }) => {
       params: { key: `${getApiKey()}` },
     });
   } catch (error) {
-    result = { data: { error: error.message } };
+    console.log(error);
   }
-  return result.data;
+
+  return result?.data ?? {};
 };
 
 export default getCategories;

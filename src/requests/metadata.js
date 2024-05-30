@@ -2,15 +2,16 @@ import axios from "axios";
 import { GET_HEADERS, METADATA_URL } from "./constants";
 import { getBaseUrl } from "../storage/requests";
 import { httpOrHttps } from "../utils";
-import { getConfig } from "./request-utils";
+import { getRequestConfig } from "./request-utils";
 
 export const getArchiveMetaData = async (arcId) => {
   if (!arcId) return Error("No archive Id supplied");
   const metadata = await axios({
-    ...getConfig(),
+    ...getRequestConfig(),
     url: `${httpOrHttps()}${getBaseUrl()}${METADATA_URL.replace(":id", arcId)}`,
   });
-  return metadata.data;
+
+  return metadata?.data ?? {};
 };
 
 export const updateArchiveMetadata = async ({ id, title, tags }) => {
@@ -18,7 +19,7 @@ export const updateArchiveMetadata = async ({ id, title, tags }) => {
   const formData = new FormData();
   if (title) formData.append("title", title);
   if (tags) formData.append("tags", tags);
-  const metadata = await axios.put(
+  const response = await axios.put(
     `${httpOrHttps()}${getBaseUrl()}${METADATA_URL.replace(":id", id)}`,
     formData,
     {
@@ -28,7 +29,8 @@ export const updateArchiveMetadata = async ({ id, title, tags }) => {
       },
     }
   );
-  return metadata.data;
+
+  return response?.data;
 };
 
 export default getArchiveMetaData;

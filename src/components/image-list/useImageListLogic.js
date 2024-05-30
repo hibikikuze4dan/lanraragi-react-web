@@ -27,6 +27,7 @@ export const useImageListLogic = () => {
   const archiveOpenedFrom = useSelector(getArchiveOpenedFrom);
   const { images: gettingImagesFromLRR } = useSelector(getLoading);
   const [pagesToRender, updatePagesToRender] = useState(10);
+  const [pagesError, setPagesError] = useState(false);
   const width = window.innerWidth;
   const height = window.innerHeight;
   const baseUrl = getBaseUrl();
@@ -36,25 +37,35 @@ export const useImageListLogic = () => {
 
   useEffect(() => {
     const getPages = async () => {
-      let jobStatus;
+      setPagesError(false);
+      let jobStatusObject;
       dispatch(updateLoading({ images: true }));
-      const newPagesData = await getArchiveFiles(arcId);
-      const job = newPagesData?.job;
+      const filesResponse = await getArchiveFiles(arcId);
+      const job = filesResponse?.job;
       if (job) {
-        jobStatus = await getMinionStatus(newPagesData?.job);
+        jobStatusObject = await getMinionStatus(filesResponse?.job);
       }
-      if (jobStatus?.state === "finished") {
-        dispatch(updatePages(newPagesData.pages));
+
+      if (jobStatusObject?.state === "finished") {
+        dispatch(updatePages(filesResponse.pages));
         dispatch(updateLoading({ images: false }));
         return;
       }
+
+      if (jobStatusObject?.error || !filesResponse?.pages) {
+        setPagesError(true);
+        dispatch(updatePages([]));
+        return;
+      }
+
       // The timeout is to give the Lanraragi API a bit more time to
       // finish extracting the images. Was experiencing messed up
       // images without it
-      setTimeout(() => dispatch(updatePages(newPagesData.pages)), 1000);
+      setTimeout(() => dispatch(updatePages(filesResponse.pages)), 1000);
       dispatch(updateLoading({ images: false }));
     };
-    if (arcId) getPages();
+
+    if (arcId && !pageUrls.length) getPages();
   }, [arcId]);
 
   useEffect(() => {
@@ -96,6 +107,7 @@ export const useImageListLogic = () => {
     observerRoot,
     onBackClick,
     onImageClick,
+    pagesError,
     pagesToRender,
     pageUrls,
     setFinalTarget,

@@ -69,9 +69,11 @@ export const Rating = ({
 
   useEffect(() => {
     if (isEmpty(archiveInfo) && !readOnly) {
-      getArchiveMetaData(arcId).then((res) => {
-        const responseTagsObject = getTagsObjectFromTagsString(res?.tags ?? "");
-        setArchiveInfo({ ...res });
+      getArchiveMetaData(arcId).then((metadata) => {
+        const responseTagsObject = getTagsObjectFromTagsString(
+          metadata?.tags ?? ""
+        );
+        setArchiveInfo({ ...metadata });
         setRatingValue(Number(responseTagsObject?.[ratingNamespace]?.[0] ?? 0));
       });
     }

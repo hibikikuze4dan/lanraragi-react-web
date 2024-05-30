@@ -3,7 +3,7 @@ import { throttle } from "lodash";
 import { SEARCH_URL } from "./constants";
 import { getBaseUrl } from "../storage/requests";
 import { httpOrHttps } from "../utils";
-import { getConfig } from "./request-utils";
+import { getRequestConfig } from "./request-utils";
 
 export const getArchivesBySearch = async (
   { filter, sortby, order, start = -1, category },
@@ -17,11 +17,12 @@ export const getArchivesBySearch = async (
   if (category) params.append("category", category);
 
   const categories = await axios({
-    ...getConfig(),
+    ...getRequestConfig(),
     url: `${httpOrHttps()}${getBaseUrl()}${SEARCH_URL}?${params.toString()}`,
     ...(controller && { signal: controller.signal }),
   });
-  return categories.data;
+  console.log(categories);
+  return categories?.data?.data ?? [];
 };
 
 export const getArchivesBySearchThrottled = throttle(
