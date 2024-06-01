@@ -9,6 +9,7 @@ import { ArchiveList } from "../archive-list/archive-list";
 import { useWidth } from "../../hooks/useWidth";
 import { getNumArchivesToRender } from "../../storage/archives";
 import { Loading } from "../loading/loading";
+import { scrollIntoViewByElement } from "../../utils";
 
 export const Random = ({ display }) => {
   const breakpoint = useWidth();
@@ -22,6 +23,7 @@ export const Random = ({ display }) => {
     dispatch(updateLoading({ random: true }));
     dispatch(updateRandomArchives(randomArchiveArray));
     dispatch(updateLoading({ random: false }));
+    scrollIntoViewByElement("#archive-text-0", 750);
   }, [count]);
 
   useEffect(() => {
