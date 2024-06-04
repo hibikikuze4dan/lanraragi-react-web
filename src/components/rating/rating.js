@@ -4,18 +4,10 @@ import { useDispatch } from "react-redux";
 import { isEmpty } from "lodash";
 import { getTagsObjectFromTagsString, stringifyTagsObject } from "../../utils";
 import { getRatingType } from "../../storage/ratings";
-import getArchiveMetaData, {
-  updateArchiveMetadata,
-} from "../../requests/metadata";
+import getArchiveMetaData, { updateArchiveMetadata } from "../../requests/metadata";
 import { updateArchiveTags, updateDisplaySnackbar } from "../../app/slice";
 
-export const Rating = ({
-  readOnly,
-  size = "large",
-  arcId,
-  archiveInfoProp = {},
-  ratingProp,
-}) => {
+export const Rating = ({ readOnly, size = "large", arcId, archiveInfoProp = {}, ratingProp }) => {
   const dispatch = useDispatch();
   const [archiveInfo, setArchiveInfo] = useState(archiveInfoProp);
   const tagsObject = getTagsObjectFromTagsString(archiveInfo?.tags ?? "");
@@ -50,9 +42,7 @@ export const Rating = ({
               type: "UPDATE_ARCHIVE_INFO_FAILURE",
               severity: "error",
             });
-            console.log(
-              res?.error ?? "Unknow error with updating archive info"
-            );
+            console.log(res?.error ?? "Unknown error with updating archive info");
           }
         })
         .catch((err) => {
@@ -61,7 +51,7 @@ export const Rating = ({
             type: "UPDATE_ARCHIVE_INFO_FAILURE",
             severity: "error",
           });
-          console.log(err ?? "Unknow error with updating archive info");
+          console.log(err ?? "Unknown error with updating archive info");
         });
     },
     [archiveInfo, tagsObject, ratingNamespace]
@@ -70,9 +60,7 @@ export const Rating = ({
   useEffect(() => {
     if (isEmpty(archiveInfo) && !readOnly) {
       getArchiveMetaData(arcId).then((metadata) => {
-        const responseTagsObject = getTagsObjectFromTagsString(
-          metadata?.tags ?? ""
-        );
+        const responseTagsObject = getTagsObjectFromTagsString(metadata?.tags ?? "");
         setArchiveInfo({ ...metadata });
         setRatingValue(Number(responseTagsObject?.[ratingNamespace]?.[0] ?? 0));
       });
@@ -84,12 +72,10 @@ export const Rating = ({
       {!readOnly && (
         <Grid item sm={12}>
           <Typography>
-            Click on any of the stars below to rate this archive. The rating
-            will be saved to the archive&apos;s metadata in the Lanraragi
-            database.
+            Click on any of the stars below to rate this archive. The rating will be saved to the
+            archive&apos;s metadata in the Lanraragi database.
             <br />
-            See the settings for different namespaces that can be used for
-            saving the rating.
+            See the settings for different namespaces that can be used for saving the rating.
           </Typography>
         </Grid>
       )}

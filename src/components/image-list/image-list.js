@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import { firstLetterToUppercase, httpOrHttps } from "../../utils";
 import { Loading } from "../loading/loading";
 import { Rating } from "../rating/rating";
@@ -13,6 +13,7 @@ export const ImageList = () => {
     arcId,
     baseUrl,
     gettingImagesFromLRR,
+    imageSpacingLevel,
     observerRoot,
     onBackClick,
     onImageClick,
@@ -25,7 +26,7 @@ export const ImageList = () => {
   } = useImageListLogic();
 
   const ImageToUse = useBlobImages ? BlobImage : Image;
-
+  console.log(imageSpacingLevel);
   return (
     <Grid
       ref={observerRoot}
@@ -44,13 +45,15 @@ export const ImageList = () => {
             const src = `${httpOrHttps()}${baseUrl}${page}`;
             const middle = (index + 1) % (pagesToRender - 5) === 0;
             return (
-              <Grid className="my-2" key={src} item xs={12}>
-                <ImageToUse
-                  uri={src}
-                  middle={middle}
-                  setObserverTarget={setObserverTarget}
-                  onImageClick={onImageClick}
-                />
+              <Grid key={src} item xs={12}>
+                <Box mb={imageSpacingLevel} width={"100%"}>
+                  <ImageToUse
+                    uri={src}
+                    middle={middle}
+                    setObserverTarget={setObserverTarget}
+                    onImageClick={onImageClick}
+                  />
+                </Box>
               </Grid>
             );
           })}
@@ -63,11 +66,7 @@ export const ImageList = () => {
       <Grid item xs={12}>
         <Grid container justifyContent="center">
           <Grid item xs={8}>
-            <Button
-              className="normal-case mt-8"
-              onClick={onBackClick}
-              fullWidth
-            >
+            <Button className="normal-case mt-8" onClick={onBackClick} fullWidth>
               Back to {firstLetterToUppercase(archiveOpenedFrom)}
             </Button>
           </Grid>

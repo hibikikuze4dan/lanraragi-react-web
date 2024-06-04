@@ -3,7 +3,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { BottomNavbar } from "./fragments/bottom-navbar";
 import { SideNavbar } from "./fragments/side-navbar";
-import { updateRandomArchives } from "../../app/slice";
+import { updateLoading, updateRandomArchives } from "../../app/slice";
 import getRandomArchives from "../../requests/random";
 import { SearchDialog } from "../dialogs/fragments/search-dialog";
 import { useWidth } from "../../hooks/useWidth";
@@ -20,8 +20,10 @@ export const Navbar = () => {
   const count = getNumArchivesToRender()[width];
 
   const callNewArchives = async () => {
+    dispatch(updateLoading({ random: true }));
     const newRandomArchives = (await getRandomArchives(count)) ?? [];
     dispatch(updateRandomArchives(newRandomArchives));
+    dispatch(updateLoading({ random: false }));
   };
   const openSearchDialog = () => setSearchDialogOpen(true);
   const onClose = () => setSearchDialogOpen(false);

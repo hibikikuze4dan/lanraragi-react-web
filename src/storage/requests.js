@@ -25,6 +25,5 @@ export const storeApiKey = (key) => {
 };
 
 export const storeUseHttps = (useHttps) => {
-  console.log(useHttps);
   localStorage.setItem(USE_HTTPS, useHttps.toString());
 };

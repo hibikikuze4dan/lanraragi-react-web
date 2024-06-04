@@ -21,12 +21,10 @@ export const getArchivesBySearch = async (
     url: `${httpOrHttps()}${getBaseUrl()}${SEARCH_URL}?${params.toString()}`,
     ...(controller && { signal: controller.signal }),
   });
-  console.log(categories);
+
   return categories?.data?.data ?? [];
 };
 
-export const getArchivesBySearchThrottled = throttle(
-  getArchivesBySearch,
-  10000,
-  { trailing: false }
-);
+export const getArchivesBySearchThrottled = throttle(getArchivesBySearch, 10000, {
+  trailing: false,
+});

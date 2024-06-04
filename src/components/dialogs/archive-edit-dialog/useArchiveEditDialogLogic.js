@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isEmpty } from "lodash";
-import getArchiveMetaData, {
-  updateArchiveMetadata,
-} from "../../../requests/metadata";
+import getArchiveMetaData, { updateArchiveMetadata } from "../../../requests/metadata";
 import { getArchiveCategories } from "../../../requests/categories";
 import { getVisibleSection } from "../../../app/selectors";
 import { updateArchiveTags, updateDisplaySnackbar } from "../../../app/slice";
@@ -34,8 +32,7 @@ export const useArchiveEditDialogModalLogic = ({ onCloseProp, arcId }) => {
         if (res?.success === 1) {
           setUpdateResponse({
             ...res,
-            successMessage:
-              "Congrats! The archive's information has been updated!",
+            successMessage: "Congrats! The archive's information has been updated!",
           });
           dispatch(
             updateArchiveTags({
@@ -58,7 +55,7 @@ export const useArchiveEditDialogModalLogic = ({ onCloseProp, arcId }) => {
             type: "UPDATE_ARCHIVE_INFO_FAILURE",
             severity: "error",
           });
-          console.log(res?.error ?? "Unknow error with updating archive info");
+          console.log(res?.error ?? "Unknown error with updating archive info");
         }
       })
       .catch((err) => {

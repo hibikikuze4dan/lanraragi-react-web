@@ -17,7 +17,7 @@ import {
 } from "../../app/slice";
 import { getArchiveFiles } from "../../requests/files";
 import { getMinionStatus } from "../../requests/minion";
-import { getNoFunModeEnabled } from "../../storage/images";
+import { getImageSpacingLevel, getNoFunModeEnabled } from "../../storage/images";
 
 export const useImageListLogic = () => {
   const dispatch = useDispatch();
@@ -98,12 +98,15 @@ export const useImageListLogic = () => {
 
   const useBlobImages = getNoFunModeEnabled() === "Yes";
 
+  const imageSpacingLevel = getImageSpacingLevel();
+
   return {
     archiveOpenedFrom,
     arcId,
     baseUrl,
     gettingImagesFromLRR,
     height,
+    imageSpacingLevel,
     observerRoot,
     onBackClick,
     onImageClick,
