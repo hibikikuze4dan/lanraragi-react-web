@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
-import { getImageSpacingLevel, setImageSpacingLevel } from "../../../../storage/images";
 import { FormControl, InputLabel, Select, Typography } from "@mui/material";
+
+import { getImageSpacingLevel, setImageSpacingLevel } from "../../../../storage/images";
 
 export const ImageSpacing = () => {
   const [spacingLevel, setSpacingLevel] = useState(getImageSpacingLevel());

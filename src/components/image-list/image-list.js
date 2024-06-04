@@ -46,7 +46,7 @@ export const ImageList = () => {
             const middle = (index + 1) % (pagesToRender - 5) === 0;
             return (
               <Grid key={src} item xs={12}>
-                <Box mb={imageSpacingLevel} width={"100%"}>
+                <Box mb={imageSpacingLevel} width="100%">
                   <ImageToUse
                     uri={src}
                     middle={middle}
