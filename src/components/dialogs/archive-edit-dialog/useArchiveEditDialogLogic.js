@@ -27,6 +27,7 @@ export const useArchiveEditDialogModalLogic = ({ onCloseProp, arcId }) => {
       id: arcId,
       title: archiveData?.title,
       tags: archiveData?.tags,
+      summary: archiveData?.summary ?? null,
     })
       .then((res) => {
         if (res?.success === 1) {
@@ -77,6 +78,7 @@ export const useArchiveEditDialogModalLogic = ({ onCloseProp, arcId }) => {
     const getArchiveData = async () => {
       const metaData = await getArchiveMetaData(arcId);
       const categoriesArray = await getArchiveCategories(arcId);
+
       setArchiveData({
         ...metaData,
         categories: categoriesArray ?? [],

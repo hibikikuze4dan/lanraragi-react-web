@@ -8,9 +8,7 @@ import { Categories } from "../../categories/categories";
 import { Tags } from "../../tags/tags";
 import { updateCategories } from "../../../app/slice";
 import { getCategories as getStateCategories } from "../../../app/selectors";
-import getCategories, {
-  getArchiveCategories,
-} from "../../../requests/categories";
+import getCategories, { getArchiveCategories } from "../../../requests/categories";
 import { DeleteArchive } from "../../delete-archive/delete-archive";
 import { IdTitleSwitchButton } from "./id-title-switch-button";
 
@@ -20,10 +18,7 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
   const [archiveData, setArchiveData] = useState({});
   const [showDelete, setShowDelete] = useState(false);
 
-  const updateShowDelete = useCallback(
-    (show) => setShowDelete(show),
-    [showDelete]
-  );
+  const updateShowDelete = useCallback((show) => setShowDelete(show), [showDelete]);
   const onClose = useCallback(() => {
     onCloseProp();
     updateShowDelete(false);
@@ -57,10 +52,7 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
   const dialogTitle = (
     <Grid container justifyContent="space-between">
       <Typography className="self-center ml-1 text-xl">Archive Info</Typography>
-      <IconButton
-        aria-label="Open Delete Archive Section"
-        onClick={onDeleteIconClick}
-      >
+      <IconButton aria-label="Open Delete Archive Section" onClick={onDeleteIconClick}>
         <Delete />
       </IconButton>
     </Grid>
@@ -84,13 +76,19 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
               <Categories arcId={arcId} categories={categories} />
             </Grid>
           </Grid>
-          <Typography>
-            Categories:{" "}
-            {archiveData?.categories?.map((cat) => cat?.name ?? "").join(", ")}
-          </Typography>
-          <Typography className="py-4 px-0">
-            Pages: {archiveData?.pagecount ?? 0}
-          </Typography>
+          {archiveData?.categories?.length ? (
+            <Typography>
+              Categories: {archiveData?.categories?.map((cat) => cat?.name ?? "").join(", ")}
+            </Typography>
+          ) : null}
+          <Typography className="py-4 px-0">Pages: {archiveData?.pagecount ?? 0}</Typography>
+          {archiveData?.summary && (
+            <Typography className="py-4 px-0">
+              Summary:
+              <br />
+              {archiveData?.summary}
+            </Typography>
+          )}
           <Tags onClose={onClose} archiveTags={archiveData?.tags ?? ""} />
         </>
       ) : (
