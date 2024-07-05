@@ -13,3 +13,16 @@ A react based front-end application for making use of the [Lanraragi](https://gi
 ## Installation
 
 [Check out the wiki](https://github.com/hibikikuze4dan/lanraragi-react-web/wiki/Installation-and-Startup)
+
+## Demo
+
+[Demo Site](https://lanraragi-react-web.pages.dev/)
+
+NOTE: If your Lanraragi content is being served from an http url, you will need to enable insecure content for the demo site and set the No-Fun Enabled setting to "Yes" in order to see images. This is due to how modern browsers deal with [mixed content issues](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content#fixing_mixed_content_issues).
+
+![enable_insecure_content_chrome](/img/enable_insecure_content_chrome.png)
+
+![enable_insecure_content_firefox](/img/enable_insecure_content_firefox.png)
+
+![enable_insecure_content_chrome_mobile](/img/enable_insecure_content_chrome_mobile.jpg)
+
