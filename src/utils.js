@@ -7,16 +7,10 @@ import { GENERAL_TAG_TYPE } from "./constants";
 
 export const scrollIntoViewByElement = (selector, timeout = 0) => {
   const element = document.querySelector(selector);
-  return element
-    ? setTimeout(element.scrollIntoView({ block: "end" }), timeout)
-    : null;
+  return element ? setTimeout(element.scrollIntoView({ block: "end" }), timeout) : null;
 };
 
-export const scrollByCoordinates = (
-  xCoordinate = 0,
-  yCoordinate = 0,
-  timeout = 0
-) =>
+export const scrollByCoordinates = (xCoordinate = 0, yCoordinate = 0, timeout = 0) =>
   setTimeout(
     window.scrollTo({
       top: yCoordinate,
@@ -37,9 +31,7 @@ const removeStartingBlankSpaceIfPresent = (str) =>
 export const spaceAfterComma = (str) => {
   const splitString = str.split(",");
   return splitString
-    .map((arrStr, ind) =>
-      arrStr.indexOf(" ") !== 0 && ind !== 0 ? ` ${arrStr}` : arrStr
-    )
+    .map((arrStr, ind) => (arrStr.indexOf(" ") !== 0 && ind !== 0 ? ` ${arrStr}` : arrStr))
     .join(",");
 };
 
@@ -55,18 +47,13 @@ export const getTagsObjectFromTagsString = (tags) => {
   const tagsArray = tags.split(",");
   return tagsArray.length
     ? tagsArray.reduce((acc, tag) => {
-        const [tagType, tagValue] = tagSeperator(
-          removeStartingBlankSpaceIfPresent(tag)
-        );
+        const [tagType, tagValue] = tagSeperator(removeStartingBlankSpaceIfPresent(tag));
         const typeToSearchFor = tagType || GENERAL_TAG_TYPE;
         const currentTagTypeValues = acc[typeToSearchFor] ?? [];
         const exists = currentTagTypeValues.includes(tagValue);
         return {
           ...acc,
-          [typeToSearchFor]: [
-            ...currentTagTypeValues,
-            ...(exists ? [] : [tagValue]),
-          ],
+          [typeToSearchFor]: [...currentTagTypeValues, ...(exists ? [] : [tagValue])],
         };
       }, {})
     : {};
@@ -77,9 +64,7 @@ export const stringifyTagsObject = (tagsObject) => {
   return tagsObjectKeys.reduce((cumulator, currentTagType, ind) => {
     const tagTypeArrayAsString =
       currentTagType !== GENERAL_TAG_TYPE
-        ? tagsObject[currentTagType]
-            .map((tag) => `${currentTagType}:${tag}`)
-            .join(", ")
+        ? tagsObject[currentTagType].map((tag) => `${currentTagType}:${tag}`).join(", ")
         : tagsObject[currentTagType].join(", ");
     const endComma = ind !== tagsObjectKeys.length - 1 ? ", " : "";
     return cumulator + tagTypeArrayAsString + endComma;
@@ -94,13 +79,9 @@ export const isValidUrl = (urlString) => {
   }
 };
 
-export const firstLetterToUppercase = (word = "") =>
-  word.slice(0, 1).toUpperCase() + word.slice(1);
+export const firstLetterToUppercase = (word = "") => word.slice(0, 1).toUpperCase() + word.slice(1);
 
-export const getNewSearchArchivesArrayAfterDeletingArchiveId = (
-  searchArchives,
-  archiveId
-) => {
+export const getNewSearchArchivesArrayAfterDeletingArchiveId = (searchArchives, archiveId) => {
   const arcIndex = searchArchives.findIndex(({ arcid }) => arcid === archiveId);
   if (arcIndex === -1) return [...searchArchives];
   const newArchives = [...searchArchives];

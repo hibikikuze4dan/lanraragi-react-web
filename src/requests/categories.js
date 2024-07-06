@@ -23,10 +23,7 @@ export const getArchiveCategories = async (arcId) => {
   try {
     response = await axios({
       ...getRequestConfig(),
-      url: `${httpOrHttps()}${getBaseUrl()}${ARCHIVE_CATEGORY_URL.replace(
-        ":id",
-        arcId
-      )}`,
+      url: `${httpOrHttps()}${getBaseUrl()}${ARCHIVE_CATEGORY_URL.replace(":id", arcId)}`,
     });
   } catch (error) {
     console.log(error);
@@ -48,6 +45,7 @@ export const updateCategory = async ({ catId, arcId }) => {
     });
   } catch (error) {
     console.log(error);
+    result = { data: { error: "Sorry, something went wrong." } };
   }
 
   return result?.data ?? {};
