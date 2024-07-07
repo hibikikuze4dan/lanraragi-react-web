@@ -28,14 +28,31 @@
     "usehooks-ts": "^2.9.1",
     "web-vitals": "^2.1.4"
   },
+  "build": {
+    "appId": "lrr.react.web",
+    "productName": "Lanraragi React Web",
+    "extends": null,
+    "files": [
+      "build/**/*",
+      "main.js",
+      "preload.js"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-electron": "concurrently \"react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-pack": "electron-builder"
   },
+  "main": "main.js",
+  "homepage": "./",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -55,6 +72,9 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "^31.1.0",
+    "electron-builder": "^24.13.3",
     "eslint": "^8.38.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.27.5",

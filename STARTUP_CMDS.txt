@@ -1,5 +1,0 @@
-docker build -f Dockerfile -t lrr-react .
-docker run -it --rm -p 1777:1777 lrr-react
-docker image tag lrr-react acreed1998/lrr-react:latest
-docker image push acreed1998/lrr-react:latest
-link to dockerhub repo: https://hub.docker.com/r/acreed1998/lrr-react
