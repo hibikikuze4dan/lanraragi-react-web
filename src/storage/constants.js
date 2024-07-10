@@ -4,6 +4,8 @@ export const LRR_API_KEY = "LRR_API_KEY";
 
 export const USE_HTTPS = "USE_HTTPS";
 
+export const USE_API_HISTORY = "USE_API_HISTORY";
+
 export const NUM_ARCHIVES_PER_ROW = "NUM_ARCHIVES_PER_ROW";
 
 export const NUM_ARCHIVES_TO_RENDER = "NUM_ARCHIVES_TO_RENDER";

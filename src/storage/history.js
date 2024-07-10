@@ -1,4 +1,10 @@
-import { ARCHIVE_HISTORY, SEARCH_HISTORY } from "./constants";
+import { ARCHIVE_HISTORY, SEARCH_HISTORY, USE_API_HISTORY } from "./constants";
+
+export const getUseApiHistory = () => localStorage.getItem(USE_API_HISTORY) === "true";
+
+export const setUseApiHistory = (useApiHistory) => {
+  localStorage.setItem(USE_API_HISTORY, useApiHistory);
+};
 
 export const getSearchHistory = () => {
   const searchHistory = localStorage.getItem(SEARCH_HISTORY);
@@ -9,16 +15,10 @@ export const addSearchToSearchHistory = (searchObject) => {
   const searchHistory = getSearchHistory();
   if (searchHistory.length > 9) {
     const minimizedSearchHistory = searchHistory.slice(1, 10);
-    localStorage.setItem(
-      SEARCH_HISTORY,
-      JSON.stringify([...minimizedSearchHistory, searchObject])
-    );
+    localStorage.setItem(SEARCH_HISTORY, JSON.stringify([...minimizedSearchHistory, searchObject]));
     return;
   }
-  localStorage.setItem(
-    SEARCH_HISTORY,
-    JSON.stringify([...searchHistory, searchObject])
-  );
+  localStorage.setItem(SEARCH_HISTORY, JSON.stringify([...searchHistory, searchObject]));
 };
 
 export const updateSearchHistoryLastSearchPage = (page) => {
@@ -29,10 +29,7 @@ export const updateSearchHistoryLastSearchPage = (page) => {
   const lastItem = searchHistory[lengthMinusOne];
   localStorage.setItem(
     SEARCH_HISTORY,
-    JSON.stringify([
-      ...searchHistory.slice(0, lengthMinusOne),
-      { ...lastItem, page },
-    ])
+    JSON.stringify([...searchHistory.slice(0, lengthMinusOne), { ...lastItem, page }])
   );
 };
 
@@ -51,8 +48,5 @@ export const addArchiveToArchiveHistory = (archiveObject) => {
     );
     return;
   }
-  localStorage.setItem(
-    ARCHIVE_HISTORY,
-    JSON.stringify([...archiveHistory, archiveObject])
-  );
+  localStorage.setItem(ARCHIVE_HISTORY, JSON.stringify([...archiveHistory, archiveObject]));
 };

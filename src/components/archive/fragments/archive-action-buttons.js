@@ -11,13 +11,7 @@ import {
 } from "../../../app/slice";
 import { addArchiveToArchiveHistory } from "../../../storage/history";
 
-export const ArchiveActionButtons = ({
-  id,
-  currentArchiveId,
-  isSearch,
-  title,
-  onInfoClick,
-}) => {
+export const ArchiveActionButtons = ({ id, currentArchiveId, isSearch, title, onInfoClick }) => {
   const dispatch = useDispatch();
 
   const handleInfoClick = useCallback(() => {

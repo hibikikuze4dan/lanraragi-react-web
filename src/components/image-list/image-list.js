@@ -26,7 +26,7 @@ export const ImageList = () => {
   } = useImageListLogic();
 
   const ImageToUse = useBlobImages ? BlobImage : Image;
-  console.log(imageSpacingLevel);
+
   return (
     <Grid
       ref={observerRoot}

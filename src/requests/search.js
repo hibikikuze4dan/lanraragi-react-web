@@ -1,6 +1,6 @@
 import axios from "axios";
 import { throttle } from "lodash";
-import { SEARCH_URL } from "./constants";
+import { LAST_READ_URL, SEARCH_URL } from "./constants";
 import { getBaseUrl } from "../storage/requests";
 import { httpOrHttps } from "../utils";
 import { getRequestConfig } from "./request-utils";
@@ -23,6 +23,18 @@ export const getArchivesBySearch = async (
   });
 
   return categories?.data?.data ?? [];
+};
+
+export const getArchivesByLastRead = async () => {
+  const results = await axios({
+    ...getRequestConfig(),
+    url: `${httpOrHttps()}${getBaseUrl()}${LAST_READ_URL}`,
+  }).catch((err) => {
+    console.error(`Something went wrong while trying to get archives sorted by lastread: ${err}`);
+    return {};
+  });
+
+  return results?.data?.data ?? [];
 };
 
 export const getArchivesBySearchThrottled = throttle(getArchivesBySearch, 10000, {

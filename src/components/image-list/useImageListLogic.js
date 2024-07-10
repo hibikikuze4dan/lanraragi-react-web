@@ -18,6 +18,7 @@ import {
 import { getArchiveFiles } from "../../requests/files";
 import { getMinionStatus } from "../../requests/minion";
 import { getImageSpacingLevel, getNoFunModeEnabled } from "../../storage/images";
+import { requestUpdateArchiveReadingPosition } from "../../requests/info";
 
 export const useImageListLogic = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,10 @@ export const useImageListLogic = () => {
   const [observerTarget, setObserverTarget] = useState();
   const [finalTarget, setFinalTarget] = useState();
   const observerRoot = useRef(null);
+
+  useEffect(() => {
+    if (pageUrls?.length) requestUpdateArchiveReadingPosition({ id: arcId, page: 1 });
+  }, [pageUrls, arcId]);
 
   useEffect(() => {
     const getPages = async () => {
