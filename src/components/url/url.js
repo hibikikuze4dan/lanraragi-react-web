@@ -16,16 +16,21 @@ import { updateSectionVisibility } from "../../app/slice";
 export const Url = ({ children, isSettings = false }) => {
   const dispatch = useDispatch();
   const [url, setUrl] = useState(getBaseUrl() ?? "");
+  const [urlFieldError, setUrlFieldError] = useState("");
   const [apiKey, setApiKey] = useState(getApiKey() ?? "");
   const [useHttps, setUseHttps] = useState(getUseHttps());
   const httpOrHttps = useHttps ? "https://" : "http://";
 
-  const onChangeText = useCallback((event) => setUrl(event.target.value), []);
-  const onChangeApiText = useCallback(
-    (event) => setApiKey(event.target.value),
-    []
-  );
+  const onChangeText = useCallback((event) => {
+    setUrl(event.target.value);
+    setUrlFieldError("");
+  }, []);
+  const onChangeApiText = useCallback((event) => setApiKey(event.target.value), []);
   const onPress = useCallback(() => {
+    if (!url) {
+      setUrlFieldError("Please enter a URL for your Lanraragi server");
+      return;
+    }
     storeBaseUrl(url);
     storeApiKey(apiKey);
     storeUseHttps(useHttps);
@@ -62,6 +67,9 @@ export const Url = ({ children, isSettings = false }) => {
               </Grid>
               <Grid item xs={12} sm={10}>
                 <TextField
+                  helperText={urlFieldError}
+                  error={!!urlFieldError}
+                  required
                   label="Lanraragi Server Address"
                   value={url}
                   placeholder="Ex: 111.111.1.111:3000"
