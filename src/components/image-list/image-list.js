@@ -14,6 +14,7 @@ export const ImageList = () => {
     baseUrl,
     gettingImagesFromLRR,
     imageSpacingLevel,
+    isMobile,
     observerRoot,
     onBackClick,
     onImageClick,
@@ -58,7 +59,7 @@ export const ImageList = () => {
             );
           })}
           <Grid className="py-4" item xs={12}>
-            <Rating arcId={arcId} />
+            <Rating arcId={arcId} useSelect={isMobile} />
           </Grid>
         </Loading>
       )}
@@ -66,7 +67,11 @@ export const ImageList = () => {
       <Grid item xs={12}>
         <Grid container justifyContent="center">
           <Grid item xs={8}>
-            <Button className="normal-case mt-8" onClick={onBackClick} fullWidth>
+            <Button
+              className="normal-case mt-8"
+              onClick={onBackClick}
+              fullWidth
+            >
               Back to {firstLetterToUppercase(archiveOpenedFrom)}
             </Button>
           </Grid>

@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
 import {
   getArchiveOpenedFrom,
   getCurrentArchiveId,
@@ -17,7 +18,10 @@ import {
 } from "../../app/slice";
 import { getArchiveFiles } from "../../requests/files";
 import { getMinionStatus } from "../../requests/minion";
-import { getImageSpacingLevel, getNoFunModeEnabled } from "../../storage/images";
+import {
+  getImageSpacingLevel,
+  getNoFunModeEnabled,
+} from "../../storage/images";
 import { requestUpdateArchiveReadingPosition } from "../../requests/info";
 
 export const useImageListLogic = () => {
@@ -37,7 +41,8 @@ export const useImageListLogic = () => {
   const observerRoot = useRef(null);
 
   useEffect(() => {
-    if (pageUrls?.length) requestUpdateArchiveReadingPosition({ id: arcId, page: 1 });
+    if (pageUrls?.length)
+      requestUpdateArchiveReadingPosition({ id: arcId, page: 1 });
   }, [pageUrls, arcId]);
 
   useEffect(() => {
@@ -112,6 +117,7 @@ export const useImageListLogic = () => {
     gettingImagesFromLRR,
     height,
     imageSpacingLevel,
+    isMobile,
     observerRoot,
     onBackClick,
     onImageClick,
