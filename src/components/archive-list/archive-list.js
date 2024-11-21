@@ -53,9 +53,7 @@ export const ArchiveList = ({
         <Grid className="mt-0 mb-6" container columns={columns} spacing={2}>
           <div id="archives-top" />
           <Loading loading={archivesLoading} label={loadingLabel}>
-            {archives
-              .slice(sliceToRender[0], secondSliceValue)
-              .map((archive, idx, arr) => {
+            {archives.map((archive, idx, arr) => {
                 const { arcid, title, tags } = archive;
                 return (
                   <Archive
@@ -72,7 +70,7 @@ export const ArchiveList = ({
                     title={title}
                   />
                 );
-              })}
+            })}
           </Loading>
         </Grid>
         {footer}

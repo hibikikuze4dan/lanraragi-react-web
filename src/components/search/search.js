@@ -29,26 +29,30 @@ export const Search = ({ display, loading, controller }) => {
   const searchOrder = useSelector(getSearchSortDirection);
   const searchCategory = useSelector(getSearchCategory)?.id;
   const maxArchivesBreakpoints = getNumArchivesToRender();
-  const sliceToRender = [
-    searchPage > 1 ? (searchPage - 1) * maxArchivesBreakpoints[breakpoint] : 0,
-    maxArchivesBreakpoints[breakpoint] * searchPage,
-  ];
   const archivesLoading = isSearchLoading || onLoadSearch;
 
   const callNewArchives = useCallback(
     async ({ filter, category, sortby, order }) => {
+      const maxPerPage = maxArchivesBreakpoints[breakpoint];
+      const start = Math.max(0, (searchPage - 1) * maxPerPage);
+      
       const searchObject = {
         filter,
         sortby,
         order,
-        start: -1,
+        start,
+        length: maxPerPage,
         ...(category && { category }),
       };
-      const arcs = await getArchivesBySearch(searchObject);
-      dispatch(updateSearchArchives(arcs));
+      
+      const response = await getArchivesBySearch(searchObject);
+      dispatch(updateSearchArchives({
+        archives: response.data,
+        total: response.recordsFiltered
+      }));
       dispatch(updateLoading({ search: false }));
     },
-    []
+    [searchPage, breakpoint]
   );
 
   useEffect(() => {
@@ -70,6 +74,8 @@ export const Search = ({ display, loading, controller }) => {
     searchSortBy,
     searchOrder,
     searchCategory,
+    searchPage,
+    breakpoint
   ]);
 
   const header = (
@@ -85,7 +91,6 @@ export const Search = ({ display, loading, controller }) => {
     <ArchiveList
       display={display}
       archives={searchArchives}
-      sliceToRender={sliceToRender}
       isSearch
       archivesLoading={archivesLoading}
       loadingLabel="Getting archives from search"

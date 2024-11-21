@@ -17,7 +17,10 @@ const initialState = {
   pages: [],
   randomArchives: [],
   renderedPages: [],
-  searchArchives: [],
+  searchArchives: {
+    archives: [],
+    total: 0
+  },
   searchCategory: {},
   searchFilter: "",
   searchPage: 1,
@@ -68,7 +71,10 @@ export const appSlice = createSlice({
       state.randomArchives = [...payload];
     },
     updateSearchArchives: (state, { payload }) => {
-      state.searchArchives = [...payload];
+      state.searchArchives = {
+        archives: [...payload.archives],
+        total: payload.total
+      };
     },
     updateBaseUrl: (state, { payload }) => {
       state.baseUrl = `${payload}`;

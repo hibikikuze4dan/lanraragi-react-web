@@ -6,7 +6,7 @@ import { httpOrHttps } from "../utils";
 import { getRequestConfig } from "./request-utils";
 
 export const getArchivesBySearch = async (
-  { filter, sortby, order, start = -1, category },
+  { filter, sortby, order, start = 0, length = 25, category },
   controller
 ) => {
   const params = new URLSearchParams();
@@ -14,6 +14,7 @@ export const getArchivesBySearch = async (
   params.append("sortby", sortby);
   params.append("order", order);
   params.append("start", start);
+  params.append("length", length);
   if (category) params.append("category", category);
 
   const categories = await axios({
@@ -22,7 +23,7 @@ export const getArchivesBySearch = async (
     ...(controller && { signal: controller.signal }),
   });
 
-  return categories?.data?.data ?? [];
+  return categories?.data ?? { data: [], recordsFiltered: 0 };
 };
 
 export const getArchivesByLastRead = async () => {

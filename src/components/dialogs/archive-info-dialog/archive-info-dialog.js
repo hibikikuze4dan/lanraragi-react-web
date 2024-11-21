@@ -17,6 +17,7 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
   const categories = useSelector(getStateCategories);
   const [archiveData, setArchiveData] = useState({});
   const [showDelete, setShowDelete] = useState(false);
+  const [hasFetchedCategories, setHasFetchedCategories] = useState(false);
 
   const updateShowDelete = useCallback((show) => setShowDelete(show), [showDelete]);
   const onClose = useCallback(() => {
@@ -44,9 +45,13 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
     const getCats = async () => {
       const categoriesArray = await getCategories();
       dispatch(updateCategories(categoriesArray));
+      setHasFetchedCategories(true);
     };
-    if (!categories.length) getCats();
-  }, [categories]);
+    
+    if (!hasFetchedCategories) {
+      getCats();
+    }
+  }, [hasFetchedCategories]);
 
   const archiveTitle = archiveData?.title ?? "";
   const dialogTitle = (

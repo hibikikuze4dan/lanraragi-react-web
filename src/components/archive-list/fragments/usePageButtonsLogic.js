@@ -6,6 +6,7 @@ import { getMaxPages, getSearchPage } from "../../../app/selectors";
 import { updateSearchPage } from "../../../app/slice";
 import { setSearchStats } from "../../../storage/search";
 import { updateSearchHistoryLastSearchPage } from "../../../storage/history";
+import { updateLoading } from "../../../app/slice";
 
 const scroll = () => {
   document
@@ -35,6 +36,7 @@ export const usePageButtonsLogic = ({ top }) => {
     const newPage = searchPage - 1;
     if (!top) scroll();
     dispatch(updateSearchPage(newPage));
+    dispatch(updateLoading({ search: true }));
     setSearchStats({ page: newPage ?? 1 });
     updateSearchHistoryLastSearchPage(newPage ?? 1);
   }, [top, searchPage]);
@@ -44,6 +46,7 @@ export const usePageButtonsLogic = ({ top }) => {
     if (maxPage !== searchPage) {
       const newPage = searchPage + 1;
       dispatch(updateSearchPage(newPage));
+      dispatch(updateLoading({ search: true }));
       setSearchStats({ page: newPage });
       updateSearchHistoryLastSearchPage(newPage);
     }
@@ -53,6 +56,7 @@ export const usePageButtonsLogic = ({ top }) => {
     (e) => {
       const newPage = Number(e.target.value);
       dispatch(updateSearchPage(newPage));
+      dispatch(updateLoading({ search: true }));
       setSearchStats({ page: newPage });
       updateSearchHistoryLastSearchPage(newPage);
       if (!top) scroll();
