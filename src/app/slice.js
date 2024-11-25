@@ -146,6 +146,7 @@ export const appSlice = createSlice({
       const [searchIndex, randomIndex] = bothArchiveTypes.map((archives) =>
         archives.findIndex((arc) => arc.arcid === arcIdForArchive)
       );
+
       if (searchIndex !== -1) {
         searchArchives[searchIndex] = {
           ...searchArchives[searchIndex],

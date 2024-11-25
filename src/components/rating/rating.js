@@ -23,6 +23,7 @@ export const Rating = ({
   archiveInfoProp = {},
   ratingProp,
   useSelect = false,
+  postRatingChange = () => null,
 }) => {
   const dispatch = useDispatch();
   const [archiveInfo, setArchiveInfo] = useState(archiveInfoProp);
@@ -51,13 +52,14 @@ export const Rating = ({
         .then((res) => {
           if (res?.success === 1) {
             setRatingValue(Number(valueToUse));
-            dispatch(updateArchiveTags({ tags: newTagsObjectAsString }));
+            dispatch(updateArchiveTags({ tags: newTagsObjectAsString, arcId }));
             dispatch(
               updateDisplaySnackbar({
                 open: true,
                 type: "UPDATE_ARCHIVE_INFO_SUCCESS",
               })
             );
+            postRatingChange();
           } else {
             updateDisplaySnackbar({
               open: true,
@@ -67,6 +69,7 @@ export const Rating = ({
             console.log(
               res?.error ?? "Unknown error with updating archive info"
             );
+            postRatingChange();
           }
         })
         .catch((err) => {
@@ -107,10 +110,10 @@ export const Rating = ({
           </Typography>
         </Grid>
       )}
-      <Grid item sm={12}>
+      <Grid container item justifyContent="center" sm={12}>
         <MUIRating
           name={`archive-rating-for-${archiveInfo?.arcid}`}
-          value={ratingValue}
+          value={readOnly && ratingValue ? ratingProp : ratingValue}
           readOnly={!!readOnly || useSelect}
           precision={0.5}
           onChange={readOnly ? null : onRatingChange}

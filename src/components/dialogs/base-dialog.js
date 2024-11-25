@@ -18,6 +18,7 @@ export const BaseDialog = ({
   title,
   children,
   fullWidth = false,
+  fullScreen,
   maxWidth = "sm",
 }) => {
   const theme = useTheme();
@@ -26,7 +27,7 @@ export const BaseDialog = ({
 
   return (
     <Dialog
-      fullScreen={smDown}
+      fullScreen={fullScreen ?? smDown}
       open={open}
       onClose={onClose}
       fullWidth={fullWidth}
