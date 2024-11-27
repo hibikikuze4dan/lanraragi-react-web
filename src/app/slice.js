@@ -2,6 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getNewSearchArchivesArrayAfterDeletingArchiveId } from "../utils";
 import { getSearchStats } from "../storage/search";
+import { loadSearchSettings, saveSearchSettings } from '../storage/searchSettings';
 
 const initialState = {
   archiveOpenedFrom: "random",
@@ -39,6 +40,9 @@ const initialState = {
     search: false,
     random: false,
     images: false,
+  },
+  settings: {
+    usePaginatedSearch: loadSearchSettings(),
   },
 };
 
@@ -171,6 +175,10 @@ export const appSlice = createSlice({
     updateTags: (state, { payload }) => {
       state.tags = [...payload];
     },
+    updateSearchPaginationSetting: (state, { payload }) => {
+      state.settings.usePaginatedSearch = payload;
+      saveSearchSettings(payload);
+    },
   },
 });
 
@@ -198,6 +206,7 @@ export const {
   deleteArchiveFromSearchArchives,
   updateTags,
   updateArchiveTags,
+  updateSearchPaginationSetting,
 } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentRandomArchives,
   getCurrentSearchArchives,
-  getSearchArchivesTotal
+  getSearchArchivesTotal,
+  getUsePaginatedSearch
 } from "../../app/selectors";
 import { updateSearchArchives } from "../../app/slice";
 import { getArchivesBySearchThrottled } from "../../requests/search";
@@ -25,6 +26,7 @@ export const useSearchOnLoad = () => {
   const searchArchives = useSelector(getCurrentSearchArchives);
   const searchTotal = useSelector(getSearchArchivesTotal);
   const randomArchives = useSelector(getCurrentRandomArchives);
+  const usePaginatedSearch = useSelector(getUsePaginatedSearch);
   const [loading, setLoading] = useState(false);
   const [searchFilter, setSearchFilter] = useState(null);
   const [controller] = useState(new AbortController());
@@ -39,7 +41,6 @@ export const useSearchOnLoad = () => {
   const callNewArchives = useCallback(async (search) => {
     setLoading(true);
     const maxPerPage = getNumArchivesToRender()[breakpoint];
-    const start = Math.max(0, (page - 1) * maxPerPage);
 
     try {
       const response = await getArchivesBySearchThrottled(
@@ -47,8 +48,10 @@ export const useSearchOnLoad = () => {
           filter: search,
           sortby,
           order,
-          start,
-          length: maxPerPage,
+          start: usePaginatedSearch 
+            ? Math.max(0, (page - 1) * maxPerPage)
+            : -1,
+          length: usePaginatedSearch ? maxPerPage : -1,
           ...(category && { category }),
         },
         controller
@@ -56,7 +59,7 @@ export const useSearchOnLoad = () => {
       
       dispatch(updateSearchArchives({
         archives: response.data,
-        total: response.recordsFiltered
+        total: usePaginatedSearch ? response.recordsFiltered : response.data.length
       }));
     } catch (error) {
       dispatch(updateSearchArchives({
@@ -66,7 +69,7 @@ export const useSearchOnLoad = () => {
     } finally {
       setLoading(false);
     }
-  }, [breakpoint, page]);
+  }, [breakpoint, page, usePaginatedSearch]);
 
   useEffect(() => {
     if (

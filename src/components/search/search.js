@@ -9,6 +9,7 @@ import {
   getSearchPage,
   getSearchSort,
   getSearchSortDirection,
+  getUsePaginatedSearch,
 } from "../../app/selectors";
 import { updateLoading, updateSearchArchives } from "../../app/slice";
 import { ArchiveList } from "../archive-list/archive-list";
@@ -30,29 +31,31 @@ export const Search = ({ display, loading, controller }) => {
   const searchCategory = useSelector(getSearchCategory)?.id;
   const maxArchivesBreakpoints = getNumArchivesToRender();
   const archivesLoading = isSearchLoading || onLoadSearch;
+  const usePaginatedSearch = useSelector(getUsePaginatedSearch);
 
   const callNewArchives = useCallback(
     async ({ filter, category, sortby, order }) => {
       const maxPerPage = maxArchivesBreakpoints[breakpoint];
-      const start = Math.max(0, (searchPage - 1) * maxPerPage);
       
       const searchObject = {
         filter,
         sortby,
         order,
-        start,
-        length: maxPerPage,
+        start: usePaginatedSearch 
+          ? Math.max(0, (searchPage - 1) * maxPerPage)
+          : -1,
+        length: usePaginatedSearch ? maxPerPage : -1,
         ...(category && { category }),
       };
       
       const response = await getArchivesBySearch(searchObject);
       dispatch(updateSearchArchives({
         archives: response.data,
-        total: response.recordsFiltered
+        total: usePaginatedSearch ? response.recordsFiltered : response.data.length
       }));
       dispatch(updateLoading({ search: false }));
     },
-    [searchPage, breakpoint]
+    [searchPage, breakpoint, usePaginatedSearch]
   );
 
   useEffect(() => {
@@ -70,12 +73,11 @@ export const Search = ({ display, loading, controller }) => {
       });
   }, [
     isSearchLoading,
+    onLoadSearch,
     searchFilter,
     searchSortBy,
     searchOrder,
-    searchCategory,
-    searchPage,
-    breakpoint
+    searchCategory
   ]);
 
   const header = (
@@ -91,6 +93,10 @@ export const Search = ({ display, loading, controller }) => {
     <ArchiveList
       display={display}
       archives={searchArchives}
+      sliceToRender={!usePaginatedSearch ? [
+        (searchPage - 1) * maxArchivesBreakpoints[breakpoint],
+        searchPage * maxArchivesBreakpoints[breakpoint]
+      ] : [0, null]}
       isSearch
       archivesLoading={archivesLoading}
       loadingLabel="Getting archives from search"

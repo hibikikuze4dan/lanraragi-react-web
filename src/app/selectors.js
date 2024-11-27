@@ -192,3 +192,8 @@ export const getAutocompleteTags = createSelector(getTags, (tags) =>
     return namespace ? `${namespace}:${text}` : text;
   })
 );
+
+export const getUsePaginatedSearch = createSelector(
+  getApp,
+  (app) => app.settings.usePaginatedSearch
+);

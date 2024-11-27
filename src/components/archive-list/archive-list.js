@@ -10,6 +10,7 @@ import { getNumArchivePerRow } from "../../storage/archives";
 import { Loading } from "../loading/loading";
 import { ArchiveEditDialog } from "../dialogs/archive-edit-dialog/archive-edit-dialog";
 import { ArchiveRatingDialog } from "../dialogs/archive-rating-dialog/archive-rating-dialog";
+import { getUsePaginatedSearch } from "../../app/selectors";
 
 export const ArchiveList = ({
   archives = [],
@@ -37,6 +38,7 @@ export const ArchiveList = ({
   const secondSliceValue = sliceToRender[1] ?? archives.length;
   const baseUrl = getBaseUrl();
   const columns = getNumArchivePerRow();
+  const usePaginatedSearch = useSelector(getUsePaginatedSearch);
   const onInfoClick = useCallback((arcId) => {
     dispatch(updateInfoDialogArchiveId(arcId));
     updateArchiveInfoModalState({ open: true, arcId });
@@ -46,6 +48,10 @@ export const ArchiveList = ({
     updateArchiveRatingModalState({ open: false, arcId });
   }, []);
 
+  const displayArchives = !usePaginatedSearch && sliceToRender[1] !== null
+    ? archives.slice(sliceToRender[0], sliceToRender[1])
+    : archives;
+
   return (
     <div className="full-height overflow-y-scroll">
       <div className="pt-8 px-4 pb-[75svh]">
@@ -53,7 +59,7 @@ export const ArchiveList = ({
         <Grid className="mt-0 mb-6" container columns={columns} spacing={2}>
           <div id="archives-top" />
           <Loading loading={archivesLoading} label={loadingLabel}>
-            {archives.map((archive, idx, arr) => {
+            {displayArchives.map((archive, idx, arr) => {
                 const { arcid, title, tags } = archive;
                 return (
                   <Archive
