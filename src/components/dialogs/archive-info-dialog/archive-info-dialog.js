@@ -47,7 +47,7 @@ export const ArchiveInfoDialog = ({ onClose: onCloseProp, arcId, open }) => {
       dispatch(updateCategories(categoriesArray));
       setHasFetchedCategories(true);
     };
-    
+
     if (!hasFetchedCategories) {
       getCats();
     }

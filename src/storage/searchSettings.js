@@ -6,5 +6,5 @@ export const saveSearchSettings = (settings) => {
 
 export const loadSearchSettings = () => {
   const savedSetting = localStorage.getItem(USE_PAGINATED_SEARCH);
-  return savedSetting ? JSON.parse(savedSetting) : true; 
-}; 
+  return savedSetting ? JSON.parse(savedSetting) : true;
+};

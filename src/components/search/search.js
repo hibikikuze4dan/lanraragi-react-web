@@ -36,18 +36,18 @@ export const Search = ({ display, loading, controller }) => {
   const callNewArchives = useCallback(
     async ({ filter, category, sortby, order }) => {
       const maxPerPage = maxArchivesBreakpoints[breakpoint];
-      
+
       const searchObject = {
         filter,
         sortby,
         order,
-        start: usePaginatedSearch 
+        start: usePaginatedSearch
           ? Math.max(0, (searchPage - 1) * maxPerPage)
           : -1,
         length: usePaginatedSearch ? maxPerPage : -1,
         ...(category && { category }),
       };
-      
+
       const response = await getArchivesBySearch(searchObject);
       dispatch(updateSearchArchives({
         archives: response.data,

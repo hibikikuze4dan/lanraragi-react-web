@@ -6,7 +6,7 @@ import { httpOrHttps } from "../utils";
 import { getRequestConfig } from "./request-utils";
 
 export const getArchivesBySearch = async (
-  { filter, sortby, order, start = 0, length = 25, category },
+  { filter, sortby, order, start = -1, length = -1, category },
   controller
 ) => {
   const params = new URLSearchParams();

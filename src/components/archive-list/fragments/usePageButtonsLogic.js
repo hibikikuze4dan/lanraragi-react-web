@@ -3,10 +3,9 @@ import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useWidth } from "../../../hooks/useWidth";
 import { getMaxPages, getSearchPage, getUsePaginatedSearch } from "../../../app/selectors";
-import { updateSearchPage } from "../../../app/slice";
+import { updateSearchPage, updateLoading } from "../../../app/slice";
 import { setSearchStats } from "../../../storage/search";
 import { updateSearchHistoryLastSearchPage } from "../../../storage/history";
-import { updateLoading } from "../../../app/slice";
 
 const scroll = () => {
   document
@@ -23,7 +22,6 @@ export const usePageButtonsLogic = ({ top }) => {
   const usePaginatedSearch = useSelector(getUsePaginatedSearch);
   const maxPage = useSelector(getMaxPages)(breakpoint);
   const outOfBounds = searchPage > maxPage;
-  const searchPageFromState = useSelector(getSearchPage);
   const topCopy = top ? "top" : "bottom";
   const pages = Array(maxPage)
     .fill(0)

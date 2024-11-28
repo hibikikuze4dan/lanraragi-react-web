@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Archive from "../archive/archive";
 import { ArchiveInfoDialog } from "../dialogs/archive-info-dialog";
 import { getBaseUrl } from "../../storage/requests";
-import { getCurrentArchiveId } from "../../app/selectors";
+import { getCurrentArchiveId, getUsePaginatedSearch } from "../../app/selectors";
 import { updateInfoDialogArchiveId } from "../../app/slice";
 import { getNumArchivePerRow } from "../../storage/archives";
 import { Loading } from "../loading/loading";
 import { ArchiveEditDialog } from "../dialogs/archive-edit-dialog/archive-edit-dialog";
 import { ArchiveRatingDialog } from "../dialogs/archive-rating-dialog/archive-rating-dialog";
-import { getUsePaginatedSearch } from "../../app/selectors";
 
 export const ArchiveList = ({
   archives = [],
@@ -35,7 +34,6 @@ export const ArchiveList = ({
     open: false,
     arcId: "",
   });
-  const secondSliceValue = sliceToRender[1] ?? archives.length;
   const baseUrl = getBaseUrl();
   const columns = getNumArchivePerRow();
   const usePaginatedSearch = useSelector(getUsePaginatedSearch);
@@ -60,22 +58,22 @@ export const ArchiveList = ({
           <div id="archives-top" />
           <Loading loading={archivesLoading} label={loadingLabel}>
             {displayArchives.map((archive, idx, arr) => {
-                const { arcid, title, tags } = archive;
-                return (
-                  <Archive
-                    baseUrl={baseUrl}
-                    currentArchiveId={currentArchiveId}
-                    id={arcid}
-                    index={idx}
-                    isSearch={isSearch}
-                    key={`${title}-${arcid}`}
-                    numOfArchivesRendered={arr.length}
-                    onEditClick={onEditClick}
-                    onInfoClick={onInfoClick}
-                    tags={tags}
-                    title={title}
-                  />
-                );
+              const { arcid, title, tags } = archive;
+              return (
+                <Archive
+                  baseUrl={baseUrl}
+                  currentArchiveId={currentArchiveId}
+                  id={arcid}
+                  index={idx}
+                  isSearch={isSearch}
+                  key={`${title}-${arcid}`}
+                  numOfArchivesRendered={arr.length}
+                  onEditClick={onEditClick}
+                  onInfoClick={onInfoClick}
+                  tags={tags}
+                  title={title}
+                />
+              );
             })}
           </Loading>
         </Grid>
