@@ -46,7 +46,7 @@ export const ArchiveList = ({
     updateArchiveRatingModalState({ open: false, arcId });
   }, []);
 
-  const displayArchives = !usePaginatedSearch && sliceToRender[1] !== null
+  const displayArchives = sliceToRender[1] !== null
     ? archives.slice(sliceToRender[0], sliceToRender[1])
     : archives;
 

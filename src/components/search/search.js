@@ -96,7 +96,7 @@ export const Search = ({ display, loading, controller }) => {
       sliceToRender={!usePaginatedSearch ? [
         (searchPage - 1) * maxArchivesBreakpoints[breakpoint],
         searchPage * maxArchivesBreakpoints[breakpoint]
-      ] : [0, null]}
+      ] : [0, Math.min(searchArchives.length, maxArchivesBreakpoints[breakpoint])]}
       isSearch
       archivesLoading={archivesLoading}
       loadingLabel="Getting archives from search"
