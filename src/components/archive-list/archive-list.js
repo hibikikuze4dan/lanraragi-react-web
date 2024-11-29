@@ -36,7 +36,6 @@ export const ArchiveList = ({
   });
   const baseUrl = getBaseUrl();
   const columns = getNumArchivePerRow();
-  const usePaginatedSearch = useSelector(getUsePaginatedSearch);
   const onInfoClick = useCallback((arcId) => {
     dispatch(updateInfoDialogArchiveId(arcId));
     updateArchiveInfoModalState({ open: true, arcId });
