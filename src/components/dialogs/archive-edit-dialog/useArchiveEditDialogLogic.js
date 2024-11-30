@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isEmpty } from "lodash";
-import getArchiveMetaData, { updateArchiveMetadata } from "../../../requests/metadata";
+import getArchiveMetaData, {
+  updateArchiveMetadata,
+} from "../../../requests/metadata";
 import { getArchiveCategories } from "../../../requests/categories";
 import { getVisibleSection } from "../../../app/selectors";
 import { updateArchiveTags, updateDisplaySnackbar } from "../../../app/slice";
@@ -10,16 +12,20 @@ export const useArchiveEditDialogModalLogic = ({ onCloseProp, arcId }) => {
   const dispatch = useDispatch();
   const openPage = useSelector(getVisibleSection);
   const [archiveData, setArchiveData] = useState({});
+  const [showDelete, setShowDelete] = useState(false);
   const [updateResponse, setUpdateResponse] = useState({
     error: "",
     operation: "update_metadata",
     success: 0,
     successMessage: null,
   });
-  const archiveDataReady = !isEmpty(archiveData);
+
+  const archiveDataReady =
+    !isEmpty(archiveData) && archiveData?.arcid === arcId;
 
   const onClose = useCallback(() => {
     if (onCloseProp) onCloseProp();
+    setTimeout(() => setShowDelete(false), 500);
   }, [onCloseProp]);
 
   const onUpdateButtonClick = useCallback(() => {
@@ -33,7 +39,8 @@ export const useArchiveEditDialogModalLogic = ({ onCloseProp, arcId }) => {
         if (res?.success === 1) {
           setUpdateResponse({
             ...res,
-            successMessage: "Congrats! The archive's information has been updated!",
+            successMessage:
+              "Congrats! The archive's information has been updated!",
           });
           dispatch(
             updateArchiveTags({
@@ -94,5 +101,7 @@ export const useArchiveEditDialogModalLogic = ({ onCloseProp, arcId }) => {
     setArchiveData,
     onUpdateButtonClick,
     archiveDataReady,
+    showDelete,
+    setShowDelete,
   };
 };

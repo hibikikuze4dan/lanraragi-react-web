@@ -1,10 +1,13 @@
 /* eslint-disable function-paren-newline */
-import React from "react";
-import { Button, Grid, IconButton, TextField, Typography } from "@mui/material";
-import { Star } from "@mui/icons-material";
+import React, { useCallback } from "react";
+import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Delete, Image, Save, Star } from "@mui/icons-material";
+import { isMobile } from "react-device-detect";
 import { BaseDialog } from "../base-dialog";
 import { Loading } from "../../loading/loading";
 import { useArchiveEditDialogModalLogic } from "./useArchiveEditDialogLogic";
+import { regenArchiveThumbnail } from "../../../requests/regen_thumbnail";
+import { DeleteArchive } from "../../delete-archive/delete-archive";
 
 export const ArchiveEditDialog = ({
   arcId,
@@ -18,24 +21,33 @@ export const ArchiveEditDialog = ({
     archiveData,
     setArchiveData,
     archiveDataReady,
+    showDelete,
+    setShowDelete,
   } = useArchiveEditDialogModalLogic({ onCloseProp, arcId });
+
+  const onUpdateArchiveRatingButtonClick = () => {
+    updateArchiveRatingModalState({ arcId, open: true });
+    onClose();
+  };
+  const onRegenArchiveThumbnailButtonClick = () => {
+    regenArchiveThumbnail({ id: arcId });
+  };
+  const updateShowDelete = useCallback(
+    (show) => setShowDelete(show),
+    [showDelete]
+  );
+  const onDeleteIconClick = useCallback(() => {
+    updateShowDelete(true);
+  }, []);
 
   const dialogTitle = (
     <Grid container justifyContent="space-between">
       <Typography className="self-center ml-1 text-xl">
-        Edit Archive Info
+        {!showDelete ? "Edit Archive Info" : "Delete Archive?"}
       </Typography>
-      <IconButton
-        aria-label="Open Delete Archive Section"
-        onClick={() => {
-          updateArchiveRatingModalState({ arcId, open: true });
-          onClose();
-        }}
-      >
-        <Star />
-      </IconButton>
     </Grid>
   );
+  const archiveTitle = archiveData?.title ?? "";
 
   return (
     <BaseDialog
@@ -45,10 +57,18 @@ export const ArchiveEditDialog = ({
       fullWidth
       maxWidth="md"
     >
-      <Grid className="pt-8 pb-4 px-0" container spacing={4}>
-        {archiveDataReady ? (
-          <>
-            <Grid item xs={12}>
+      <Grid
+        className={`full-width m-0 pt-8 px-0 ${isMobile ? "pb-40" : "pb-4"}`}
+        container
+        spacing={4}
+      >
+        {!showDelete ? (
+          <Loading
+            label="Getting archive info"
+            loading={!archiveDataReady}
+            centerText
+          >
+            <Grid className="pl-0" item xs={12}>
               <TextField
                 id="edit-title-inputfield"
                 label="Title"
@@ -61,7 +81,7 @@ export const ArchiveEditDialog = ({
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid className="pl-0" item xs={12}>
               <TextField
                 id="edit-tags-inputfield"
                 label="Tags"
@@ -76,7 +96,7 @@ export const ArchiveEditDialog = ({
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid className="pl-0" item xs={12}>
               <TextField
                 id="edit-summary-inputfield"
                 label="Summary"
@@ -92,17 +112,53 @@ export const ArchiveEditDialog = ({
               />
             </Grid>
             <Grid item xs={12}>
-              <Grid container justifyContent="center">
-                <Grid item xs={6}>
-                  <Button fullWidth onClick={onUpdateButtonClick}>
-                    Update Archive
+              <Grid container justifyContent="center" spacing={4}>
+                <Grid className="pl-0" item xs={12} md={6}>
+                  <Button
+                    startIcon={<Save />}
+                    fullWidth
+                    onClick={onUpdateButtonClick}
+                  >
+                    Save Archive Info Changes
+                  </Button>
+                </Grid>
+                <Grid className="pl-0" item xs={12} md={6}>
+                  <Button
+                    startIcon={<Star />}
+                    fullWidth
+                    onClick={onUpdateArchiveRatingButtonClick}
+                  >
+                    Update Archive Rating
+                  </Button>
+                </Grid>
+                <Grid className="pl-0" item xs={12} md={6}>
+                  <Button
+                    startIcon={<Image />}
+                    fullWidth
+                    onClick={onRegenArchiveThumbnailButtonClick}
+                  >
+                    Regen Archive Thumbnail
+                  </Button>
+                </Grid>
+                <Grid className="pl-0" item xs={12} md={6}>
+                  <Button
+                    startIcon={<Delete />}
+                    fullWidth
+                    onClick={onDeleteIconClick}
+                  >
+                    Delete Archive
                   </Button>
                 </Grid>
               </Grid>
             </Grid>
-          </>
+          </Loading>
         ) : (
-          <Loading label="Getting archive info" loading centerText />
+          <DeleteArchive
+            arcId={arcId}
+            title={archiveTitle}
+            onBack={updateShowDelete}
+            onClose={onClose}
+          />
         )}
       </Grid>
     </BaseDialog>
