@@ -16,6 +16,8 @@ export const DISPLAY_METHOD_IMAGES = "DISPLAY_METHOD_IMAGES";
 
 export const SEARCH_STATS = "SEARCH_STATS";
 
+export const USE_PAGINATED_SEARCH = "USE_PAGINATED_SEARCH";
+
 export const SEARCH_STATS_DEFAULT = {
   filter: "",
   page: 1,

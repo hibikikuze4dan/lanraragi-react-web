@@ -17,9 +17,15 @@ export const getCurrentRandomArchives = createSelector(getApp, (app) => [
   ...app.randomArchives,
 ]);
 
-export const getCurrentSearchArchives = createSelector(getApp, (app) => [
-  ...app.searchArchives,
-]);
+export const getCurrentSearchArchives = createSelector(
+  getApp,
+  (app) => [...app.searchArchives]
+);
+
+export const getSearchArchivesTotal = createSelector(
+  getApp,
+  (app) => app.searchArchivesTotal
+);
 
 export const getRandomAndSearchArchives = createSelector(
   getCurrentRandomArchives,
@@ -34,8 +40,8 @@ export const getCurrentArchiveFromRandomAndResults = createSelector(
 );
 
 export const getAmountOfSearchArchives = createSelector(
-  getCurrentSearchArchives,
-  (archives) => archives.length
+  getSearchArchivesTotal,
+  (total) => total
 );
 
 export const getCurrentArciveRandomArchivesIndex = createSelector(
@@ -114,11 +120,11 @@ export const getSearchFilter = createSelector(
 );
 
 export const getMaxPages = createSelector(
-  getAmountOfSearchArchives,
-  (numOfArchive) => (breakpoint) => {
+  getSearchArchivesTotal,
+  (total) => (breakpoint) => {
     const maxNum = getNumArchivesToRender();
-    const maxPageNumber = numOfArchive / maxNum[breakpoint];
-    return numOfArchive % maxNum[breakpoint] === 0
+    const maxPageNumber = total / maxNum[breakpoint];
+    return total % maxNum[breakpoint] === 0
       ? maxPageNumber
       : Math.ceil(maxPageNumber);
   }
@@ -185,4 +191,9 @@ export const getAutocompleteTags = createSelector(getTags, (tags) =>
     const text = tag?.text;
     return namespace ? `${namespace}:${text}` : text;
   })
+);
+
+export const getUsePaginatedSearch = createSelector(
+  getApp,
+  (app) => app.settings.usePaginatedSearch
 );

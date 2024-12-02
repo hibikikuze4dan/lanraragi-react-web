@@ -34,7 +34,6 @@ export const ArchiveList = ({
     open: false,
     arcId: "",
   });
-  const secondSliceValue = sliceToRender[1] ?? archives.length;
   const baseUrl = getBaseUrl();
   const columns = getNumArchivePerRow();
   const onInfoClick = useCallback((arcId) => {
@@ -46,6 +45,10 @@ export const ArchiveList = ({
     updateArchiveRatingModalState({ open: false, arcId });
   }, []);
 
+  const displayArchives = sliceToRender[1] !== null
+    ? archives.slice(sliceToRender[0], sliceToRender[1])
+    : archives;
+
   return (
     <div className="full-height overflow-y-scroll">
       <div className="pt-8 px-4 pb-[75svh]">
@@ -53,26 +56,24 @@ export const ArchiveList = ({
         <Grid className="mt-0 mb-6" container columns={columns} spacing={2}>
           <div id="archives-top" />
           <Loading loading={archivesLoading} label={loadingLabel}>
-            {archives
-              .slice(sliceToRender[0], secondSliceValue)
-              .map((archive, idx, arr) => {
-                const { arcid, title, tags } = archive;
-                return (
-                  <Archive
-                    baseUrl={baseUrl}
-                    currentArchiveId={currentArchiveId}
-                    id={arcid}
-                    index={idx}
-                    isSearch={isSearch}
-                    key={`${title}-${arcid}`}
-                    numOfArchivesRendered={arr.length}
-                    onEditClick={onEditClick}
-                    onInfoClick={onInfoClick}
-                    tags={tags}
-                    title={title}
-                  />
-                );
-              })}
+            {displayArchives.map((archive, idx, arr) => {
+              const { arcid, title, tags } = archive;
+              return (
+                <Archive
+                  baseUrl={baseUrl}
+                  currentArchiveId={currentArchiveId}
+                  id={arcid}
+                  index={idx}
+                  isSearch={isSearch}
+                  key={`${title}-${arcid}`}
+                  numOfArchivesRendered={arr.length}
+                  onEditClick={onEditClick}
+                  onInfoClick={onInfoClick}
+                  tags={tags}
+                  title={title}
+                />
+              );
+            })}
           </Loading>
         </Grid>
         {footer}
