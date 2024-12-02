@@ -19,12 +19,12 @@ export const getCurrentRandomArchives = createSelector(getApp, (app) => [
 
 export const getCurrentSearchArchives = createSelector(
   getApp,
-  (app) => [...app.searchArchives.archives]
+  (app) => [...app.searchArchives]
 );
 
 export const getSearchArchivesTotal = createSelector(
   getApp,
-  (app) => app.searchArchives.total
+  (app) => app.searchArchivesTotal
 );
 
 export const getRandomAndSearchArchives = createSelector(

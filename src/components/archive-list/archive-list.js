@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Archive from "../archive/archive";
 import { ArchiveInfoDialog } from "../dialogs/archive-info-dialog";
 import { getBaseUrl } from "../../storage/requests";
-import { getCurrentArchiveId, getUsePaginatedSearch } from "../../app/selectors";
+import { getCurrentArchiveId } from "../../app/selectors";
 import { updateInfoDialogArchiveId } from "../../app/slice";
 import { getNumArchivePerRow } from "../../storage/archives";
 import { Loading } from "../loading/loading";

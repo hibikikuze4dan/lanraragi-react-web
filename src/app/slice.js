@@ -18,10 +18,8 @@ const initialState = {
   pages: [],
   randomArchives: [],
   renderedPages: [],
-  searchArchives: {
-    archives: [],
-    total: 0
-  },
+  searchArchives: [],
+  searchArchivesTotal: 0,
   searchCategory: {},
   searchFilter: "",
   searchPage: 1,
@@ -75,10 +73,8 @@ export const appSlice = createSlice({
       state.randomArchives = [...payload];
     },
     updateSearchArchives: (state, { payload }) => {
-      state.searchArchives = {
-        archives: [...payload.archives],
-        total: payload.total
-      };
+      state.searchArchives = [...payload.archives];
+      state.searchArchivesTotal = payload.total;
     },
     updateBaseUrl: (state, { payload }) => {
       state.baseUrl = `${payload}`;
@@ -145,6 +141,7 @@ export const appSlice = createSlice({
           payload
         ),
       ];
+      state.searchArchivesTotal = Math.max(0, state.searchArchivesTotal - 1);
     },
     updateArchiveTags: (state, { payload }) => {
       if (!payload?.tags) return;
