@@ -43,14 +43,16 @@ export const Archive = ({
         </div>
         <div className="p-2">
           <button className="w-full" type="button" onClick={onTitleClick}>
-            <p
-              className={`normal-case font-bold m-0 text-sm ${
-                showFullTitle ? "" : "clamp"
-              }`}
+            <a
+              className={`normal-case font-bold m-0 text-sm ${showFullTitle ? "" : "clamp"
+                }`}
               id={`archive-text-${index}`}
+              ref={ref}
+              href={`${httpOrHttps()}${baseUrl}/reader?id=${id}`}
+              target="_blank"
             >
               {title}
-            </p>
+            </a>
           </button>
         </div>
         {rating && (
@@ -67,7 +69,6 @@ export const Archive = ({
         />
         <EditArchiveButton id={id} title={title} onEditClick={onEditClick} />
       </Paper>
-      <span ref={ref} />
     </Grid>
   );
 };
