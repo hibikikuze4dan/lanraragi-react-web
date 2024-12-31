@@ -44,9 +44,8 @@ export const Archive = ({
         <div className="p-2">
           <button className="w-full" type="button" onClick={onTitleClick}>
             <p
-              className={`normal-case font-bold m-0 text-sm ${
-                showFullTitle ? "" : "clamp"
-              }`}
+              className={`normal-case font-bold m-0 text-sm ${showFullTitle ? "" : "clamp"
+                }`}
               id={`archive-text-${index}`}
             >
               {title}
