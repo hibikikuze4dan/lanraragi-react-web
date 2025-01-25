@@ -14,18 +14,18 @@ import { History } from "./history/history";
 
 export default function App() {
   const theme = useTheme();
-  const mdUp = useMediaQuery(theme.breakpoints.up("sm"));
+  const smUp = useMediaQuery(theme.breakpoints.up("sm"));
   const { random, images, search, settings, history } = useSelector(
     getSectionVisibilityObject
   );
   const { loading, controller } = useSearchOnLoad();
 
   return (
-    <div className="static h-svh md:flex md:flex-row">
-      {mdUp && <Navbar />}
+    <div className="static h-svh sm:flex sm:flex-row">
+      {smUp && <Navbar />}
       <div
         id="top-div"
-        className="full-width h-[91svh] sm:h-svh md:flex md:flex-row"
+        className="full-width h-[91svh] sm:h-svh sm:flex sm:flex-row"
       >
         <div className="full-width full-height">
           <Grid className="full-width full-height">
@@ -40,7 +40,7 @@ export default function App() {
         </div>
       </div>
       <SnackbarAlert />
-      {!mdUp && <Navbar />}
+      {!smUp && <Navbar />}
     </div>
   );
 }
