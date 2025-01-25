@@ -1,5 +1,5 @@
 import { Button, Grid } from "@mui/material";
-import React, { useCallback } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateSearchCategory,
@@ -7,14 +7,9 @@ import {
   updateSearchFilter,
   updateLoading,
 } from "../../../app/slice";
-import {
-  getCategories,
-  getSearchFilter,
-  getSearchSort,
-  getSearchSortDirection,
-} from "../../../app/selectors";
+import { getSearchSort, getSearchSortDirection } from "../../../app/selectors";
 import { setSearchStats } from "../../../storage/search";
-import { addSearchToSearchHistory } from "../../../storage/history";
+import { useOnSubmit } from "../hooks/useOnSubmit";
 
 export const SubmitAndClear = ({
   selectedCategoryId,
@@ -22,38 +17,9 @@ export const SubmitAndClear = ({
   setSelectedCategoryId,
 }) => {
   const dispatch = useDispatch();
-  const categories = useSelector(getCategories);
-  const searchFilter = useSelector(getSearchFilter);
   const searchSort = useSelector(getSearchSort);
   const searchSortDirection = useSelector(getSearchSortDirection);
-
-  const onSubmit = useCallback(() => {
-    dispatch(updateSearchPage(1));
-    dispatch(
-      updateSearchCategory(
-        categories.find(({ id }) => id === selectedCategoryId) ?? {}
-      )
-    );
-    dispatch(updateLoading({ search: true }));
-    onClose();
-
-    const searchStatsObject = {
-      filter: searchFilter,
-      page: 1,
-      sort: searchSort,
-      direction: searchSortDirection,
-      category: selectedCategoryId,
-    };
-    setSearchStats(searchStatsObject);
-    addSearchToSearchHistory(searchStatsObject);
-  }, [
-    searchFilter,
-    selectedCategoryId,
-    onClose,
-    categories,
-    searchSort,
-    searchSortDirection,
-  ]);
+  const onSubmit = useOnSubmit({ selectedCategoryId, onPostDispatch: onClose });
 
   const onClear = () => {
     dispatch(updateSearchPage(1));

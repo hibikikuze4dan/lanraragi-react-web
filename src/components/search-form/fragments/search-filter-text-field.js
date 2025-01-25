@@ -6,11 +6,16 @@ import { Autocomplete } from "../../autocomplete/autocomplete";
 import { updateSearchFilter, updateTags } from "../../../app/slice";
 import { getAutocompleteTags, getSearchFilter } from "../../../app/selectors";
 import { getTags } from "../../../requests/tags";
+import { useOnSubmit } from "../hooks/useOnSubmit";
 
-export const SearchFilterTextField = () => {
+export const SearchFilterTextField = ({
+  onClose = () => null,
+  selectedCategoryId = "",
+}) => {
   const dispatch = useDispatch();
   const tags = useSelector(getAutocompleteTags);
   const searchFilter = useSelector(getSearchFilter);
+  const onSubmit = useOnSubmit({ selectedCategoryId, onPostDispatch: onClose });
 
   const onChangeText = debounce((value) => {
     dispatch(updateSearchFilter(value));
@@ -37,6 +42,7 @@ export const SearchFilterTextField = () => {
       placeholder="Search Title, Artist, Series, Language or Tags"
       items={tags}
       onChange={onChange}
+      onSubmit={onSubmit}
       value={searchFilter}
       maxItems={5}
     />

@@ -18,6 +18,7 @@ export const Autocomplete = ({
   items = [],
   maxItems = 25,
   onChange,
+  onSubmit,
   placeholder,
 }) => {
   const {
@@ -34,6 +35,10 @@ export const Autocomplete = ({
     ref,
   } = useAutocompleteLogic({ value, onChange, items, maxItems });
 
+  const onKeyUp = (event) => {
+    if (event.key === "Enter" && onSubmit) onSubmit();
+  };
+
   return (
     <div
       onFocus={() => setFocued(true)}
@@ -48,6 +53,7 @@ export const Autocomplete = ({
         fullWidth
         value={textFieldValue}
         onChange={onTextFieldChange}
+        onKeyUp={onKeyUp}
         placeholder={placeholder}
         InputProps={{
           endAdornment: textFieldValue ? (
