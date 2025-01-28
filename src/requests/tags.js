@@ -18,7 +18,9 @@ export const getTags = async () => {
     response = { data: [] };
     return response.data;
   }
-  return response.data.filter(
-    (tag) => !EXCLUDED_NAMSPACES.includes(tag.namespace)
-  );
+  return [
+    ...(response?.data?.filter(
+      (tag) => !EXCLUDED_NAMSPACES.includes(tag.namespace)
+    ) ?? []),
+  ];
 };

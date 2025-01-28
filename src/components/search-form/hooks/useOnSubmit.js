@@ -32,8 +32,8 @@ export const useOnSubmit = ({
       )
     );
     dispatch(updateLoading({ search: true }));
-    console.log("calling post dispatch", onPostDispatch);
-    onPostDispatch();
+
+    if (onPostDispatch) onPostDispatch();
 
     const searchStatsObject = {
       filter: searchFilter,
