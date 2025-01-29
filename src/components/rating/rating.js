@@ -15,6 +15,7 @@ import getArchiveMetaData, {
   updateArchiveMetadata,
 } from "../../requests/metadata";
 import { updateArchiveTags, updateDisplaySnackbar } from "../../app/slice";
+import { RATING_VALUES } from "../../constants";
 
 export const Rating = ({
   readOnly,
@@ -134,7 +135,7 @@ export const Rating = ({
                 value={ratingValue ?? 0}
                 onChange={onRatingChange}
               >
-                {[0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5].map((val) => (
+                {RATING_VALUES.map((val) => (
                   <option value={`${val}`} key={`rating-select-val-${val}`}>
                     {val}
                   </option>
