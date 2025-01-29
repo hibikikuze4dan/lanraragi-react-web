@@ -103,5 +103,6 @@ export const useArchiveEditDialogModalLogic = ({ onCloseProp, arcId }) => {
     archiveDataReady,
     showDelete,
     setShowDelete,
+    dispatch,
   };
 };

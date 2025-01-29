@@ -4,26 +4,34 @@ import { httpOrHttps } from "../utils";
 import { GET_HEADERS, UPDATE_ARCHIVE_THUMBNAIL_URL } from "./constants";
 
 export const regenArchiveThumbnail = async ({ id, page }) => {
-  if (!id) return Error("No archive Id supplied");
+  if (!id) {
+    console.log("No archive Id supplied");
+    return 0;
+  }
+
+  const url = `${httpOrHttps()}${getBaseUrl()}${UPDATE_ARCHIVE_THUMBNAIL_URL.replace(
+    ":id",
+    id
+  )}`;
 
   const formData = new FormData();
   if (page) formData.append("page", page);
 
-  const response = await axios.put(
-    `${httpOrHttps()}${getBaseUrl()}${UPDATE_ARCHIVE_THUMBNAIL_URL.replace(
-      ":id",
-      id
-    )}`,
-    formData,
-    {
-      headers: {
-        ...GET_HEADERS(),
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
+  const config = {
+    headers: {
+      ...GET_HEADERS(),
+      "Content-Type": "multipart/form-data",
+    },
+  };
 
-  console.log(response, "axios response for thumbnail regen");
+  try {
+    const response = await axios.put(url, formData, config);
 
-  return response?.data;
+    return response?.data?.success ?? 0;
+  } catch (err) {
+    console.log(
+      `Error occured while trying to regen thumbnail for ${id}: ${err}`
+    );
+    return 0;
+  }
 };

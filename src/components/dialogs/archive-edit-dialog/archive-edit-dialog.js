@@ -8,6 +8,7 @@ import { Loading } from "../../loading/loading";
 import { useArchiveEditDialogModalLogic } from "./useArchiveEditDialogLogic";
 import { regenArchiveThumbnail } from "../../../requests/regen_thumbnail";
 import { DeleteArchive } from "../../delete-archive/delete-archive";
+import { updateDisplaySnackbar } from "../../../app/slice";
 
 export const ArchiveEditDialog = ({
   arcId,
@@ -23,19 +24,33 @@ export const ArchiveEditDialog = ({
     archiveDataReady,
     showDelete,
     setShowDelete,
+    dispatch,
   } = useArchiveEditDialogModalLogic({ onCloseProp, arcId });
 
   const onUpdateArchiveRatingButtonClick = () => {
     updateArchiveRatingModalState({ arcId, open: true });
     onClose();
   };
+
   const onRegenArchiveThumbnailButtonClick = () => {
-    regenArchiveThumbnail({ id: arcId });
+    regenArchiveThumbnail({ id: arcId }).then((code) => {
+      if (!code) {
+        dispatch(
+          updateDisplaySnackbar({ open: true, type: "REGEN_THUMBNAIL_FAILURE" })
+        );
+        return;
+      }
+      dispatch(
+        updateDisplaySnackbar({ open: true, type: "REGEN_THUMBNAIL_SUCCESS" })
+      );
+    });
   };
+
   const updateShowDelete = useCallback(
     (show) => setShowDelete(show),
     [showDelete]
   );
+
   const onDeleteIconClick = useCallback(() => {
     updateShowDelete(true);
   }, []);
@@ -47,6 +62,7 @@ export const ArchiveEditDialog = ({
       </Typography>
     </Grid>
   );
+
   const archiveTitle = archiveData?.title ?? "";
 
   return (
