@@ -17,6 +17,12 @@ import getArchiveMetaData, {
 import { updateArchiveTags, updateDisplaySnackbar } from "../../app/slice";
 import { RATING_VALUES } from "../../constants";
 
+const updateArchiveInfoSnackbarInfo = {
+  open: true,
+  type: "UPDATE_ARCHIVE_INFO_FAILURE",
+  severity: "error",
+};
+
 export const Rating = ({
   readOnly,
   size = "large",
@@ -62,11 +68,7 @@ export const Rating = ({
             );
             postRatingChange();
           } else {
-            updateDisplaySnackbar({
-              open: true,
-              type: "UPDATE_ARCHIVE_INFO_FAILURE",
-              severity: "error",
-            });
+            updateDisplaySnackbar(updateArchiveInfoSnackbarInfo);
             console.log(
               res?.error ?? "Unknown error with updating archive info"
             );
@@ -74,11 +76,7 @@ export const Rating = ({
           }
         })
         .catch((err) => {
-          updateDisplaySnackbar({
-            open: true,
-            type: "UPDATE_ARCHIVE_INFO_FAILURE",
-            severity: "error",
-          });
+          updateDisplaySnackbar(updateArchiveInfoSnackbarInfo);
           console.log(err ?? "Unknown error with updating archive info");
         });
     },
