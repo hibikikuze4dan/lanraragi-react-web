@@ -2,6 +2,8 @@
 
 A react based front-end application for making use of the [Lanraragi](https://github.com/Difegue/LANraragi) api. Works best on mobile and tablet viewports, but the desktop experience is okay.
 
+NOTE: V2 of this application is in development! Check it out [here](https://github.com/hibikikuze4dan/lanraragi-react-web-v2)!
+
 ## Features
 
 - The app makes use of the Client API to interact with [LANraragi](https://github.com/Difegue/LANraragi) and get access to things like archive, thumbnails, images, categories, etc.
